@@ -15,17 +15,47 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 20vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  margin-bottom: 5vh;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+.levelImage, .startImage, .targetImage {
+  height: 30vh;
+  width: 30vh;
+  padding-left: 1vh;
+  padding-right: 1vh;
+}
+
+.startImage {
+  padding: 0.5vh;
+  background-color: #ff9484;
+  margin-right: 1vh;
+}
+
+.targetImage {
+  padding: 0.5vh;
+  background-color: rgb(200, 255, 118);
+  margin-left: 1vh;
+}
+
+.levelImage {
+  background-color: beige;
+  margin-left: 1vh;
+  margin-right: 1vh;
+}
+
+.GameParameters {
+  margin-bottom: 5vh;
 }
 
 @keyframes App-logo-spin {
