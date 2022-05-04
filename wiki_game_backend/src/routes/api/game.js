@@ -25,7 +25,6 @@ router.get('/', (req, res) => {
 
 //Upon getting a GET request to /ongoing send back 5 new images based on the game logic
 router.get('/ongoing', (req, res) => {
-    console.log("GET /game/ongoing called on server")
 
     //Analyse the image url that the user selected
 
