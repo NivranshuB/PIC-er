@@ -1,6 +1,5 @@
 import express from 'express';
 import path from 'path';
-import mongoose from 'mongoose';
 
 // Setup Express
 const app = express();
@@ -29,6 +28,5 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-// Start the DB running. Then, once it's connected, start the server.
-mongoose.connect('mongodb://localhost:27017/blogogog', { useNewUrlParser: true })
-    .then(() => app.listen(port, () => console.log(`App server listening on port ${port}!`)));
+//Start listening on port
+app.listen(port, () => console.log(`App server listening on port ${port}!`));
