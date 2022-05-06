@@ -11,8 +11,8 @@ const NavbarPage = () => {
                 
                 <Spacer />
                 <ButtonGroup>
-                    <Button>Sign Up</Button>
-                    <Button>Login</Button>
+                    <Button variant='borderlessWhite'>Sign Up</Button>
+                    <Button variant='borderless'>Login</Button>
                 </ButtonGroup>
 
             </Flex>
