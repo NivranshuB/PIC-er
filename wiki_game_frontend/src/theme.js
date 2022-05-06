@@ -6,26 +6,50 @@ const Button = {
         // hide the blue focused border when clicking
         _focus: {
             boxShadow: 'none',
-        }
+        },
+        _active: {
+            bg: 'accent',
+        },
     },
     variants: {
         solid: {
             bg: 'accent',
             color: 'white',
+            _hover: {
+                bg: 'white',
+                color: 'accent',
+            },
+            _active: {
+                bg: 'accent',
+            }
+        },
+        grey: {
+            bg: 'lighterBackground',
+            _hover: {
+                bg: 'white',
+                color: 'accent',
+            },
         },
         borderless: {
             color: 'accent',
             _hover: {
-                background: 'accent',
+                bg: 'accent',
                 color: 'white',
             },
+            _active: {
+                bg: 'white',
+                color: 'accent',
+            }
         },
         borderlessWhite: {
             color: 'white',
             _hover: {
-                background: 'accent',
+                bg: 'accent',
             },
-            
+            _active: {
+                bg: 'white',
+                color: 'accent',
+            }
         }
     }
 }
