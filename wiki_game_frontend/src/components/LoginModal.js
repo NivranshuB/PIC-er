@@ -1,4 +1,4 @@
-import { Button, Center, FormControl, FormHelperText, Heading, HStack, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Spacer, Stack } from "@chakra-ui/react"
+import { Button, Center, FormControl, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Spacer, Stack } from "@chakra-ui/react"
 
 const LoginModal = (props) => {
 
@@ -18,10 +18,10 @@ const LoginModal = (props) => {
                                 <Heading size='lg' alignContent='center'>Login</Heading>
                             </Center>
                             <FormControl>
-                                <Input id='username' placeholder='Username' />
+                                <Input id='username' placeholder='Username'/>
                             </FormControl>
                             <FormControl>
-                                <Input id='password' placeholder='Password' />
+                                <Input id='password' placeholder='Password' type='password'/>
                             </FormControl>
                             <Center>
                                 <Button type='submit'>Login</Button>

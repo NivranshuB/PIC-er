@@ -55,6 +55,22 @@ const Button = {
     }
 }
 
+const Input = {
+    baseStyle: {
+        field: {
+            bg: 'background',
+            color: 'white',
+            _focus: {
+                border: '1px',
+                borderColor: 'accent',
+            }
+        },
+    },
+    defaultProps: {
+        variant: '',
+    }
+}
+
 const theme = extendTheme({
     styles: {
         global: {
@@ -72,6 +88,7 @@ const theme = extendTheme({
     },
     components: {
         Button,
+        Input,
     }
 });
 
