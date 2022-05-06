@@ -1,11 +1,14 @@
+import { Flex } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 
 const NavbarPage = () => {
     return (
         <div>
-            Navbar
+            <Flex color='accent' backgroundColor='lighterBackground'>
+                PIC-er
+            </Flex>
             {/* Renders children pages */}
-            <Outlet/>
+            <Outlet />
         </div>
     )
 }
