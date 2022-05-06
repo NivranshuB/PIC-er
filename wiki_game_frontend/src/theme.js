@@ -15,6 +15,7 @@ const Button = {
         solid: {
             bg: 'accent',
             color: 'white',
+            width: '120px',
             _hover: {
                 bg: 'white',
                 color: 'accent',
