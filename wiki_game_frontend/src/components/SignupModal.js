@@ -1,6 +1,6 @@
-import { Button, Center, FormControl, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Spacer, Stack } from "@chakra-ui/react"
+import { Button, Center, FormControl, FormHelperText, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Spacer, Stack } from "@chakra-ui/react"
 
-const LoginModal = (props) => {
+const SignupModal = (props) => {
 
     const { isOpen, onClose } = props;
 
@@ -15,7 +15,7 @@ const LoginModal = (props) => {
                         <Stack spacing='24px'>
                             <Spacer />
                             <Center>
-                                <Heading size='lg' alignContent='center'>Login</Heading>
+                                <Heading size='lg' alignContent='center'>Sign Up</Heading>
                             </Center>
                             <Spacer />
                             <FormControl>
@@ -23,16 +23,24 @@ const LoginModal = (props) => {
                             </FormControl>
                             <Spacer />
                             <FormControl>
+                                <Input id='password' placeholder='Email' type='email'/>
+                                <FormHelperText>e.g. email@email.com</FormHelperText>
+                            </FormControl>
+                            <FormControl>
                                 <Input id='password' placeholder='Password' type='password'/>
+                                <FormHelperText>Must be at least 8 characters</FormHelperText>
+                            </FormControl>
+                            <FormControl>
+                                <Input id='confirmPassword' placeholder='Confirm Password' type='password'/>
                             </FormControl>
                             <Spacer />
                             <Center>
-                                <Button type='submit'>Login</Button>
+                                <Button type='submit'>Sign Up</Button>
                             </Center>
                             <Spacer />
                             <Center>
-                                Don't have an account?
-                                <Button variant='borderless' ml='8px'>Sign up</Button>
+                                Already have an account?
+                                <Button variant='borderless' ml='8px'>Login</Button>
                             </Center>
                             <Spacer />
                         </Stack>
@@ -45,4 +53,4 @@ const LoginModal = (props) => {
 
 }
 
-export default LoginModal;
+export default SignupModal;
