@@ -71,6 +71,19 @@ const Input = {
     }
 }
 
+const CloseButton = {
+    baseStyle: {
+        bg: 'accent',
+        _focus: {
+            boxShadow: 'none',
+        },
+        _hover: {
+            bg: 'white',
+            color: 'accent',
+        }
+    }
+}
+
 const theme = extendTheme({
     styles: {
         global: {
@@ -89,6 +102,7 @@ const theme = extendTheme({
     components: {
         Button,
         Input,
+        CloseButton,
     }
 });
 
