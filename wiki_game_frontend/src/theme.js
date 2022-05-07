@@ -26,6 +26,7 @@ const Button = {
         },
         grey: {
             bg: 'lighterBackground',
+            width: '120px',
             _hover: {
                 bg: 'white',
                 color: 'accent',
