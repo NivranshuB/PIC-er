@@ -1,6 +1,7 @@
 import { Box, Button, Center, Flex, Heading, HStack, Spacer, Stack, VStack } from "@chakra-ui/react";
 import LeaderboardList from "../components/LeaderboardList";
 import NotLoggedInCard from "../components/NotLoggedInCard";
+import { Link } from "react-router-dom";
 
 const GameEndPage = (props) => {
 
@@ -62,17 +63,18 @@ const GameEndPage = (props) => {
                     </HStack>
                     <Flex>
                         <VStack width='100%'>
-                            <Heading size='md'>Time</Heading>
-                            <Heading size='lg'>{time}3:04</Heading>
-                        </VStack>
-                        <VStack width='100%'>
                             <Heading size='md'>Clicks</Heading>
                             <Heading size='lg'>{clicks}3</Heading>
+                        </VStack>
+                        <VStack width='100%'>
+
+                            <Heading size='md'>Time</Heading>
+                            <Heading size='lg'>{time}3:04</Heading>
                         </VStack>
                     </Flex>
                     <Center>
                         <HStack pt='36px' spacing='24px'>
-                            <Button variant='grey'>Home</Button>
+                            <Button variant='grey' as={Link} to='/'>Home</Button>
                             <Button>Play Again</Button>
                         </HStack>
                     </Center>
