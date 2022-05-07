@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavbarPage from './pages/NavbarPage';
 import HomePage from './pages/HomePage';
+import LeaderboardPage from './pages/LeaderboardPage';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Routes>
           <Route path='/' element={<NavbarPage />} >
             <Route index element={<HomePage />} />
+            <Route path='leaderboard' element={<LeaderboardPage />} />
           </Route>
         </Routes>
       </div>

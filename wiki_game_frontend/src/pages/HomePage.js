@@ -1,11 +1,12 @@
-import LeaderboardCard from "../components/LeaderboardCard";
+import { Button } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 
 const HomePage = () => {
     return (
         <div>
             inside navbar
-            <LeaderboardCard/>
+            <Button as={Link} to='leaderboard'>Leaderboard</Button>
         </div>
     )
 }
