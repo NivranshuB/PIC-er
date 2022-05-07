@@ -1,5 +1,5 @@
 import { Button, ButtonGroup, Center, Flex, Spacer, useDisclosure } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import LoginModal from "../components/LoginModal";
 import SignupModal from "../components/SignupModal";
 
@@ -12,7 +12,10 @@ const NavbarPage = () => {
         <div>
             <Flex color='accent' backgroundColor='lighterBackground'>
                 <Center pl='4'>
+                    <Link to='/'>
                     PIC-er
+                    </Link>
+                    
                 </Center>
 
                 <Spacer />
