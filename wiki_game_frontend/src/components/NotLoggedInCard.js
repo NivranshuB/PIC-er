@@ -5,7 +5,7 @@ const NotLoggedInCard = (props) => {
     const { text } = props;
 
     return (
-        <Flex align='center' width='100%' bg='lighterBackground' borderRadius='8' grow>
+        <Flex align='center' width='100%' bg='lighterBackground' borderRadius='8'  ml='16px' mr='16px'>
             <Container>
                 <Stack p='24px'>
                     <Center>
