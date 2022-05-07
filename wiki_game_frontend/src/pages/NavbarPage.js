@@ -3,13 +3,16 @@ import { Link, Outlet } from "react-router-dom";
 import LoginModal from "../components/LoginModal";
 import SignupModal from "../components/SignupModal";
 import { useAuth0 } from "@auth0/auth0-react";
+import MD5 from 'crypto-js/md5';
 
 
 
 const NavbarPage = () => {
-    const { user, loginWithRedirect, logout, isAuthenticated } = useAuth0();
+    const { user, loginWithRedirect, logout, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
     const {isOpen, onOpen, onClose} = useDisclosure();
     const {isOpen: isOpenSignup, onOpen: onOpenSignup, onClose: onCloseSignup} = useDisclosure();
+
+
 
     return (
         <div>
@@ -25,8 +28,8 @@ const NavbarPage = () => {
                 <ButtonGroup>
                     <Button variant='borderlessWhite' onClick={() => loginWithRedirect({screen_hint: 'signup'})}>Sign Up</Button>
                     <SignupModal isOpen={isOpenSignup} onClose={onCloseSignup}/>
-                    {isAuthenticated 
-                    ? <span><Button variant='borderless' onClick={() => logout({returnTo: window.location.origin})}>Logout</Button><h2>{user.email}</h2></span>
+                    {(!isLoading && isAuthenticated) 
+                    ? <span><Button variant='borderless' onClick={() => logout({returnTo: window.location.origin})}>Logout</Button><h2>{MD5(user.email).toString()}</h2></span>
                     : <Button variant='borderless' onClick={() => loginWithRedirect()}>Login</Button>}
                     
                     
