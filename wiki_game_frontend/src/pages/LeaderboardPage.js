@@ -1,6 +1,7 @@
 import { Center, Flex, Spacer } from "@chakra-ui/react";
 import BackButton from "../components/BackButton";
 import LeaderboardList from "../components/LeaderboardList";
+import NotLoggedInCard from "../components/NotLoggedInCard";
 
 const LeaderboardPage = () => {
 
@@ -14,14 +15,33 @@ const LeaderboardPage = () => {
     const globalHighScores = [
         { rank: 1, name: "number 1", clicks: 3, time: "0:01" },
         { rank: 2, name: "number 2", clicks: 3, time: "0:02" },
+        { rank: 1, name: "number 1", clicks: 3, time: "0:01" },
+        { rank: 2, name: "number 2", clicks: 3, time: "0:02" },
+        { rank: 1, name: "number 1", clicks: 3, time: "0:01" },
+        { rank: 2, name: "number 2", clicks: 3, time: "0:02" },
+        { rank: 1, name: "number 1", clicks: 3, time: "0:01" },
+        { rank: 2, name: "number 2", clicks: 3, time: "0:02" },
+        { rank: 1, name: "number 1", clicks: 3, time: "0:01" },
+        { rank: 2, name: "number 2", clicks: 3, time: "0:02" },
+        { rank: 1, name: "number 1", clicks: 3, time: "0:01" },
+        { rank: 2, name: "number 2", clicks: 3, time: "0:02" },
+
     ];
+
+    const notLoggedInText = 'Login or create an account to view your high scores';
+
+    // to be replaced by auth0
+    const isAuthenticated = false;
 
     return (
         <div>
             <BackButton />
-            
+
             <Flex m='24px'>
-                <LeaderboardList items={personalHighScores} title='Personal High Scores' />
+                {isAuthenticated
+                    ? <LeaderboardList items={personalHighScores} title='Personal High Scores' />
+                    : <NotLoggedInCard text={notLoggedInText}/>}
+
                 <LeaderboardList items={globalHighScores} title='Global Leaderboard' />
             </Flex>
         </div>
