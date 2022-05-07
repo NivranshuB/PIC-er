@@ -17,21 +17,11 @@ const LeaderboardPage = () => {
     return (
         <div>
             <BackButton />
-            Leaderboard
-            {/* <Center> */}
+            
             <Flex m='24px'>
-                {/* <Center> */}
                 <LeaderboardList items={personalHighScores} title='Personal High Scores' />
                 <LeaderboardList items={globalHighScores} title='Global Leaderboard' />
-                {/* </Center> */}
-
             </Flex>
-
-
-
-            {/* </Center> */}
-
-
         </div>
     )
 }
