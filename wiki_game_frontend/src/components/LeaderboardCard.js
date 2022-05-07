@@ -5,7 +5,7 @@ const LeaderboardCard = (props) => {
     const { rank, name, clicks, time } = props;
 
     return (
-            <Flex bg='lighterBackground' borderRadius='8px' p='4px'>
+            <Flex bg='lighterBackground' borderRadius='8px' p='4px' m='8px' >
                 <Center flex='1'>
                     {rank}
                 </Center>
