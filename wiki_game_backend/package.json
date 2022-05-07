@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "./src/server.js",
-  "type": "module",
   "scripts": {
     "start": "node -r esm ./src/server.js",
     "production": "cross-env NODE_ENV=production node -r esm ./src/server.js",

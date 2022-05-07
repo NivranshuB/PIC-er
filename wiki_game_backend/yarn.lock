@@ -202,6 +202,11 @@ dicer@0.2.5:
     readable-stream "1.1.x"
     streamsearch "0.1.2"
 
+dotenv@^16.0.0:
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.0.tgz#c619001253be89ebb638d027b609c75c26e47411"
+  integrity sha512-qD9WU0MPM4SWLPJy/r2Be+2WgQj8plChsyrCNQzW/0WjvcJQiKQJ9mH3ZgB3fxbUUxgc/11ZJ0Fi5KiimWGz2Q==
+
 dummy-json@^3.0.4:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/dummy-json/-/dummy-json-3.0.5.tgz#c9bb8fea57264703646dcbb77610b0ca68215d39"

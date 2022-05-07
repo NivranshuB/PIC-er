@@ -1,6 +1,8 @@
 import express from 'express';
 import path from 'path';
 
+//Note: Had to remove '"type": "module",' from package.json of backend to make server.js work after merging
+
 // Setup Express
 const app = express();
 const port = process.env.PORT || 3001;
