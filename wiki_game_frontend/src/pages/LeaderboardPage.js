@@ -6,10 +6,10 @@ import NotLoggedInCard from "../components/NotLoggedInCard";
 const LeaderboardPage = () => {
 
     const personalHighScores = [
-        { rank: 1, name: "person1", clicks: 10, time: "a" },
-        { rank: 2, name: "person2", clicks: 11, time: "f" },
-        { rank: 2, name: "person3", clicks: 15, time: "b" },
-        { rank: 2, name: "person4", clicks: 1, time: "z" },
+        { rank: 1, name: "person1", clicks: 10, time: "3:04" },
+        { rank: 2, name: "person2", clicks: 11, time: "23:07" },
+        { rank: 2, name: "person3", clicks: 15, time: "1:03" },
+        { rank: 2, name: "person4", clicks: 1, time: "7:09" },
     ];
 
     const globalHighScores = [
@@ -31,7 +31,7 @@ const LeaderboardPage = () => {
     const notLoggedInText = 'Login or create an account to view your high scores';
 
     // to be replaced by auth0
-    const isAuthenticated = false;
+    const isAuthenticated = true;
 
     return (
         <div>

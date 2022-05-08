@@ -8,10 +8,10 @@ const GameEndPage = (props) => {
     const { clicks, time } = props;
 
     const personalHighScores = [
-        { rank: 1, name: "person1", clicks: 10, time: "a" },
-        { rank: 2, name: "person2", clicks: 11, time: "f" },
-        { rank: 2, name: "person3", clicks: 15, time: "b" },
-        { rank: 2, name: "person4", clicks: 1, time: "z" },
+        { rank: 1, name: "person1", clicks: 10, time: "4:03" },
+        { rank: 2, name: "person2", clicks: 11, time: "2:09" },
+        { rank: 2, name: "person3", clicks: 15, time: "6:06" },
+        { rank: 2, name: "person4", clicks: 1, time: "90:10" },
     ];
 
     const globalHighScores = [
