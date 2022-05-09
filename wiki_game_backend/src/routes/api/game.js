@@ -2,6 +2,8 @@
  * This is a simple RESTful api for dealing with the requests for the wiki game.
  */
 
+import { dummy_images } from '../../images-data/dummy-images';
+
 import express from 'express';
 import { createGame, nextLevelImages } from '../../images-data/images-dao';
 
@@ -17,7 +19,7 @@ router.get('/', (req, res) => {
 
     //Retrieve two random image objects and their associated tags list
     //Set one of the image as the start image and the other as the target image
-    const newGameImages = createGame();
+    const newGameImages = createGame(dummy_images);
 
     //Send the start image and the target image in the response payload
     res.json(newGameImages);
@@ -31,7 +33,7 @@ router.get('/ongoing', (req, res) => {
     //Make changes to the game depending on their game progress
 
     //Retrieve 5 image urls from the database (with one of the images being the progressing image)
-    const nextImagesSet = nextLevelImages();
+    const nextImagesSet = nextLevelImages(dummy_images);
 
     //Send the url of the 5 images back to the client in the response payload
     res.json(nextImagesSet);
