@@ -5,4 +5,17 @@ export const getLeaderboard = async () => {
         .then((response) => {
             return response.data;
         })
+        .catch(error => {
+            throw new Error(error.message);
+        })
+}
+
+export const getPersonalLeaderboard = async (id) => {
+    axios.get('/leaderboard/' + id)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            throw new Error(error.message);
+        })
 }
