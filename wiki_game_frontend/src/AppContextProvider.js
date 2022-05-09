@@ -9,13 +9,17 @@ const AppContext = React.createContext({
 function AppContextProvider({ children }) {
   // Utilize our useGet hook to query our Express API for the articles.
   const gameParameterGet = useGet("/api/game", []);
+  console.log("Game parameter objects are: ");
+  console.log(gameParameterGet.data);
 
   // The context value that will be supplied to any descendants of this component.
-  const contextStart = gameParameterGet.data.startImage;
-  const contextTarget = gameParameterGet.data.targetImage;
+  const contextStart = gameParameterGet.data[0];
+  const contextTarget = gameParameterGet.data[1];
 
   // Utilize our usePut hook to query our Express API for the articles.
   const nextLevelImages = useGet("/api/game/ongoing", []);
+  console.log("Level objects are: ");
+  console.log(nextLevelImages.data);
 
   // The context value that will be supplied to any descendants of this component.
   const levelImages = nextLevelImages.data;

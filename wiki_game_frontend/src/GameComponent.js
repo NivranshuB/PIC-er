@@ -4,8 +4,8 @@ import GameParameter from "./GameParameter";
 function GameComponent() {
     return (
         <>
-            <GameParameter />
-            <GameImageSet />
+            <GameParameter tagsVisible={true}/>
+            <GameImageSet tagsVisible={true}/>
         </>
     )
 }

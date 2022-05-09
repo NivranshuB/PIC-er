@@ -1,37 +1,54 @@
 import { useContext } from "react";
 import { AppContext } from "./AppContextProvider";
+import TagList from "./TagList";
 
-function GameImageSet() {
-
+function GameImageSet(props) {
   const { levelImages } = useContext(AppContext);
 
   return (
     <div className="GameImageSet">
       <img
-        src={levelImages.length ? levelImages[0] : "/logo192.png"}
+        src={levelImages.length ? levelImages[0].imageURL : "/logo192.png"}
         className="levelImage"
         alt="Iteration"
       />
       <img
-        src={levelImages.length ? levelImages[1] : "/logo192.png"}
+        src={levelImages.length ? levelImages[1].imageURL : "/logo192.png"}
         className="levelImage"
         alt="Iteration"
       />
       <img
-        src={levelImages.length ? levelImages[2] : "/logo192.png"}
+        src={levelImages.length ? levelImages[2].imageURL : "/logo192.png"}
         className="levelImage"
         alt="Iteration"
       />
       <img
-        src={levelImages.length ? levelImages[3] : "/logo192.png"}
+        src={levelImages.length ? levelImages[3].imageURL : "/logo192.png"}
         className="levelImage"
         alt="Iteration"
       />
       <img
-        src={levelImages.length ? levelImages[4] : "/logo192.png"}
+        src={levelImages.length ? levelImages[4].imageURL : "/logo192.png"}
         className="levelImage"
         alt="Iteration"
       />
+      <div className="tags">
+        {levelImages.length && props.tagsVisible? (
+          <TagList tagArray={levelImages[0].imageTags} />
+        ) : null}
+        {levelImages.length && props.tagsVisible ? (
+          <TagList tagArray={levelImages[1].imageTags} />
+        ) : null}
+        {levelImages.length && props.tagsVisible ? (
+          <TagList tagArray={levelImages[2].imageTags} />
+        ) : null}
+        {levelImages.length && props.tagsVisible ? (
+          <TagList tagArray={levelImages[3].imageTags} />
+        ) : null}
+        {levelImages.length && props.tagsVisible ? (
+          <TagList tagArray={levelImages[4].imageTags} />
+        ) : null}
+      </div>
     </div>
   );
 }
