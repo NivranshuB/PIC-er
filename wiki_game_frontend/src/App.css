@@ -66,3 +66,13 @@
     transform: rotate(360deg);
   }
 }
+
+.tagList {
+  max-width: fit-content;
+  margin: 0px 5% 0px 5%;
+  padding: 2%;
+  background-color: #d4f6ff;
+  display: inline-block;
+  flex-direction: row;
+  vertical-align: top;
+}
