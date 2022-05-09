@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: '..\\.env'});
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.s2hea.mongodb.net/PictureRace?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-let dbConnection, imageCollection;
+let dbConnection, imageCollection, scoreCollection;
 
 const app = express();
 const port = 3000;
@@ -21,6 +21,7 @@ client.connect((err, c) => {
     console.log("Successfully connected to MongoDb server")
     dbConnection = c.db("PictureRace");
     imageCollection = dbConnection.collection('ImageCollection');
+    scoreCollection = dbConnection.collection('ScoreCollection');
 })
 
 app.listen(port, () => { console.log(`Express listening on port ${port}`) });
@@ -47,6 +48,18 @@ app.get('/closerImage', (req, res) => {
 app.get('/randomImages', (req, res) => {
     let NUM_OF_IMAGES = 5
     imageCollection.aggregate([{ $sample: {size: NUM_OF_IMAGES - 1} }]).toArray().then(output => res.send(output))
+})
+
+app.post('/newHighscore', (req, res) => {
+    scoreCollection.insertOne({
+        username: req.body.username,
+        email: req.body.email,
+        highscore: req.body.highscore 
+    }).then(() => res.sendStatus(200)).catch((err) => console.error(err))
+})
+
+app.get('/topHighscores', (req, res) => {
+    scoreCollection.find().sort( {highscore: 1}).limit(10).toArray().then((output) => res.send(output))
 })
 
 export default app;
