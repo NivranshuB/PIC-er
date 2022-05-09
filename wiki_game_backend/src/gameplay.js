@@ -93,7 +93,7 @@ function getACloserImage(collection, tagsMatching) {
 
 /** Get 4 random images that are randomly generated from the MongoDB database */
 function getRandomImages(collection) {
-    return collection.aggregate([{ $sample: {size: NUM_OF_IMAGES - 1} }])
+    return collection.aggregate([{ $sample: {size: NUM_OF_IMAGES - 1} }]).toArray()
 }
 
 // Check if the game has been won or not

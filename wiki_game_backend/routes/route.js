@@ -2,7 +2,7 @@ import express from 'express';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({ path: '..\\.env'});
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.s2hea.mongodb.net/PictureRace?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 let dbConnection, imageCollection;
@@ -12,7 +12,10 @@ const port = 3000;
 
 client.connect((err, c) => {
     if (err) { 
-    console.error(err)    
+    console.error(err)
+    console.error(`DB username: ${process.env.DB_USERNAME}`)    
+    console.error(`DB password: ${process.env.DB_PASSWORD}`)
+    console.error(process.cwd())    
     return
     }
     console.log("Successfully connected to MongoDb server")
@@ -34,4 +37,17 @@ app.get('/allPictures', (req, res) => {
 app.get('/leisureOnly', (req, res) => {
     imageCollection.find({imageTags: 'leisure'}).toArray().then(output => res.send(output))
 })
+
+app.get('/closerImage', (req, res) => {
+    let tagsMatching = ['leisure', 'food']
+    imageCollection.find({imageTags: {$all: tagsMatching}}).toArray().then(output => res.send(output))
+    // imageCollection.find({imageTags: 'leisure'}).toArray().then(output => res.send(output))
+})
+
+app.get('/randomImages', (req, res) => {
+    let NUM_OF_IMAGES = 5
+    imageCollection.aggregate([{ $sample: {size: NUM_OF_IMAGES - 1} }]).toArray().then(output => res.send(output))
+})
+
+export default app;
 
