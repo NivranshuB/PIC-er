@@ -49,7 +49,8 @@ app.put('/closerImage', (req, res) => {
 
 app.get('/randomImages', (req, res) => {
     let NUM_OF_IMAGES = 5
-    imageCollection.aggregate([{ $sample: {size: NUM_OF_IMAGES - 1} }]).toArray().then(output => res.send(output))
+    imageCollection.aggregate([{ $sample: {size: NUM_OF_IMAGES - 1} }]).toArray()
+    .then(output => res.send(output))
 })
 
 app.post('/newHighscore', (req, res) => {
