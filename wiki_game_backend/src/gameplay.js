@@ -9,7 +9,7 @@
 const NUM_OF_IMAGES = 5;
 
 // INITIALIZE GAME --> Todo
-function createGame(collection) {
+export function createGame(collection) {
     let startImageArray = collection.find({tagCount: {$lt: 3}}).toArray(); //get list of starting images with a tag count of less than 1 or 2.
     let startImage = startImageArray[getRandomIntBetweenValues(0, len(startImageArray))]; //randomly select one of the images  
     let startImageTagArray = startImage.imageTags; //get tags for the start image
@@ -86,19 +86,21 @@ function resetGame() {
  * Can't use findOne because it returns the first matching document in order, which is bad because under the same conditions, this document will always be 
  * returned.
 */
-function getACloserImage(collection, tagsMatching) {
-    let closerImageArray = collection.find({imageTags: {$all: tagsMatching}}).toArray();
-    return len(closerImageArray) > 0 ? closerImageArray(getRandomIntBetweenValues(0, len(closerImageArray))) : null; 
+export function getACloserImage(collection, tagsMatching) {
+    // console.log(getRandomIntBetweenValues(0, ))
+    collection.find({imageTags: {$all: tagsMatching}}).toArray()
+    .then((closerImageArray) => {return closerImageArray.length > 0 ? closerImageArray[getRandomIntBetweenValues(0, closerImageArray.length)] : {} })
+    
 }
 
 /** Get 4 random images that are randomly generated from the MongoDB database */
-function getRandomImages(collection) {
+export function getRandomImages(collection) {
     return collection.aggregate([{ $sample: {size: NUM_OF_IMAGES - 1} }]).toArray()
 }
 
 // Check if the game has been won or not
 
-function getRandomIntBetweenValues(min, max) {
+export function getRandomIntBetweenValues(min, max) {
     let diff = max - min;
     let rand = Math.random();
     rand = Math.floor(rand * diff);

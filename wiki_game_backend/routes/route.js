@@ -1,6 +1,7 @@
 import express from 'express';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import dotenv from 'dotenv';
+import { getRandomIntBetweenValues } from '../src/gameplay'
 
 dotenv.config({ path: '..\\.env'});
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.s2hea.mongodb.net/PictureRace?retryWrites=true&w=majority`;
@@ -39,10 +40,11 @@ app.get('/leisureOnly', (req, res) => {
     imageCollection.find({imageTags: 'leisure'}).toArray().then(output => res.send(output))
 })
 
-app.get('/closerImage', (req, res) => {
-    let tagsMatching = ['leisure', 'food']
-    imageCollection.find({imageTags: {$all: tagsMatching}}).toArray().then(output => res.send(output))
-    // imageCollection.find({imageTags: 'leisure'}).toArray().then(output => res.send(output))
+app.put('/closerImage', (req, res) => {
+    let tagsMatching = req.body.tagsMatching;
+    imageCollection.find({imageTags: {$all: tagsMatching}}).toArray()
+        .then((closerImageArray) => {return closerImageArray.length > 0 ? closerImageArray[getRandomIntBetweenValues(0, closerImageArray.length)] : {} })
+        .then((closerImageArray) => res.send(closerImageArray));
 })
 
 app.get('/randomImages', (req, res) => {
