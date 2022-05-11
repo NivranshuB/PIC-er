@@ -1,5 +1,8 @@
 import express from 'express';
 import path from 'path';
+import { MongoClient, ServerApiVersion } from 'mongodb';
+import dotenv from 'dotenv';
+import { getRandomIntBetweenValues } from '../src/gameplay'
 
 //Note: Had to remove '"type": "module",' from package.json of backend to make server.js work after merging
 
@@ -17,6 +20,24 @@ app.use('/', routes);
 //Setup routes from old routes
 // import routes from '../routes/route'
 // app.use('/', routes)
+
+//Setup mongo connection
+dotenv.config({ path: '..\\.env'});
+const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.s2hea.mongodb.net/PictureRace?retryWrites=true&w=majority`;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+export let dbConnection, imageCollection, scoreCollection;
+
+client.connect((err, c) => {
+    if (err) {
+        console.error(err)
+    } else {
+        console.log("Successfully connected to MongoDb server")
+        dbConnection = c.db("PictureRace");
+        imageCollection = dbConnection.collection('ImageCollection');
+        scoreCollection = dbConnection.collection('ScoreCollection');   
+    }
+
+})
 
 // Make the "public" folder available statically
 app.use(express.static(path.join(__dirname, '../public')));

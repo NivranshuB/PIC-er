@@ -1,3 +1,6 @@
+
+import { scoreCollection } from '../server'
+const LEADERBOARD_RESULTS_LIMIT = 10
 /**
  * Contains all the access methods to retrieve local and global score objects from MongoDB
  */
@@ -15,23 +18,20 @@ function addGlobalScore(username, hashedEmail, clicks, time, startImageURL, targ
 }
 
 //Return the local leaderboard for a particular user from MongoDB
-function getLocalLeaderboard(username) {
-    const localLeaderboard = [];
-
+async function getLocalLeaderboard(username) {
+    const localLeaderboard = await scoreCollection.find({username: username}).sort({highscore: 1}).limit(LEADERBOARD_RESULTS_LIMIT).toArray();
     return localLeaderboard;
 }
 
 //Return the global leaderboard from MongoDB
-function getGlobalLeaderboard() {
-    const globalLeaderboard = [];
-
-    return globalLeaderboard; 
+async function getGlobalLeaderboard() {
+    const globalLeaderboard = await scoreCollection.find().sort( {highscore: 1}).limit(LEADERBOARD_RESULTS_LIMIT).toArray();
+    return globalLeaderboard;
 }
 
 //Remove all entries of a particular user's local leaderboard
-function clearLocalLeaderboard(userID) {
-    //remove all MongoDB entries for 'userID'
-    return;
+function clearLocalLeaderboard(username) {
+    scoreCollection.deleteMany({username:username})
 }
 
 export {
