@@ -19,7 +19,7 @@ const LeaderboardList = (props) => {
     }
 
     const handleSort = () => {
-        
+
         if (clicksSorted) {
             items.sort((a, b) => (a.clicks > b.clicks) ? 1 : -1);
         } else {
@@ -32,10 +32,10 @@ const LeaderboardList = (props) => {
     useEffect(() => {
         handleSort();
     }, []);
-    
+
 
     return (
-        <Box width='100%' ml='16px' mr='16px'>
+        <Flex width='100%' ml='16px' mr='16px' direction='column' height='48%'>
             <Center>
                 <Heading mb='24px'>
                     {title}
@@ -62,13 +62,16 @@ const LeaderboardList = (props) => {
                 </Center>
             </Flex>
 
-            {items.map((item, index) => {
-                return (
-                    <LeaderboardCard rank={index + 1} name={item.name} clicks={item.clicks} time={item.time} />
-                )
-            })}
+            <Box overflow='auto'>
+                {items.map((item, index) => {
+                    return (
+                        <LeaderboardCard rank={index + 1} name={item.name} clicks={item.clicks} time={item.time} />
+                    )
+                })}
+            </Box>
 
-        </Box>
+
+        </Flex>
     )
 }
 
