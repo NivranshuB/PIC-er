@@ -10,6 +10,18 @@ export const startGame = async () => {
         })
 }
 
+export const continueGame = async ({ selectedTags }) => {
+    axios.put('/game/continue', {
+        selectedTags: selectedTags,
+    })
+        .then((response) => {
+            return response.data;
+        })
+        .catch(error => {
+            throw new Error(error.message);
+        })
+}
+
 export const getLeaderboard = async () => {
     axios.get('/leaderboard')
         .then((response) => {
