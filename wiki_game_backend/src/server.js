@@ -11,12 +11,12 @@ const port = process.env.PORT || 3001;
 app.use(express.json());
 
 // Setup our routes.
-// import routes from './routes';
-// app.use('/', routes);
+import routes from './routes';
+app.use('/', routes);
 
 //Setup routes from old routes
-import routes from '../routes/route'
-app.use('/', routes)
+// import routes from '../routes/route'
+// app.use('/', routes)
 
 // Make the "public" folder available statically
 app.use(express.static(path.join(__dirname, '../public')));

@@ -8,44 +8,44 @@ function GameImageSet(props) {
   return (
     <div className="GameImageSet">
       <img
-        src={levelImages.length ? levelImages[0].imageURL : "/logo192.png"}
+        src={levelImages ? levelImages[0].imageURL : "/logo192.png"}
         className="levelImage"
         alt="Iteration"
       />
       <img
-        src={levelImages.length ? levelImages[1].imageURL : "/logo192.png"}
+        src={levelImages ? levelImages[1].imageURL : "/logo192.png"}
         className="levelImage"
         alt="Iteration"
       />
       <img
-        src={levelImages.length ? levelImages[2].imageURL : "/logo192.png"}
+        src={levelImages ? levelImages[2].imageURL : "/logo192.png"}
         className="levelImage"
         alt="Iteration"
       />
       <img
-        src={levelImages.length ? levelImages[3].imageURL : "/logo192.png"}
+        src={levelImages ? levelImages[3].imageURL : "/logo192.png"}
         className="levelImage"
         alt="Iteration"
       />
       <img
-        src={levelImages.length ? levelImages[4].imageURL : "/logo192.png"}
+        src={levelImages ? levelImages[4].imageURL : "/logo192.png"}
         className="levelImage"
         alt="Iteration"
       />
       <div className="tags">
-        {levelImages.length && props.tagsVisible? (
+        {levelImages && props.tagsVisible? (
           <TagList tagArray={levelImages[0].imageTags} />
         ) : null}
-        {levelImages.length && props.tagsVisible ? (
+        {levelImages && props.tagsVisible ? (
           <TagList tagArray={levelImages[1].imageTags} />
         ) : null}
-        {levelImages.length && props.tagsVisible ? (
+        {levelImages && props.tagsVisible ? (
           <TagList tagArray={levelImages[2].imageTags} />
         ) : null}
-        {levelImages.length && props.tagsVisible ? (
+        {levelImages && props.tagsVisible ? (
           <TagList tagArray={levelImages[3].imageTags} />
         ) : null}
-        {levelImages.length && props.tagsVisible ? (
+        {levelImages && props.tagsVisible ? (
           <TagList tagArray={levelImages[4].imageTags} />
         ) : null}
       </div>
