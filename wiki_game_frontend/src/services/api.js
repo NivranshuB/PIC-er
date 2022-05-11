@@ -49,8 +49,18 @@ export const getLeaderboard = async () => {
         })
 }
 
-export const getPersonalLeaderboard = async (id) => {
-    axios.get('/leaderboard/' + id)
+export const getPersonalLeaderboard = async (name) => {
+    axios.get('/leaderboard/' + name)
+        .then((response) => {
+            return response.data;
+        })
+        .catch(error => {
+            throw new Error(error.message);
+        })
+}
+
+export const deletePersonalLeaderboard = async (name) => {
+    axios.delete('/leaderboard/' + name)
         .then((response) => {
             return response.data;
         })
