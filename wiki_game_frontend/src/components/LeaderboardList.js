@@ -1,5 +1,6 @@
 import { Box, Button, Center, Flex, Heading, Spacer } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { overflowBoxStyle } from "../theme";
 import LeaderboardCard from "./LeaderboardCard"
 
 const LeaderboardList = (props) => {
@@ -62,7 +63,7 @@ const LeaderboardList = (props) => {
                 </Center>
             </Flex>
 
-            <Box overflow='auto'>
+            <Box overflow='auto' sx={overflowBoxStyle}>
                 {items.map((item, index) => {
                     return (
                         <LeaderboardCard rank={index + 1} name={item.name} clicks={item.clicks} time={item.time} />
