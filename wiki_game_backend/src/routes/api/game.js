@@ -3,6 +3,8 @@
  */
 import express from 'express';
 import { dummyCreateGame, dummyNextLevelImages } from '../../images-data/images-dao';
+import { addLocalScore, addGlobalScore } from '../../images-data/leaderboard-dao';
+
 
 // const HTTP_OK = 200; // Not really needed; this is the default if you don't set something else.
 const HTTP_CREATED = 201;
@@ -29,5 +31,21 @@ router.put('/continue', async (req, res) => {
     const nextImagesSet = dummyNextLevelImages(selectedTags, targetTags);
     res.json(nextImagesSet);
 });
+
+// Create new score entry for the player (and if required for the global leaderboard)
+router.post('/end', async (req, res) => {
+
+    const localScoreAdded = addLocalScore(req.body.username, req.body.hashedEmail, 
+        req.body.clicks, req.body.time, req.body.startImageURL, requ.body.targetImageURL);
+    const globalScoreAdded = addGlobalScore(req.body.username, req.body.hashedEmail, 
+        req.body.clicks, req.body.time, req.body.startImageURL, requ.body.targetImageURL);
+
+    if (localScoreAdded || globalScoreAdded) {
+        res.status(HTTP_CREATED);
+    } else {
+        res.status(HTTP_NO_CONTENT);
+    }
+    
+})
 
 export default router;

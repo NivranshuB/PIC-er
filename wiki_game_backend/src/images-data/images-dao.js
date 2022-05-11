@@ -1,7 +1,7 @@
 /**
  * Contains all the access methods to retrieve image objects from MongoDB
  */
- import { dummy_images } from './dummy-images';
+import { dummy_images } from './dummy-images';
 
 //Function to send the start image, the target image and the 5 level images upon game initialisation
 function createGame() {
@@ -25,7 +25,6 @@ function dummyNextLevelImages(selectedTags, targetTags) {//Placeholder function
 
     return nextImages;
 }
-
 
 export {
     dummyCreateGame,
