@@ -22,6 +22,23 @@ export const continueGame = async ({ selectedTags }) => {
         })
 }
 
+export const endGame = async (props) => {
+    axios.post('/game/end', {
+        username: props.username,
+        email: props.email,
+        clicks: props.clicks,
+        time: props.time,
+        startImage: props.startImage,
+        targetImage: props.targetImage,
+    })
+        .then((response) => {
+            return response;
+        })
+        .catch(error => {
+            throw new Error(error.message);
+        })
+}
+
 export const getLeaderboard = async () => {
     axios.get('/leaderboard')
         .then((response) => {
