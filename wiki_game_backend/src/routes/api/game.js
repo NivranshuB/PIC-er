@@ -2,8 +2,8 @@
  * This is a simple RESTful api for dealing with the requests for the wiki game.
  */
 import express from 'express';
-import { createGame, dummyCreateGame, dummyNextLevelImages } from '../../images-data/images-dao';
-import { addLocalScore, addGlobalScore } from '../../images-data/leaderboard-dao';
+import { createGame, getNextImageSet, dummyCreateGame, dummyNextLevelImages } from '../../images-data/images-dao';
+import { addScore } from '../../images-data/leaderboard-dao';
 
 
 // const HTTP_OK = 200; // Not really needed; this is the default if you don't set something else.
@@ -23,25 +23,13 @@ router.get('/', (req, res) => {
 //and the target image's tags
 router.put('/continue', async (req, res) => {
     const selectedTags = req.body.selectedTags;
-    const targetTags = req.body.targetTags;
-
-    const nextImagesSet = dummyNextLevelImages(selectedTags, targetTags);
-    res.json(nextImagesSet);
+    getNextImageSet(selectedTags).then((nextImageSet) => res.json(nextImageSet))
 });
 
 // Create new score entry for the player (and if required for the global leaderboard)
 router.post('/end', async (req, res) => {
-
-    const localScoreAdded = addLocalScore(req.body.username, req.body.hashedEmail, 
-        req.body.clicks, req.body.time, req.body.startImageURL, requ.body.targetImageURL);
-    const globalScoreAdded = addGlobalScore(req.body.username, req.body.hashedEmail, 
-        req.body.clicks, req.body.time, req.body.startImageURL, requ.body.targetImageURL);
-
-    if (localScoreAdded || globalScoreAdded) {
-        res.status(HTTP_CREATED);
-    } else {
-        res.status(HTTP_NO_CONTENT);
-    }
+    addScore(req)
+    res.status(HTTP_CREATED).send()
     
 })
 

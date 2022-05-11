@@ -8,7 +8,6 @@ const NUM_OF_IMAGES = 5;
 
 //Function to send the start image, the target image and the 5 level images upon game initialisation
 async function createGame() {
-
     let startImage = {}
     let startImageTagArray = []
     let targetImage = {}
@@ -28,6 +27,13 @@ async function createGame() {
     levelImages.push(closerImage);
     levelImages = levelImages.concat(randomImages);
     return [startImage, targetImage, levelImages]
+}
+
+async function getNextImageSet(tagsMatching) {
+    let imageSet = []
+    await getACloserImage(tagsMatching).then((o) => imageSet.push(o));
+    await getRandomImages().then((o) => {imageSet = imageSet.concat(o)});
+    return imageSet;
 }
 
 async function getACloserImage(tagsMatching) {
@@ -76,6 +82,7 @@ function getRandomIntBetweenValues(min, max) {
 
 export {
     createGame,
+    getNextImageSet,
     dummyCreateGame,
     dummyNextLevelImages
 }

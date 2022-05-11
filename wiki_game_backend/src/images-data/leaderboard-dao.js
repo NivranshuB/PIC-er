@@ -6,9 +6,16 @@ const LEADERBOARD_RESULTS_LIMIT = 10
  */
 
 //Check if the local score is in the top 10 highest scores for the user
-function addLocalScore(username, hashedEmail, clicks, time, startImageURL, targetImageURL) {
+function addScore(request) {
     //If a new local score was created return true else return false
-    return false;
+    scoreCollection.insertOne({
+        username: request.body.username,
+        email: request.body.email,
+        highscore: request.body.highscore,
+        startImageURL: request.body.startImageURL,
+        targetImageURL: request.body.targetImageURL,
+        time: request.body.time
+    })
 }
 
 //Check if the local score is in the top 10 highest scores for the user
@@ -35,7 +42,7 @@ function clearLocalLeaderboard(username) {
 }
 
 export {
-    addLocalScore,
+    addScore,
     addGlobalScore,
     getLocalLeaderboard,
     getGlobalLeaderboard,

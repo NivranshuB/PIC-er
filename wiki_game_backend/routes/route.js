@@ -53,11 +53,14 @@ app.get('/randomImages', (req, res) => {
     .then(output => res.send(output))
 })
 
-app.post('/newHighscore', (req, res) => {
+app.post('/end', (req, res) => {
     scoreCollection.insertOne({
         username: req.body.username,
         email: req.body.email,
-        highscore: req.body.highscore 
+        highscore: req.body.highscore,
+        startImageURL: req.body.startImageURL,
+        targetImageURL: req.body.targetImageURL,
+        time: req.body.time
     }).then(() => res.sendStatus(200)).catch((err) => console.error(err))
 })
 
