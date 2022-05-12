@@ -60,24 +60,24 @@ const GameEndPage = () => {
                     ? <LeaderboardList items={personalHighScores} title='Personal High Scores' />
                     : <NotLoggedInCard text={notLoggedInText} />}
             </VStack>
-            <Center width='100%' p='36px'>
-                <Stack spacing='36px' width='100%'>
+            <Center width='100%' p='36px' height='100%' alignSelf='center'>
+                <Stack spacing='36px' width='100%' height='100%'>
                     <Center>
                         <Heading mb='36px'>
                             Congratulations!
                         </Heading>
                     </Center>
 
-                    <HStack width='100%'>
-                        <VStack width='100%'>
+                    <HStack width='100%' height='50%'>
+                        <VStack width='100%' height='100%'>
                             <Heading size='md'>Starting image</Heading>
-                            <Image src={startImageURL} />
+                            <Image src={startImageURL} maxHeight='100%' />
 
                         </VStack>
                         <Spacer />
-                        <VStack width='100%'>
+                        <VStack width='100%' height='100%'>
                             <Heading size='md'>Goal image</Heading>
-                            <Image src={targetImageURL} />
+                            <Image src={targetImageURL} maxHeight='100%' />
                         </VStack>
                     </HStack>
                     <Flex>

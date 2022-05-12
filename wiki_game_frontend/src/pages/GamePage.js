@@ -56,7 +56,7 @@ const GamePage = () => {
 
     const handleContinue = async (image) => {
         checkGameComplete(image);
-        const dataToSend = {selectedTags: image.imageTags};
+        const dataToSend = getTagsToSend(image);
         const response = await continueGame(dataToSend);
         setData({
             ...data,
@@ -70,6 +70,15 @@ const GamePage = () => {
         if (image.imageURL === data.targetImage.imageURL) {
             navigate('/end', { state: { clicks: clicks, time: time, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL}});
         }
+    }
+
+    const getTagsToSend = (image) => {
+        console.log('clicke image:');
+        console.log(image);
+        console.log('target image:');
+        console.log(data.targetImage);
+        // {selectedTags: image.imageTags};
+        return {selectedTags: image.imageTags};
     }
 
     const handleRestart = () => {
