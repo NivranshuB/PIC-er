@@ -86,7 +86,7 @@ const GamePage = () => {
     }
 
     return (
-        <div>
+        <Flex direction='column' height='10%'>
             <Flex>
                 <BackButton />
                 <Flex p='24px' width='100%' position='fixed' justifyContent='right'>
@@ -100,14 +100,14 @@ const GamePage = () => {
 
             </Flex>
 
-            <Flex direction='column'>
+            <Flex direction='column' height='100%'>
                 <Flex position='fixed' width='20%' textAlign='center' p='16px'>
                     <Heading size='md'>
                         Select the image below that best links you to the target image
                     </Heading>
                 </Flex>
 
-                <Flex alignSelf='center' direction='column'>
+                <Flex alignSelf='center' direction='column' height='100%'>
                     <Box>
                         <Center>
                             <Box>
@@ -121,7 +121,7 @@ const GamePage = () => {
 
                     <GameArrow />
 
-                    <HStack spacing='16px' width='100%' justify='center'>
+                    <HStack spacing='16px' width='100%' justify='center' height='100%'>
                         {data.images.map((image) => {
                             return (
                                 <Image src={image.imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue(image)} />
@@ -150,7 +150,7 @@ const GamePage = () => {
                 </Flex>
             </Flex>
 
-        </div>
+        </Flex>
     )
 }
 
