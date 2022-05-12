@@ -48,11 +48,14 @@ const GamePage = () => {
         return () => clearInterval(interval);
     }, [time]);
 
-    const handleContinue = async () => {
-        const data = {selectedTags: []};
-        const response = await continueGame(data);
-        console.log("contine");
-        console.log(response);
+    const handleContinue = async (image) => {
+        const dataToSend = {selectedTags: image.imageTags};
+        const response = await continueGame(dataToSend);
+        setData({
+            ...data,
+            startImage: image,
+            images: response,
+        })
         setClicks(clicks + 1);
     }
 
@@ -97,9 +100,9 @@ const GamePage = () => {
                     <GameArrow />
 
                     <HStack spacing='16px' width='100%' justify='center'>
-                        {data.images.map((image) => {
+                        {data.images.map((image, {index}) => {
                             return (
-                                <Image src={image.imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
+                                <Image src={image.imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue(image)} />
                             )
                         })}
                         {/* <Image src={data.images[0].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
