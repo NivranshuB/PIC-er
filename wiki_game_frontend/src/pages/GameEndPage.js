@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Heading, HStack, Spacer, Stack, VStack, Wrap } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer, Stack, VStack, Wrap } from "@chakra-ui/react";
 import LeaderboardList from "../components/LeaderboardList";
 import NotLoggedInCard from "../components/NotLoggedInCard";
 import { Link, useLocation } from "react-router-dom";
@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 const GameEndPage = () => {
 
     const {state} = useLocation();
-    const {clicks, time} = state;
+    const {clicks, time, startImageURL, targetImageURL} = state;
 
     const personalHighScores = [
         { rank: 1, name: "person1", clicks: 10, time: "4:03" },
@@ -69,17 +69,13 @@ const GameEndPage = () => {
                     <HStack width='100%'>
                         <VStack width='100%'>
                             <Heading size='md'>Starting image</Heading>
-                            <Box bg='accent' w='100%' h='250px'>
-                                Image
-                            </Box>
+                            <Image src={startImageURL} />
 
                         </VStack>
                         <Spacer />
                         <VStack width='100%'>
                             <Heading size='md'>Goal image</Heading>
-                            <Box bg='accent' w='100%' h='250px'>
-                                Image
-                            </Box>
+                            <Image src={targetImageURL} />
                         </VStack>
                     </HStack>
                     <Flex>

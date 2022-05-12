@@ -16,6 +16,8 @@ const GamePage = () => {
         images: [],
     })
 
+    const [originalImage, setOriginalImage] = useState();
+
     const handleStart = async () => {
         const data = await startGame();
         const { startImage, targetImage, levelImages } = data;
@@ -24,6 +26,7 @@ const GamePage = () => {
             targetImage: targetImage,
             images: levelImages,
         });
+        setOriginalImage(startImage);
         console.log(data);
         console.log(startImage)
         setClicks(0);
@@ -65,8 +68,7 @@ const GamePage = () => {
 
     const checkGameComplete = (image) => {
         if (image.imageURL === data.targetImage.imageURL) {
-            console.log("complete!");
-            navigate('/end', { state: { clicks: clicks, time: time}});
+            navigate('/end', { state: { clicks: clicks, time: time, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL}});
         }
     }
 
@@ -111,7 +113,7 @@ const GamePage = () => {
                     <GameArrow />
 
                     <HStack spacing='16px' width='100%' justify='center'>
-                        {data.images.map((image, {index}) => {
+                        {data.images.map((image) => {
                             return (
                                 <Image src={image.imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue(image)} />
                             )
