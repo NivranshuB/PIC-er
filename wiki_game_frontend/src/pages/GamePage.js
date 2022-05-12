@@ -6,9 +6,16 @@ import { continueGame, startGame } from "../services/api";
 
 const GamePage = () => {
 
-    useEffect(() => {
+    const handleStart = () => {
         const response = startGame();
+        const { startImage, targetImage, images } = response;
         console.log(response);
+        setClicks(0);
+        setTime(0);
+    }
+
+    useEffect(() => {
+        handleStart();
     }, []);
 
     const [time, setTime] = useState(0);
@@ -28,10 +35,15 @@ const GamePage = () => {
     }, [time]);
 
     const handleContinue = () => {
-        const data = {};
+        const data = {selectedTags: []};
         const response = continueGame(data);
         console.log("contine");
+        console.log(response);
         setClicks(clicks + 1);
+    }
+
+    const handleRestart = () => {
+        handleStart();
     }
 
     return (
@@ -81,7 +93,7 @@ const GamePage = () => {
 
                 <Flex p='24px' position='fixed' bottom='0' width='100%'>
                     <Box alignSelf='center'>
-                        <Button>Restart</Button>
+                        <Button onClick={() => handleRestart()}>Restart</Button>
                     </Box>
                     <Spacer />
                     <Box alignSelf='center'>
