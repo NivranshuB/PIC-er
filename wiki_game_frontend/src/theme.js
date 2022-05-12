@@ -26,6 +26,7 @@ const Button = {
         },
         grey: {
             bg: 'lighterBackground',
+            width: '120px',
             _hover: {
                 bg: 'white',
                 color: 'accent',
@@ -82,6 +83,18 @@ const CloseButton = {
             color: 'accent',
         }
     }
+}
+
+export const overflowBoxStyle = {
+    ':: -webkit-scrollbar': {
+        width: '8px',
+        backgroundColor: 'lighterBackground',
+        borderRadius: '8px'
+    },
+    ':: -webkit-scrollbar-thumb': {
+        backgroundColor: 'accent',
+        borderRadius: '8px',
+    },
 }
 
 const theme = extendTheme({

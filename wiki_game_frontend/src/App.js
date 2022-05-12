@@ -1,9 +1,12 @@
-import './App.css';
+import "./App.css";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
+import GameComponent from "./GameComponent";
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavbarPage from './pages/NavbarPage';
 import HomePage from './pages/HomePage';
 import LeaderboardPage from './pages/LeaderboardPage';
+import GameEndPage from './pages/GameEndPage';
 
 function App() {
   return (
@@ -13,6 +16,7 @@ function App() {
           <Route path='/' element={<NavbarPage />} >
             <Route index element={<HomePage />} />
             <Route path='leaderboard' element={<LeaderboardPage />} />
+            <Route path='end' element={<GameEndPage />} />
           </Route>
         </Routes>
       </div>
