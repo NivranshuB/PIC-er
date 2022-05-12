@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Center, Flex, Spacer, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Center, Flex, HStack, Spacer, Stack, useDisclosure } from "@chakra-ui/react";
 import { Link, Outlet } from "react-router-dom";
 import LoginModal from "../components/LoginModal";
 import SignupModal from "../components/SignupModal";
@@ -8,27 +8,33 @@ import MD5 from 'crypto-js/md5';
 
 const NavbarPage = () => {
     const { user, loginWithRedirect, logout, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
-    const {isOpen, onOpen, onClose} = useDisclosure();
-    const {isOpen: isOpenSignup, onOpen: onOpenSignup, onClose: onCloseSignup} = useDisclosure();
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const { isOpen: isOpenSignup, onOpen: onOpenSignup, onClose: onCloseSignup } = useDisclosure();
 
     return (
         <Box height='100vh'>
             <Flex color='accent' backgroundColor='lighterBackground'>
                 <Center pl='4'>
                     <Link to='/'>
-                    PIC-er
+                        PIC-er
                     </Link>
-                    
+
                 </Center>
 
                 <Spacer />
                 <ButtonGroup>
-                    <Button variant='borderlessWhite' onClick={() => loginWithRedirect({screen_hint: 'signup'})}>Sign Up</Button>
-                    <SignupModal isOpen={isOpenSignup} onClose={onCloseSignup}/>
-                    {(!isLoading && isAuthenticated) 
-                    ? <span><Button variant='borderless' onClick={() => logout({returnTo: window.location.origin})}>Logout</Button><h2>{MD5(user.email).toString()}</h2></span>
-                    : <Button variant='borderless' onClick={() => loginWithRedirect()}>Login</Button>}
-                    <LoginModal isOpen={isOpen} onClose={onClose}/>
+
+                    <SignupModal isOpen={isOpenSignup} onClose={onCloseSignup} />
+                    {(!isLoading && isAuthenticated)
+                        ? <HStack>
+                            <h2>{MD5(user.email).toString()}</h2>
+                            <Button variant='borderless' onClick={() => logout({ returnTo: window.location.origin })}>Logout</Button>
+                        </HStack>
+                        : (<>
+                            <Button variant='borderlessWhite' onClick={() => loginWithRedirect({ screen_hint: 'signup' })}>Sign Up</Button>
+                            <Button variant='borderless' onClick={() => loginWithRedirect()}>Login</Button>
+                        </>)}
+                    <LoginModal isOpen={isOpen} onClose={onClose} />
                 </ButtonGroup>
 
             </Flex>
