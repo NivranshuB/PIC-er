@@ -85,6 +85,18 @@ const CloseButton = {
     }
 }
 
+export const overflowBoxStyle = {
+    ':: -webkit-scrollbar': {
+        width: '8px',
+        backgroundColor: 'lighterBackground',
+        borderRadius: '8px'
+    },
+    ':: -webkit-scrollbar-thumb': {
+        backgroundColor: 'accent',
+        borderRadius: '8px',
+    },
+}
+
 const theme = extendTheme({
     styles: {
         global: {
