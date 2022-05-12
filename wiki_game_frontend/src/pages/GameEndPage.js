@@ -1,9 +1,11 @@
 import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer, Stack, VStack, Wrap } from "@chakra-ui/react";
 import LeaderboardList from "../components/LeaderboardList";
 import NotLoggedInCard from "../components/NotLoggedInCard";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const GameEndPage = () => {
+
+    const navigate = useNavigate();
 
     const {state} = useLocation();
     const {clicks, time, startImageURL, targetImageURL} = state;
@@ -92,7 +94,7 @@ const GameEndPage = () => {
                     <Center>
                         <HStack pt='36px' spacing='24px'>
                             <Button variant='grey' as={Link} to='/'>Home</Button>
-                            <Button>Play Again</Button>
+                            <Button onClick={() => navigate('/game')}>Play Again</Button>
                         </HStack>
                     </Center>
 
