@@ -2,7 +2,6 @@ import express from 'express';
 import path from 'path';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import dotenv from 'dotenv';
-import { getRandomIntBetweenValues } from '../src/gameplay'
 
 //Note: Had to remove '"type": "module",' from package.json of backend to make server.js work after merging
 
