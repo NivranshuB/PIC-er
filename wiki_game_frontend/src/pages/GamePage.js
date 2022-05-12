@@ -1,5 +1,4 @@
-import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer, Stack, Text } from "@chakra-ui/react";
-import axios from "axios";
+import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
@@ -68,7 +67,7 @@ const GamePage = () => {
 
     const checkGameComplete = (image) => {
         if (image.imageURL === data.targetImage.imageURL) {
-            navigate('/end', { state: { clicks: clicks, time: time, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL}});
+            navigate('/end', { state: { clicks: clicks, time: time, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL } });
         }
     }
 
@@ -78,7 +77,7 @@ const GamePage = () => {
         console.log('target image:');
         console.log(data.targetImage);
         // {selectedTags: image.imageTags};
-        return {selectedTags: image.imageTags};
+        return { selectedTags: image.imageTags };
     }
 
     const handleRestart = () => {
@@ -87,37 +86,37 @@ const GamePage = () => {
 
     return (
         <Flex direction='column' height='10%'>
-            <Flex>
-                <BackButton />
-                <Flex p='24px' width='100%' position='fixed' justifyContent='right'>
-                    <Box alignSelf='center'>
-                        <Heading textAlign='center'>
-                            Target Image
-                        </Heading>
-                        <Image src={data.targetImage.imageURL} boxSize='300px' fit='contain' />
-                    </Box>
+            <BackButton />
+            <Flex width='100%' position='absolute' zIndex='-1'>
+                
+                <Heading size='md' alignSelf='center' p='32px' textAlign='center' width='200px'>
+                    Select the image below that best links you to the target image
+                </Heading>
+                <Spacer />
+                <Flex direction='column' p='32px' justify='right'>
+                    <Heading textAlign='center'>
+                        Target Image
+                    </Heading>
+                    <Image src={data.targetImage.imageURL} boxSize='300px' fit='contain' />
                 </Flex>
-
             </Flex>
 
             <Flex direction='column' height='100%'>
-                <Flex position='fixed' width='20%' textAlign='center' p='16px'>
-                    <Heading size='md'>
-                        Select the image below that best links you to the target image
-                    </Heading>
-                </Flex>
 
-                <Flex alignSelf='center' direction='column' height='100%'>
-                    <Box>
+                <Flex alignSelf='center' direction='column' height='80%'>
+                    <Flex>
+                        <Spacer />
                         <Center>
                             <Box>
                                 <Heading textAlign='center'>
                                     Current Image
                                 </Heading>
                                 <Image src={data.startImage.imageURL} boxSize='300px' fit='contain' />
+
                             </Box>
                         </Center>
-                    </Box>
+                        <Spacer />
+                    </Flex>
 
                     <GameArrow />
 
@@ -127,11 +126,6 @@ const GamePage = () => {
                                 <Image src={image.imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue(image)} />
                             )
                         })}
-                        {/* <Image src={data.images[0].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
-                        <Image src={data.images[1].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
-                        <Image src={data.images[2].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
-                        <Image src={data.images[3].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
-                        <Image src={data.images[4].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} /> */}
                     </HStack>
                 </Flex>
 
