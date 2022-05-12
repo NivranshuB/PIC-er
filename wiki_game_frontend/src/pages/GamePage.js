@@ -1,4 +1,5 @@
 import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer, Stack, Text } from "@chakra-ui/react";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import BackButton from "../components/BackButton";
 import GameArrow from "../components/GameArrow";
@@ -6,12 +7,25 @@ import { continueGame, startGame } from "../services/api";
 
 const GamePage = () => {
 
-    const handleStart = () => {
-        const response = startGame();
-        const { startImage, targetImage, images } = response;
-        console.log(response);
+    const [data, setData] = useState({
+        startImage: '',
+        targetImage: '',
+        images: [],
+    })
+
+    const handleStart = async () => {
+        const data = await startGame();
+        const { startImage, targetImage, levelImages } = data;
+        setData({
+            startImage: startImage,
+            targetImage: targetImage,
+            images: levelImages,
+        });
+        console.log(data);
+        console.log(startImage)
         setClicks(0);
         setTime(0);
+        console.log(data.images);
     }
 
     useEffect(() => {
@@ -34,9 +48,9 @@ const GamePage = () => {
         return () => clearInterval(interval);
     }, [time]);
 
-    const handleContinue = () => {
+    const handleContinue = async () => {
         const data = {selectedTags: []};
-        const response = continueGame(data);
+        const response = await continueGame(data);
         console.log("contine");
         console.log(response);
         setClicks(clicks + 1);
@@ -55,7 +69,7 @@ const GamePage = () => {
                         <Heading textAlign='center'>
                             Target Image
                         </Heading>
-                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" boxSize='300px' fit='contain' />
+                        <Image src={data.targetImage.imageURL} boxSize='300px' fit='contain' />
                     </Box>
                 </Flex>
 
@@ -75,7 +89,7 @@ const GamePage = () => {
                                 <Heading textAlign='center'>
                                     Current Image
                                 </Heading>
-                                <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" boxSize='300px' fit='contain' />
+                                <Image src={data.startImage.imageURL} boxSize='300px' fit='contain' />
                             </Box>
                         </Center>
                     </Box>
@@ -83,11 +97,16 @@ const GamePage = () => {
                     <GameArrow />
 
                     <HStack spacing='16px' width='100%' justify='center'>
-                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" fit='contain' maxWidth='15%' onClick={() => handleContinue()} />
-                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
-                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
-                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
-                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
+                        {data.images.map((image) => {
+                            return (
+                                <Image src={image.imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
+                            )
+                        })}
+                        {/* <Image src={data.images[0].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
+                        <Image src={data.images[1].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
+                        <Image src={data.images[2].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
+                        <Image src={data.images[3].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
+                        <Image src={data.images[4].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} /> */}
                     </HStack>
                 </Flex>
 

@@ -3,7 +3,7 @@
  */
 import { imageCollection } from '../server';
 
-const NUM_OF_IMAGES = 5;
+const NUM_OF_IMAGES = 4;
 
 //Function to send the start image, the target image and the 5 level images upon game initialisation
 async function createGame() {
@@ -25,7 +25,7 @@ async function createGame() {
     await getRandomImages().then((o) => randomImages = o);      
     levelImages.push(closerImage);
     levelImages = levelImages.concat(randomImages);
-    return [startImage, targetImage, levelImages]
+    return {startImage, targetImage, levelImages}
 }
 
 async function getNextImageSet(tagsMatching) {
