@@ -14,6 +14,12 @@ const GamePage = () => {
     const [time, setTime] = useState(0);
     const [clicks, setClicks] = useState(0);
 
+    let minutes = parseInt(time / 60);
+    let seconds = time % 60;
+
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+
     useEffect(() => {
         let interval = setInterval(() => {
             setTime(time + 1);
@@ -22,7 +28,8 @@ const GamePage = () => {
     }, [time]);
 
     const handleContinue = () => {
-        const response = continueGame();
+        const data = {};
+        const response = continueGame(data);
         console.log("contine");
         setClicks(clicks + 1);
     }
@@ -78,7 +85,7 @@ const GamePage = () => {
                     </Box>
                     <Spacer />
                     <Box alignSelf='center'>
-                        Time: {time}
+                        Time: {minutes}:{seconds}
                     </Box>
                     <Spacer />
                     <Box alignSelf='center'>
