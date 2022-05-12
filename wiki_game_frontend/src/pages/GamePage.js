@@ -85,10 +85,10 @@ const GamePage = () => {
     }
 
     return (
-        <Flex direction='column' height='10%'>
+        <Flex direction='column' height='100%'>
             <BackButton />
             <Flex width='100%' position='absolute' zIndex='-1'>
-                
+
                 <Heading size='md' alignSelf='center' p='32px' textAlign='center' width='200px'>
                     Select the image below that best links you to the target image
                 </Heading>
@@ -97,7 +97,14 @@ const GamePage = () => {
                     <Heading textAlign='center'>
                         Target Image
                     </Heading>
-                    <Image src={data.targetImage.imageURL} boxSize='300px' fit='contain' />
+                    <Image src={data.targetImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} />
+                    <Box alignSelf='center'>
+                        Time: {minutes}:{seconds}
+                    </Box>
+                    <Spacer />
+                    <Box alignSelf='center'>
+                        Clicks: {clicks}
+                    </Box>
                 </Flex>
             </Flex>
 
@@ -111,7 +118,7 @@ const GamePage = () => {
                                 <Heading textAlign='center'>
                                     Current Image
                                 </Heading>
-                                <Image src={data.startImage.imageURL} boxSize='300px' fit='contain' />
+                                <Image src={data.startImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} />
 
                             </Box>
                         </Center>
@@ -120,10 +127,10 @@ const GamePage = () => {
 
                     <GameArrow />
 
-                    <HStack spacing='16px' width='100%' justify='center' height='100%'>
+                    <HStack spacing='16px' width='100%' justify='center' alignItems='start'>
                         {data.images.map((image) => {
                             return (
-                                <Image src={image.imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue(image)} />
+                                <Image src={image.imageURL} maxWidth='16%' maxHeight='80%' fit='contain' onClick={() => handleContinue(image)} _hover={{ cursor: 'pointer', transform: 'scale(2)' }} />
                             )
                         })}
                     </HStack>
@@ -134,13 +141,7 @@ const GamePage = () => {
                         <Button onClick={() => handleRestart()}>Restart</Button>
                     </Box>
                     <Spacer />
-                    <Box alignSelf='center'>
-                        Time: {minutes}:{seconds}
-                    </Box>
-                    <Spacer />
-                    <Box alignSelf='center'>
-                        Clicks: {clicks}
-                    </Box>
+
                 </Flex>
             </Flex>
 
