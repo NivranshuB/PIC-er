@@ -1,4 +1,6 @@
-import './App.css';
+import "./App.css";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
+import GameComponent from "./GameComponent";
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavbarPage from './pages/NavbarPage';
