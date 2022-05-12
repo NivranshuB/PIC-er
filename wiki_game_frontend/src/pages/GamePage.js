@@ -2,8 +2,14 @@ import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer, Stack, Text 
 import { useEffect, useState } from "react";
 import BackButton from "../components/BackButton";
 import GameArrow from "../components/GameArrow";
+import { continueGame, startGame } from "../services/api";
 
 const GamePage = () => {
+
+    useEffect(() => {
+        const response = startGame();
+        console.log(response);
+    }, []);
 
     const [time, setTime] = useState(0);
     const [clicks, setClicks] = useState(0);
@@ -14,6 +20,12 @@ const GamePage = () => {
         }, 1000);
         return () => clearInterval(interval);
     }, [time]);
+
+    const handleContinue = () => {
+        const response = continueGame();
+        console.log("contine");
+        setClicks(clicks + 1);
+    }
 
     return (
         <div>
@@ -49,14 +61,14 @@ const GamePage = () => {
                         </Center>
                     </Box>
 
-                    <GameArrow/>
+                    <GameArrow />
 
                     <HStack spacing='16px' width='100%' justify='center'>
-                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" fit='contain' maxWidth='15%' />
-                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" maxWidth='15%' fit='contain' />
-                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" maxWidth='15%' fit='contain' />
-                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" maxWidth='15%' fit='contain' />
-                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" maxWidth='15%' fit='contain' />
+                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" fit='contain' maxWidth='15%' onClick={() => handleContinue()} />
+                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
+                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
+                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
+                        <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
                     </HStack>
                 </Flex>
 
