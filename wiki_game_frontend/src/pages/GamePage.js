@@ -1,6 +1,7 @@
 import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer, Stack, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import BackButton from "../components/BackButton";
+import GameArrow from "../components/GameArrow";
 
 const GamePage = () => {
 
@@ -48,36 +49,7 @@ const GamePage = () => {
                         </Center>
                     </Box>
 
-                    <Box align='center'>
-                        <Box width='8px' bg='accent' height='100px' />
-                        <Box width='65%' bg='accent' height='8px' />
-                        <HStack justify='center' width='66.7%'>
-                            <Box>
-                                <Box width='8px' bg='accent' height='100px' />
-                                <Box borderColor='accent' borderWidth='20px' borderBottomColor='transparent' borderLeftColor='transparent' borderRightColor='transparent' />
-                            </Box>
-                            <Spacer />
-                            <Box>
-                                <Box width='8px' bg='accent' height='100px' />
-                                <Box borderColor='accent' borderWidth='20px' borderBottomColor='transparent' borderLeftColor='transparent' borderRightColor='transparent' />
-                            </Box>
-                            <Spacer />
-                            <Box>
-                                <Box width='8px' bg='accent' height='100px' />
-                                <Box borderColor='accent' borderWidth='20px' borderBottomColor='transparent' borderLeftColor='transparent' borderRightColor='transparent' />
-                            </Box>
-                            <Spacer />
-                            <Box>
-                                <Box width='8px' bg='accent' height='100px' />
-                                <Box borderColor='accent' borderWidth='20px' borderBottomColor='transparent' borderLeftColor='transparent' borderRightColor='transparent' />
-                            </Box>
-                            <Spacer />
-                            <Box>
-                                <Box width='8px' bg='accent' height='100px' />
-                                <Box borderColor='accent' borderWidth='20px' borderBottomColor='transparent' borderLeftColor='transparent' borderRightColor='transparent' />
-                            </Box>
-                        </HStack>
-                    </Box>
+                    <GameArrow/>
 
                     <HStack spacing='16px' width='100%' justify='center'>
                         <Image src="https://farm8.staticflickr.com/7212/6896667434_2605d9e181_z.jpg" fit='contain' maxWidth='15%' />
