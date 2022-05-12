@@ -2,7 +2,7 @@
  * This is a simple RESTful api for dealing with the requests for the wiki game leaderboard.
  */
  import express from 'express';
- import { getLocalLeaderboard, getGlobalLeaderboard, clearLocalLeaderboard } from '../../images-data/leaderboard-dao';
+ import { getLocalLeaderboard, getGlobalLeaderboard, clearLocalLeaderboard } from '../../app-data/leaderboard-dao';
  
  const HTTP_CREATED = 201;
  const HTTP_NOT_FOUND = 404;

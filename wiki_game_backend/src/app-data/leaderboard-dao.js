@@ -1,4 +1,3 @@
-
 import { scoreCollection } from '../server'
 const LEADERBOARD_RESULTS_LIMIT = 10
 /**
@@ -16,12 +15,6 @@ function addScore(request) {
         targetImageURL: request.body.targetImageURL,
         time: request.body.time
     })
-}
-
-//Check if the local score is in the top 10 highest scores for the user
-function addGlobalScore(username, hashedEmail, clicks, time, startImageURL, targetImageURL) {
-    //If a new global score was create return true else return false
-    return false;
 }
 
 //Return the local leaderboard for a particular user from MongoDB
@@ -43,7 +36,6 @@ function clearLocalLeaderboard(username) {
 
 export {
     addScore,
-    addGlobalScore,
     getLocalLeaderboard,
     getGlobalLeaderboard,
     clearLocalLeaderboard

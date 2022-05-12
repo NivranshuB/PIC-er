@@ -2,8 +2,8 @@
  * This is a simple RESTful api for dealing with the requests for the wiki game.
  */
 import express from 'express';
-import { createGame, getNextImageSet, dummyCreateGame, dummyNextLevelImages } from '../../images-data/images-dao';
-import { addScore } from '../../images-data/leaderboard-dao';
+import { createGame, getNextImageSet } from '../../app-data/images-dao';
+import { addScore } from '../../app-data/leaderboard-dao';
 
 
 // const HTTP_OK = 200; // Not really needed; this is the default if you don't set something else.
