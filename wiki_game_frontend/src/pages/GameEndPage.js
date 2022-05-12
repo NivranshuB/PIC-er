@@ -1,11 +1,12 @@
 import { Box, Button, Center, Flex, Heading, HStack, Spacer, Stack, VStack, Wrap } from "@chakra-ui/react";
 import LeaderboardList from "../components/LeaderboardList";
 import NotLoggedInCard from "../components/NotLoggedInCard";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-const GameEndPage = (props) => {
+const GameEndPage = () => {
 
-    const { clicks, time } = props;
+    const {state} = useLocation();
+    const {clicks, time} = state;
 
     const personalHighScores = [
         { rank: 1, name: "person1", clicks: 10, time: "4:03" },
@@ -84,12 +85,12 @@ const GameEndPage = (props) => {
                     <Flex>
                         <VStack width='100%'>
                             <Heading size='md'>Clicks</Heading>
-                            <Heading size='lg'>{clicks}3</Heading>
+                            <Heading size='lg'>{clicks}</Heading>
                         </VStack>
                         <VStack width='100%'>
 
                             <Heading size='md'>Time</Heading>
-                            <Heading size='lg'>{time}3:04</Heading>
+                            <Heading size='lg'>{time}</Heading>
                         </VStack>
                     </Flex>
                     <Center>

@@ -1,11 +1,14 @@
 import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer, Stack, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import GameArrow from "../components/GameArrow";
 import { continueGame, startGame } from "../services/api";
 
 const GamePage = () => {
+
+    const navigate = useNavigate();
 
     const [data, setData] = useState({
         startImage: '',
@@ -49,6 +52,7 @@ const GamePage = () => {
     }, [time]);
 
     const handleContinue = async (image) => {
+        checkGameComplete(image);
         const dataToSend = {selectedTags: image.imageTags};
         const response = await continueGame(dataToSend);
         setData({
@@ -57,6 +61,13 @@ const GamePage = () => {
             images: response,
         })
         setClicks(clicks + 1);
+    }
+
+    const checkGameComplete = (image) => {
+        if (image.imageURL === data.targetImage.imageURL) {
+            console.log("complete!");
+            navigate('/end', { state: { clicks: clicks, time: time}});
+        }
     }
 
     const handleRestart = () => {
