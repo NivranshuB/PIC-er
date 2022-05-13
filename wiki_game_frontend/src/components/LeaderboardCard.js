@@ -2,7 +2,7 @@ import { Box, Center, Flex, Heading, Modal, ModalBody, ModalCloseButton, ModalCo
 
 const LeaderboardCard = (props) => {
 
-    const { rank, name, clicks, time } = props;
+    const { rank, name, clicks, time, startImage, targetImage} = props;
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -70,11 +70,13 @@ const LeaderboardCard = (props) => {
                                 <VStack width='100%'>
                                     <Heading size='md'>Starting image</Heading>
                                     <Box bg='background' padding='20px'>
+                                        <img src={startImage}></img>   
                                     </Box>
                                 </VStack>
                                 <VStack width='100%'>
                                     <Heading size='md'>Goal image</Heading>
                                     <Box bg='background' padding='20px'>
+                                        <img src={targetImage}></img>
                                     </Box>
                                 </VStack>
                             </Flex>

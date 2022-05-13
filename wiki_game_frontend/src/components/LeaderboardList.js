@@ -2,6 +2,8 @@ import { Box, Button, Center, Flex, Heading, Spacer } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { overflowBoxStyle } from "../theme";
 import LeaderboardCard from "./LeaderboardCard"
+import NoPersonalScoresCard from "./NoPersonalScoresCard";
+import NotLoggedInCard from "./NotLoggedInCard";
 
 const LeaderboardList = (props) => {
 
@@ -10,14 +12,14 @@ const LeaderboardList = (props) => {
     const [clicksSorted, setClicksSorted] = useState(true);
 
     // Sort time by converting string to seconds
-    const sortTime = (a, b) => {
-        let aTime = a.time.split(':');
-        aTime = (parseInt(aTime[0]) * 60) + parseInt(aTime[1]);
-        let bTime = b.time.split(':');
-        bTime = (parseInt(bTime[0]) * 60) + parseInt(bTime[1]);
+    // const sortTime = (a, b) => {
+    //     let aTime = a.time.split(':');
+    //     aTime = (parseInt(aTime[0]) * 60) + parseInt(aTime[1]);
+    //     let bTime = b.time.split(':');
+    //     bTime = (parseInt(bTime[0]) * 60) + parseInt(bTime[1]);
 
-        return aTime - bTime;
-    }
+    //     return aTime - bTime;
+    // }
 
     const timeInMinutes = (a) => {
         let mins = (Math.floor(a / 60)).toString();
@@ -30,7 +32,7 @@ const LeaderboardList = (props) => {
         if (clicksSorted) {
             items.sort((a, b) => (a.clicks > b.clicks) ? 1 : -1);
         } else {
-            items.sort((a, b) => sortTime(a, b))
+            items.sort((a, b) => (a.time > b.time) ? 1 : -1);
         }
         setClicksSorted(!clicksSorted)
     }
@@ -70,11 +72,11 @@ const LeaderboardList = (props) => {
 
             <Box overflow='auto' sx={overflowBoxStyle}>
                 
-                {items.map((item, index) => {
+                {items.length > 0 ? (items.map((item, index) => {
                     return (
-                        <LeaderboardCard rank={index + 1} name={item.username} clicks={item.highscore} time={timeInMinutes(item.time)} />
+                        <LeaderboardCard rank={index + 1} name={item.username} clicks={item.highscore} time={timeInMinutes(item.time)} startImage={item.startImageURL} targetImage={item.targetImageURL} />
                     )
-                })}
+                })) : <NoPersonalScoresCard text={"Play some games to get your scores on the board!"}/>}
             </Box>
 
 
