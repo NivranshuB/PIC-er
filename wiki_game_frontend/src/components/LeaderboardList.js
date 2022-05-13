@@ -19,6 +19,12 @@ const LeaderboardList = (props) => {
         return aTime - bTime;
     }
 
+    const timeInMinutes = (a) => {
+        let mins = (Math.floor(a / 60)).toString();
+        let seconds = ((a % 60).toString().padStart(2, '0'))
+        return `${mins}:${seconds}`
+    }
+
     const handleSort = () => {
 
         if (clicksSorted) {
@@ -30,10 +36,9 @@ const LeaderboardList = (props) => {
     }
 
     // Sorts code once on page load
-    useEffect(() => {
-        handleSort();
-    }, []);
-
+    // useEffect(() => {
+    //     handleSort();
+    // }, []);
 
     return (
         <Flex width='100%' ml='16px' mr='16px' direction='column' height='48%'>
@@ -64,9 +69,10 @@ const LeaderboardList = (props) => {
             </Flex>
 
             <Box overflow='auto' sx={overflowBoxStyle}>
+                
                 {items.map((item, index) => {
                     return (
-                        <LeaderboardCard rank={index + 1} name={item.name} clicks={item.clicks} time={item.time} />
+                        <LeaderboardCard rank={index + 1} name={item.username} clicks={item.highscore} time={timeInMinutes(item.time)} />
                     )
                 })}
             </Box>

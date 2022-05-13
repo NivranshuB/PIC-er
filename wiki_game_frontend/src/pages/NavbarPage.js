@@ -26,7 +26,7 @@ const NavbarPage = () => {
                     <Button variant='borderlessWhite' onClick={() => loginWithRedirect({screen_hint: 'signup'})}>Sign Up</Button>
                     <SignupModal isOpen={isOpenSignup} onClose={onCloseSignup}/>
                     {(!isLoading && isAuthenticated) 
-                    ? <span><Button variant='borderless' onClick={() => logout({returnTo: window.location.origin})}>Logout</Button><h2>{MD5(user.email).toString()}</h2></span>
+                    ? <span><Button variant='borderless' onClick={() => logout({returnTo: window.location.origin})}>Logout</Button><h2>{user.nickname}</h2></span>
                     : <Button variant='borderless' onClick={() => loginWithRedirect()}>Login</Button>}
                     <LoginModal isOpen={isOpen} onClose={onClose}/>
                 </ButtonGroup>
