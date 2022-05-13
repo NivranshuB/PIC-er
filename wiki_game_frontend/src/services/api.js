@@ -22,10 +22,10 @@ export const endGame = async (props) => {
     const response = await axios.post('/api/game/end', {
         username: props.username,
         email: props.email,
-        clicks: props.clicks,
+        highscore: props.highscore,
         time: props.time,
-        startImage: props.startImage,
-        targetImage: props.targetImage,
+        startImageURL: props.startImageURL,
+        targetImageURL: props.targetImageURL,
     })
         .catch(error => {
             throw new Error(error.message);

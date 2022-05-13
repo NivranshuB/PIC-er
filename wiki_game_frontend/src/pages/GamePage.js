@@ -4,11 +4,15 @@ import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import GameArrow from "../components/GameArrow";
 import ImageModal from "../components/ImageModal";
-import { continueGame, startGame } from "../services/api";
+import { continueGame, endGame, startGame } from "../services/api";
+import { useAuth0 } from "@auth0/auth0-react";
+import MD5 from 'crypto-js/md5';
 
 const GamePage = () => {
 
     const navigate = useNavigate();
+
+    const { user } = useAuth0();
 
     const [data, setData] = useState({
         startImage: '',
@@ -40,7 +44,7 @@ const GamePage = () => {
             for (let image of images.slice(1, 6)) {
                 if (image.imageID !== closerImage.imageID) {
                     randomImages.push(image);
-                    if (randomImages.length === 5 ) {
+                    if (randomImages.length === 5) {
                         break;
                     }
                 }
@@ -84,12 +88,12 @@ const GamePage = () => {
         const dataToSend = getTagsToSend(image);
         await continueGame(dataToSend)
             .then((response) => {
-                    let shuffledArray = shuffleImages(response);
-                    setData({
-                        ...data,
-                        startImage: image,
-                        images: shuffledArray,
-                    })
+                let shuffledArray = shuffleImages(response);
+                setData({
+                    ...data,
+                    startImage: image,
+                    images: shuffledArray,
+                })
             });
 
         setClicks(clicks + 1);
@@ -97,6 +101,9 @@ const GamePage = () => {
 
     const checkGameComplete = (image) => {
         if (image.imageURL === data.targetImage.imageURL) {
+            console.log(clicks);
+            console.log(originalImage.imageURL);
+            endGame({ username: user.nickname, email: MD5(user.email).toString(), highscore: clicks, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL, time: time });
             navigate('/end', { state: { clicks: clicks, time: time, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL } });
         }
     }
@@ -104,10 +111,6 @@ const GamePage = () => {
     const getTagsToSend = (image) => {
         const imageTags = image.imageTags;
         const targetTags = data.targetImage.imageTags;
-        // console.log('clicke image:');
-        // console.log(imageTags);
-        // console.log('target image:');
-        // console.log(targetTags);
 
         let tagMatchCount = 0;
         for (let tag of targetTags) {
