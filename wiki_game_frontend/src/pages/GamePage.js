@@ -1,8 +1,9 @@
-import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, HStack, Image, Modal, ModalBody, ModalContent, ModalOverlay, Spacer, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import GameArrow from "../components/GameArrow";
+import ImageModal from "../components/ImageModal";
 import { continueGame, startGame } from "../services/api";
 
 const GamePage = () => {
@@ -89,6 +90,7 @@ const GamePage = () => {
             <BackButton />
             <Flex width='100%' position='absolute' zIndex='-1'>
 
+
                 <Heading size='md' alignSelf='center' p='32px' textAlign='center' width='200px'>
                     Select the image below that best links you to the target image
                 </Heading>
@@ -119,7 +121,6 @@ const GamePage = () => {
                                     Current Image
                                 </Heading>
                                 <Image src={data.startImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} />
-
                             </Box>
                         </Center>
                         <Spacer />
@@ -130,7 +131,7 @@ const GamePage = () => {
                     <HStack spacing='16px' width='100%' justify='center' alignItems='start'>
                         {data.images.map((image) => {
                             return (
-                                <Image src={image.imageURL} maxWidth='16%' maxHeight='80%' fit='contain' onClick={() => handleContinue(image)} _hover={{ cursor: 'pointer', transform: 'scale(2)' }} />
+                                    <ImageModal image={image} handleContinue={handleContinue} />
                             )
                         })}
                     </HStack>
