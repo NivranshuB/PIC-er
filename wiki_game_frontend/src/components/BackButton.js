@@ -8,7 +8,7 @@ const BackButton = () => {
 
     return (
         <Box m='16px'>
-            <Button leftIcon={<ArrowBackIcon/>} onClick={() => navigate(-1)}>Back</Button>
+            <Button leftIcon={<ArrowBackIcon/>} onClick={() => navigate('/')}>Back</Button>
         </Box>
         
     )

@@ -9,7 +9,7 @@ const GameArrow = () => {
         <Box align='center'>
             <Box width={arrowWidth} bg='accent' height={arrowLength} />
             <Box width='65%' bg='accent' height={arrowWidth} pl='10px'/>
-            <HStack justify='center' width='65%'>
+            <HStack justify='center' width='66.7%'>
                 <Box>
                     <Box width={arrowWidth} bg='accent' height={arrowLength} />
                     <Box borderColor='accent' borderWidth='20px' borderBottomColor='transparent' borderLeftColor='transparent' borderRightColor='transparent' />
