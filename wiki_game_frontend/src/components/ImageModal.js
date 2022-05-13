@@ -4,6 +4,11 @@ const ImageModal = ({ image, handleContinue }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
+    const handleClick = (image) => {
+        onClose();
+        handleContinue(image);
+    }
+
     return (
         <>
             <Image src={image.imageURL} maxWidth='16%' maxHeight='80%' fit='contain' onClick={onOpen} _hover={{ cursor: 'pointer' }} />
@@ -14,7 +19,7 @@ const ImageModal = ({ image, handleContinue }) => {
                     <ModalBody >
                         <Stack>
                             <Image src={image.imageURL} height='100%' />
-                            <Button alignSelf='center' onClick={() => handleContinue(image)}>Select</Button>
+                            <Button alignSelf='center' onClick={() => handleClick(image) }>Select</Button>
                         </Stack>
 
                     </ModalBody>
