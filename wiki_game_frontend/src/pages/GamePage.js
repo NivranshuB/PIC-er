@@ -1,11 +1,18 @@
-import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer, Stack, Text } from "@chakra-ui/react";
-import axios from "axios";
+import { Box, Button, Center, Flex, Heading, HStack, Image, Modal, ModalBody, ModalContent, ModalOverlay, Spacer, useDisclosure } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import GameArrow from "../components/GameArrow";
-import { continueGame, startGame } from "../services/api";
+import ImageModal from "../components/ImageModal";
+import { continueGame, endGame, startGame } from "../services/api";
+import { useAuth0 } from "@auth0/auth0-react";
+import MD5 from 'crypto-js/md5';
 
 const GamePage = () => {
+
+    const navigate = useNavigate();
+
+    const { user, isAuthenticated } = useAuth0();
 
     const [data, setData] = useState({
         startImage: '',
@@ -13,19 +20,47 @@ const GamePage = () => {
         images: [],
     })
 
+    const [originalImage, setOriginalImage] = useState();
+
     const handleStart = async () => {
         const data = await startGame();
         const { startImage, targetImage, levelImages } = data;
+        let shuffledArray = shuffleImages(levelImages);
         setData({
             startImage: startImage,
             targetImage: targetImage,
-            images: levelImages,
+            images: shuffledArray,
         });
-        console.log(data);
-        console.log(startImage)
+        setOriginalImage(startImage);
         setClicks(0);
         setTime(0);
-        console.log(data.images);
+    }
+
+    const shuffleImages = (images) => {
+        const closerImage = images[0];
+        let randomImages = [];
+        if (Object.keys(closerImage.length > 0)) {
+            randomImages.push(closerImage);
+            for (let image of images.slice(1, 6)) {
+                if (image.imageID !== closerImage.imageID) {
+                    randomImages.push(image);
+                    if (randomImages.length === 5) {
+                        break;
+                    }
+                }
+            }
+        } else {
+            randomImages = images.slice(1, 6);
+        }
+
+        let index = randomImages.length;
+        while (index !== 0) {
+            let randomIndex = Math.floor(Math.random() * index);
+            index--;
+
+            [randomImages[index], randomImages[randomIndex]] = [randomImages[randomIndex], randomImages[index]];
+        }
+        return randomImages;
     }
 
     useEffect(() => {
@@ -48,12 +83,54 @@ const GamePage = () => {
         return () => clearInterval(interval);
     }, [time]);
 
-    const handleContinue = async () => {
-        const data = {selectedTags: []};
-        const response = await continueGame(data);
-        console.log("contine");
-        console.log(response);
+    const handleContinue = async (image) => {
+        checkGameComplete(image);
+        const dataToSend = getTagsToSend(image);
+        await continueGame(dataToSend)
+            .then((response) => {
+                let shuffledArray = shuffleImages(response);
+                setData({
+                    ...data,
+                    startImage: image,
+                    images: shuffledArray,
+                })
+            });
+
         setClicks(clicks + 1);
+    }
+
+    const checkGameComplete = (image) => {
+        if (image.imageURL === data.targetImage.imageURL) {
+            console.log(clicks);
+            console.log(originalImage.imageURL);
+            if ( isAuthenticated ) {
+                endGame({ username: user.nickname, email: MD5(user.email).toString(), highscore: clicks, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL, time: time });
+            }
+            navigate('/end', { state: { clicks: clicks, time: time, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL } });
+        }
+    }
+
+    const getTagsToSend = (image) => {
+        const imageTags = image.imageTags;
+        const targetTags = data.targetImage.imageTags;
+
+        let tagMatchCount = 0;
+        for (let tag of targetTags) {
+            for (let clickedTag of imageTags) {
+                if (clickedTag === tag) {
+                    tagMatchCount++;
+                }
+            }
+        }
+        if (tagMatchCount === targetTags.length) {
+            return { selectedTags: targetTags };
+        }
+
+        if (tagMatchCount === 0) {
+            return { selectedTags: imageTags };
+        }
+
+        return { selectedTags: image.imageTags };
     }
 
     const handleRestart = () => {
@@ -61,60 +138,20 @@ const GamePage = () => {
     }
 
     return (
-        <div>
-            <Flex>
-                <BackButton />
-                <Flex p='24px' width='100%' position='fixed' justifyContent='right'>
-                    <Box alignSelf='center'>
-                        <Heading textAlign='center'>
-                            Target Image
-                        </Heading>
-                        <Image src={data.targetImage.imageURL} boxSize='300px' fit='contain' />
-                    </Box>
-                </Flex>
+        <Flex direction='column' height='100%'>
+            <BackButton />
+            <Flex width='100%' position='absolute' zIndex='-1'>
 
-            </Flex>
 
-            <Flex direction='column'>
-                <Flex position='fixed' width='20%' textAlign='center' p='16px'>
-                    <Heading size='md'>
-                        Select the image below that best links you to the target image
+                <Heading size='md' alignSelf='center' p='32px' textAlign='center' width='200px'>
+                    Select the image below that best links you to the target image
+                </Heading>
+                <Spacer />
+                <Flex direction='column' p='32px' justify='right'>
+                    <Heading textAlign='center'>
+                        Target Image
                     </Heading>
-                </Flex>
-
-                <Flex alignSelf='center' direction='column'>
-                    <Box>
-                        <Center>
-                            <Box>
-                                <Heading textAlign='center'>
-                                    Current Image
-                                </Heading>
-                                <Image src={data.startImage.imageURL} boxSize='300px' fit='contain' />
-                            </Box>
-                        </Center>
-                    </Box>
-
-                    <GameArrow />
-
-                    <HStack spacing='16px' width='100%' justify='center'>
-                        {data.images.map((image) => {
-                            return (
-                                <Image src={image.imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
-                            )
-                        })}
-                        {/* <Image src={data.images[0].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
-                        <Image src={data.images[1].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
-                        <Image src={data.images[2].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
-                        <Image src={data.images[3].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} />
-                        <Image src={data.images[4].imageURL} maxWidth='15%' fit='contain' onClick={() => handleContinue()} /> */}
-                    </HStack>
-                </Flex>
-
-                <Flex p='24px' position='fixed' bottom='0' width='100%'>
-                    <Box alignSelf='center'>
-                        <Button onClick={() => handleRestart()}>Restart</Button>
-                    </Box>
-                    <Spacer />
+                    <Image src={data.targetImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} />
                     <Box alignSelf='center'>
                         Time: {minutes}:{seconds}
                     </Box>
@@ -125,7 +162,43 @@ const GamePage = () => {
                 </Flex>
             </Flex>
 
-        </div>
+            <Flex direction='column' height='100%'>
+
+                <Flex alignSelf='center' direction='column' height='80%'>
+                    <Flex>
+                        <Spacer />
+                        <Center>
+                            <Box>
+                                <Heading textAlign='center'>
+                                    Current Image
+                                </Heading>
+                                <Image src={data.startImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} />
+                            </Box>
+                        </Center>
+                        <Spacer />
+                    </Flex>
+
+                    <GameArrow />
+
+                    <HStack spacing='16px' width='100%' justify='center' alignItems='start'>
+                        {data.images.map((image) => {
+                            return (
+                                <ImageModal image={image} handleContinue={handleContinue} />
+                            )
+                        })}
+                    </HStack>
+                </Flex>
+
+                <Flex p='24px' position='fixed' bottom='0' width='100%'>
+                    <Box alignSelf='center'>
+                        <Button onClick={() => handleRestart()}>Restart</Button>
+                    </Box>
+                    <Spacer />
+
+                </Flex>
+            </Flex>
+
+        </Flex>
     )
 }
 

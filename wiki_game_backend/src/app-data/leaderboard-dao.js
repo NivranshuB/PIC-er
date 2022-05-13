@@ -25,7 +25,7 @@ async function getLocalLeaderboard(username) {
 
 //Return the global leaderboard from MongoDB
 async function getGlobalLeaderboard() {
-    const globalLeaderboard = await scoreCollection.find().sort( {highscore: 1}).limit(LEADERBOARD_RESULTS_LIMIT).toArray();
+    const globalLeaderboard = await scoreCollection.find().sort( {highscore: 1, time: 1}).limit(LEADERBOARD_RESULTS_LIMIT).toArray();
     return globalLeaderboard;
 }
 
