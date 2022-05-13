@@ -27,7 +27,7 @@ const NavbarPage = () => {
                     <SignupModal isOpen={isOpenSignup} onClose={onCloseSignup} />
                     {(!isLoading && isAuthenticated)
                         ? <HStack>
-                            <h2>{MD5(user.email).toString()}</h2>
+                            <h2>Hi, {user.nickname}</h2>
                             <Button variant='borderless' onClick={() => logout({ returnTo: window.location.origin })}>Logout</Button>
                         </HStack>
                         : (<>

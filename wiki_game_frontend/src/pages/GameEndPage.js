@@ -2,62 +2,51 @@ import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer, Stack, VStac
 import LeaderboardList from "../components/LeaderboardList";
 import NotLoggedInCard from "../components/NotLoggedInCard";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getLeaderboard, getPersonalLeaderboard } from "../services/api";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const GameEndPage = () => {
+
+    const { user, isAuthenticated } = useAuth0();
 
     const navigate = useNavigate();
 
     const {state} = useLocation();
     const {clicks, time, startImageURL, targetImageURL} = state;
 
-    const personalHighScores = [
-        { rank: 1, name: "person1", clicks: 10, time: "4:03" },
-        { rank: 2, name: "person2", clicks: 11, time: "2:09" },
-        { rank: 2, name: "person3", clicks: 15, time: "6:06" },
-        { rank: 2, name: "person4", clicks: 1, time: "90:10" },
-        { rank: 1, name: "person1", clicks: 10, time: "4:03" },
-        { rank: 2, name: "person2", clicks: 11, time: "2:09" },
-        { rank: 2, name: "person3", clicks: 15, time: "6:06" },
-        { rank: 2, name: "person4", clicks: 1, time: "90:10" },
-        { rank: 1, name: "person1", clicks: 10, time: "4:03" },
-        { rank: 2, name: "person2", clicks: 11, time: "2:09" },
-        { rank: 2, name: "person3", clicks: 15, time: "6:06" },
-        { rank: 2, name: "person4", clicks: 1, time: "90:10" },
-        { rank: 2, name: "person2", clicks: 11, time: "2:09" },
-        { rank: 2, name: "person3", clicks: 15, time: "6:06" },
-        { rank: 2, name: "person4", clicks: 1, time: "90:10" },
-        { rank: 1, name: "person1", clicks: 10, time: "4:03" },
-        { rank: 2, name: "person2", clicks: 11, time: "2:09" },
-        { rank: 2, name: "person3", clicks: 15, time: "6:06" },
-        { rank: 2, name: "person4", clicks: 1, time: "90:10" },
-    ];
+    const [globalLead, setGlobalLead] = useState([])
+    const [personalLead, setPersonalLead] = useState([])
 
-    const globalHighScores = [
-        { rank: 1, name: "number 1", clicks: 3, time: "0:01" },
-        { rank: 2, name: "number 2", clicks: 3, time: "0:02" },
-        { rank: 1, name: "number 1", clicks: 3, time: "0:01" },
-        { rank: 2, name: "number 2", clicks: 3, time: "0:02" },
-        { rank: 1, name: "number 1", clicks: 3, time: "0:01" },
-        { rank: 2, name: "number 2", clicks: 3, time: "0:02" },
-        { rank: 1, name: "number 1", clicks: 3, time: "0:01" },
-        { rank: 2, name: "number 2", clicks: 3, time: "0:02" },
-        { rank: 1, name: "number 1", clicks: 3, time: "0:01" },
-        { rank: 2, name: "number 2", clicks: 3, time: "0:02" },
 
-    ];
+    useEffect(() => {
+        async function loadLeaderboardData() {
+            console.log('Loading global leaderboard')
+            getLeaderboard().then((o) => {
+                setGlobalLead(o);
+                console.log(globalLead);
+            });
+            if (isAuthenticated) {
+                console.log('Loading personal leaderboard for ' + user.nickname)
+                // await setPersonalLead(user.username).then((o) => setPersonalLead(o))
+                getPersonalLeaderboard(user.nickname).then((o) => setPersonalLead(o))
+            }
+        }
+        loadLeaderboardData();
+    }, []);
 
-    const notLoggedInText = 'Login or create an account to view your high scores';
+    const notLoggedInText = 'Login or create an account to view your personal high scores';
 
     // to be replaced by auth0
-    const isAuthenticated = true;
+    // const isAuthenticated = true;
 
     return (
         <Flex m='24px' height='90%'>
             <VStack direction='column' width='100%' height='100%' >
-                <LeaderboardList items={globalHighScores} title='Global Leaderboard' />
+                <LeaderboardList items={globalLead} title='Global Leaderboard' />
                 <Spacer/>
                 {isAuthenticated
-                    ? <LeaderboardList items={personalHighScores} title='Personal High Scores' />
+                    ? <LeaderboardList items={personalLead} title='Personal High Scores' />
                     : <NotLoggedInCard text={notLoggedInText} />}
             </VStack>
             <Center width='100%' p='36px' height='100%' alignSelf='center'>

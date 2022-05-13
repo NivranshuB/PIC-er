@@ -12,7 +12,7 @@ const GamePage = () => {
 
     const navigate = useNavigate();
 
-    const { user } = useAuth0();
+    const { user, isAuthenticated } = useAuth0();
 
     const [data, setData] = useState({
         startImage: '',
@@ -103,7 +103,9 @@ const GamePage = () => {
         if (image.imageURL === data.targetImage.imageURL) {
             console.log(clicks);
             console.log(originalImage.imageURL);
-            endGame({ username: user.nickname, email: MD5(user.email).toString(), highscore: clicks, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL, time: time });
+            if ( isAuthenticated ) {
+                endGame({ username: user.nickname, email: MD5(user.email).toString(), highscore: clicks, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL, time: time });
+            }
             navigate('/end', { state: { clicks: clicks, time: time, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL } });
         }
     }
