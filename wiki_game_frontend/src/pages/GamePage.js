@@ -27,7 +27,6 @@ const GamePage = () => {
             targetImage: targetImage,
             images: shuffledArray,
         });
-        console.log(data);
         setOriginalImage(startImage);
         setClicks(0);
         setTime(0);
@@ -83,26 +82,14 @@ const GamePage = () => {
     const handleContinue = async (image) => {
         checkGameComplete(image);
         const dataToSend = getTagsToSend(image);
-        const response = await continueGame(dataToSend)
+        await continueGame(dataToSend)
             .then((response) => {
-                console.log(response)
-                if (response[0] === null) {
+                    let shuffledArray = shuffleImages(response);
                     setData({
                         ...data,
                         startImage: image,
-                        images: response,
+                        images: shuffledArray,
                     })
-                    setData({
-                        ...data,
-                        images: response.slice(1, 6),
-                    })
-                } else {
-                    setData({
-                        ...data,
-                        startImage: image,
-                        images: response.slice(0, 5),
-                    })
-                }
             });
 
         setClicks(clicks + 1);
@@ -117,10 +104,10 @@ const GamePage = () => {
     const getTagsToSend = (image) => {
         const imageTags = image.imageTags;
         const targetTags = data.targetImage.imageTags;
-        console.log('clicke image:');
-        console.log(imageTags);
-        console.log('target image:');
-        console.log(targetTags);
+        // console.log('clicke image:');
+        // console.log(imageTags);
+        // console.log('target image:');
+        // console.log(targetTags);
 
         let tagMatchCount = 0;
         for (let tag of targetTags) {
@@ -131,12 +118,10 @@ const GamePage = () => {
             }
         }
         if (tagMatchCount === targetTags.length) {
-            console.log("sometimg");
             return { selectedTags: targetTags };
         }
 
         if (tagMatchCount === 0) {
-            console.log('not at ll');
             return { selectedTags: imageTags };
         }
 
