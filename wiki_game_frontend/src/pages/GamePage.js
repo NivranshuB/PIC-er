@@ -27,20 +27,37 @@ const GamePage = () => {
             targetImage: targetImage,
             images: shuffledArray,
         });
+        console.log(data);
         setOriginalImage(startImage);
         setClicks(0);
         setTime(0);
     }
 
     const shuffleImages = (images) => {
-        let index = images.length;
+        const closerImage = images[0];
+        let randomImages = [];
+        if (Object.keys(closerImage.length > 0)) {
+            randomImages.push(closerImage);
+            for (let image of images.slice(1, 6)) {
+                if (image.imageID !== closerImage.imageID) {
+                    randomImages.push(image);
+                    if (randomImages.length === 5 ) {
+                        break;
+                    }
+                }
+            }
+        } else {
+            randomImages = images.slice(1, 6);
+        }
+
+        let index = randomImages.length;
         while (index !== 0) {
             let randomIndex = Math.floor(Math.random() * index);
             index--;
 
-            [images[index], images[randomIndex]] = [images[randomIndex], images[index]];
+            [randomImages[index], randomImages[randomIndex]] = [randomImages[randomIndex], randomImages[index]];
         }
-        return images;
+        return randomImages;
     }
 
     useEffect(() => {
@@ -66,12 +83,28 @@ const GamePage = () => {
     const handleContinue = async (image) => {
         checkGameComplete(image);
         const dataToSend = getTagsToSend(image);
-        const response = await continueGame(dataToSend);
-        setData({
-            ...data,
-            startImage: image,
-            images: response,
-        })
+        const response = await continueGame(dataToSend)
+            .then((response) => {
+                console.log(response)
+                if (response[0] === null) {
+                    setData({
+                        ...data,
+                        startImage: image,
+                        images: response,
+                    })
+                    setData({
+                        ...data,
+                        images: response.slice(1, 6),
+                    })
+                } else {
+                    setData({
+                        ...data,
+                        startImage: image,
+                        images: response.slice(0, 5),
+                    })
+                }
+            });
+
         setClicks(clicks + 1);
     }
 
@@ -82,11 +115,31 @@ const GamePage = () => {
     }
 
     const getTagsToSend = (image) => {
+        const imageTags = image.imageTags;
+        const targetTags = data.targetImage.imageTags;
         console.log('clicke image:');
-        console.log(image);
+        console.log(imageTags);
         console.log('target image:');
-        console.log(data.targetImage);
-        // {selectedTags: image.imageTags};
+        console.log(targetTags);
+
+        let tagMatchCount = 0;
+        for (let tag of targetTags) {
+            for (let clickedTag of imageTags) {
+                if (clickedTag === tag) {
+                    tagMatchCount++;
+                }
+            }
+        }
+        if (tagMatchCount === targetTags.length) {
+            console.log("sometimg");
+            return { selectedTags: targetTags };
+        }
+
+        if (tagMatchCount === 0) {
+            console.log('not at ll');
+            return { selectedTags: imageTags };
+        }
+
         return { selectedTags: image.imageTags };
     }
 
@@ -140,7 +193,7 @@ const GamePage = () => {
                     <HStack spacing='16px' width='100%' justify='center' alignItems='start'>
                         {data.images.map((image) => {
                             return (
-                                    <ImageModal image={image} handleContinue={handleContinue} />
+                                <ImageModal image={image} handleContinue={handleContinue} />
                             )
                         })}
                     </HStack>

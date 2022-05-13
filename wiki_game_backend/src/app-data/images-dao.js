@@ -3,7 +3,7 @@
  */
 import { imageCollection } from '../server';
 
-const NUM_OF_IMAGES = 4;
+const NUM_OF_IMAGES = 5;
 
 //Function to send the start image, the target image and the 5 level images upon game initialisation
 async function createGame() {
