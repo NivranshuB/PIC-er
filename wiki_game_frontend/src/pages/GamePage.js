@@ -21,17 +21,26 @@ const GamePage = () => {
     const handleStart = async () => {
         const data = await startGame();
         const { startImage, targetImage, levelImages } = data;
+        let shuffledArray = shuffleImages(levelImages);
         setData({
             startImage: startImage,
             targetImage: targetImage,
-            images: levelImages,
+            images: shuffledArray,
         });
         setOriginalImage(startImage);
-        console.log(data);
-        console.log(startImage)
         setClicks(0);
         setTime(0);
-        console.log(data.images);
+    }
+
+    const shuffleImages = (images) => {
+        let index = images.length;
+        while (index !== 0) {
+            let randomIndex = Math.floor(Math.random() * index);
+            index--;
+
+            [images[index], images[randomIndex]] = [images[randomIndex], images[index]];
+        }
+        return images;
     }
 
     useEffect(() => {
