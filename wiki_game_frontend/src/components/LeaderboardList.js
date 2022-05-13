@@ -1,25 +1,14 @@
 import { Box, Button, Center, Flex, Heading, Spacer } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { overflowBoxStyle } from "../theme";
 import LeaderboardCard from "./LeaderboardCard"
 import NoPersonalScoresCard from "./NoPersonalScoresCard";
-import NotLoggedInCard from "./NotLoggedInCard";
 
 const LeaderboardList = (props) => {
 
     const { items, title } = props;
 
     const [clicksSorted, setClicksSorted] = useState(true);
-
-    // Sort time by converting string to seconds
-    // const sortTime = (a, b) => {
-    //     let aTime = a.time.split(':');
-    //     aTime = (parseInt(aTime[0]) * 60) + parseInt(aTime[1]);
-    //     let bTime = b.time.split(':');
-    //     bTime = (parseInt(bTime[0]) * 60) + parseInt(bTime[1]);
-
-    //     return aTime - bTime;
-    // }
 
     const timeInMinutes = (a) => {
         let mins = (Math.floor(a / 60)).toString();
