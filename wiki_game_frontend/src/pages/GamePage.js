@@ -8,6 +8,8 @@ import { continueGame, endGame, startGame } from "../services/api";
 import { useAuth0 } from "@auth0/auth0-react";
 import MD5 from 'crypto-js/md5';
 
+let closerImage = {};
+
 const GamePage = () => {
 
     const navigate = useNavigate();
@@ -37,7 +39,8 @@ const GamePage = () => {
     }
 
     const shuffleImages = (images) => {
-        const closerImage = images[0];
+        closerImage = images[0];
+
         let randomImages = [];
         if (Object.keys(closerImage).length > 0) {
             randomImages.push(closerImage);
@@ -101,8 +104,6 @@ const GamePage = () => {
 
     const checkGameComplete = (image) => {
         if (image.imageURL === data.targetImage.imageURL) {
-            console.log(clicks);
-            console.log(originalImage.imageURL);
             if ( isAuthenticated ) {
                 endGame({ username: user.nickname, email: MD5(user.email).toString(), highscore: clicks, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL, time: time });
             }
@@ -122,6 +123,7 @@ const GamePage = () => {
                 }
             }
         }
+
         if (tagMatchCount === targetTags.length) {
             return { selectedTags: targetTags };
         }
@@ -130,7 +132,15 @@ const GamePage = () => {
             return { selectedTags: imageTags };
         }
 
-        return { selectedTags: image.imageTags };
+        if (closerImage.imageID === image.imageID) {
+            let newTags = targetTags.filter(tag => !imageTags.includes(tag));
+            const randomNewTag = newTags[Math.floor(Math.random() * newTags.length)];
+    
+            let tagsToSend = imageTags.concat(randomNewTag);
+            return { selectedTags: tagsToSend };
+        }
+
+        return { selectedTags: imageTags };
     }
 
     const handleRestart = () => {
