@@ -1,7 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { startGame, continueGame, endGame } from '../api';
+import { startGame, continueGame, endGame, getLeaderboard, getPersonalLeaderboard, deletePersonalLeaderboard } from '../api';
 
 let mock;
 
@@ -60,4 +60,41 @@ it("end game connects to endpoint to send game details", async () => {
     const result = await endGame(gameDetails);
 
     expect(mock.history.post[0].url).toEqual('/api/game/end');
+})
+
+it("get leaderboard gets global leaderboard", async () => {
+
+    const globalLeaderboard = {
+        data: ['n1', 'n2', 'n3', 'n4']
+    }
+
+    mock.onGet('/api/leaderboard').reply(200, globalLeaderboard);
+
+    const result = await getLeaderboard();
+
+    expect(mock.history.get[0].url).toEqual('/api/leaderboard');
+    expect(result).toEqual(globalLeaderboard);
+})
+
+it("get personal leaderboard gets a user's local leaderboard", async () => {
+
+    const userLocalLeaderboard = {
+        data: ['u1', 'u2', 'u3', 'u4']
+    }
+
+    mock.onGet('/api/leaderboard/user1').reply(200, userLocalLeaderboard);
+
+    const result = await getPersonalLeaderboard('user1');
+
+    expect(mock.history.get[0].url).toEqual('/api/leaderboard/user1');
+    expect(result).toEqual(userLocalLeaderboard);
+})
+
+it("delete personal leaderboard connects to endpoint to delete user's local leaderboard", async () => {
+
+    mock.onDelete('/api/leaderboard/user1').reply(200);
+
+    const result = await deletePersonalLeaderboard('user1');
+
+    expect(mock.history.delete[0].url).toEqual('/api/leaderboard/user1');
 })
