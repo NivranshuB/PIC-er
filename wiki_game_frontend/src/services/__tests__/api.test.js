@@ -55,7 +55,7 @@ it("end game connects to endpoint to send game details", async () => {
         targetImageURL: ''
     }
 
-    mock.onPost('/api/game/end', gameDetails).reply(200);
+    mock.onPost('/api/game/end', gameDetails).reply(201);
 
     const result = await endGame(gameDetails);
 
@@ -92,7 +92,7 @@ it("get personal leaderboard gets a user's local leaderboard", async () => {
 
 it("delete personal leaderboard connects to endpoint to delete user's local leaderboard", async () => {
 
-    mock.onDelete('/api/leaderboard/user1').reply(200);
+    mock.onDelete('/api/leaderboard/user1').reply(204);
 
     const result = await deletePersonalLeaderboard('user1');
 
