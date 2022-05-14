@@ -52,6 +52,19 @@ const Button = {
                 bg: 'white',
                 color: 'accent',
             }
+        },
+        home: {
+            bg: 'accent',
+            width: '240px',
+            h: '60px',
+            fontSize: '2xl',
+            _hover: {
+                bg: 'white',
+                color: 'accent',
+            },
+            _active: {
+                bg: 'accent',
+            }
         }
     }
 }
