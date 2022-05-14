@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Center, Flex, HStack, Spacer } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Flex, Heading, HStack, Spacer, Text } from "@chakra-ui/react";
 import { Link, Outlet } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -7,12 +7,10 @@ const NavbarPage = () => {
 
     return (
         <Box height='100vh'>
-            <Flex color='accent' backgroundColor='lighterBackground'>
-                <Center pl='4'>
+            <Flex color='accent' backgroundColor='lighterBackground' pl='16px' pr='16px'>
                     <Link to='/'>
-                        PIC-er
+                        <Heading textAlign='center'>PIC-er</Heading>
                     </Link>
-                </Center>
 
                 <Spacer />
 
@@ -20,7 +18,7 @@ const NavbarPage = () => {
 
                     {(!isLoading && isAuthenticated)
                         ? <HStack>
-                            <h2>Hi, {user.nickname}</h2>
+                            <Text color='white'>Hi, {user.nickname}</Text>
                             <Button variant='borderless' onClick={() => logout({ returnTo: window.location.origin })}>Logout</Button>
                         </HStack>
                         : (<>
