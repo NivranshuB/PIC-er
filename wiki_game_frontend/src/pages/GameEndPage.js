@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getLeaderboard, getPersonalLeaderboard } from "../services/api";
 import { useAuth0 } from "@auth0/auth0-react";
+import timeInMinutes from "../utils/timeInMinutes";
 
 const GameEndPage = () => {
 
@@ -14,6 +15,8 @@ const GameEndPage = () => {
 
     const {state} = useLocation();
     const {clicks, time, startImageURL, targetImageURL} = state;
+
+
 
     const [globalLead, setGlobalLead] = useState([])
     const [personalLead, setPersonalLead] = useState([])
@@ -70,7 +73,7 @@ const GameEndPage = () => {
                         <VStack width='100%'>
 
                             <Heading size='md'>Time</Heading>
-                            <Heading size='lg'>{time}</Heading>
+                            <Heading size='lg'>{timeInMinutes(time)}</Heading>
                         </VStack>
                     </Flex>
                     <Center>

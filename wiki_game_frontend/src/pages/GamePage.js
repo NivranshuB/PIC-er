@@ -7,6 +7,7 @@ import ImageModal from "../components/ImageModal";
 import { continueGame, endGame, startGame } from "../services/api";
 import { useAuth0 } from "@auth0/auth0-react";
 import MD5 from 'crypto-js/md5';
+import timeInMinutes from "../utils/timeInMinutes";
 
 let closerImage = {};
 
@@ -72,12 +73,6 @@ const GamePage = () => {
 
     const [time, setTime] = useState(0);
     const [clicks, setClicks] = useState(0);
-
-    let minutes = parseInt(time / 60);
-    let seconds = time % 60;
-
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    seconds = seconds < 10 ? '0' + seconds : seconds;
 
     useEffect(() => {
         let interval = setInterval(() => {
@@ -163,7 +158,7 @@ const GamePage = () => {
                     </Heading>
                     <Image src={data.targetImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} />
                     <Box alignSelf='center'>
-                        Time: {minutes}:{seconds}
+                        Time: {timeInMinutes(time)}
                     </Box>
                     <Spacer />
                     <Box alignSelf='center'>
