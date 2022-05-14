@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
     return (
         <>
-            <Heading color='accent' textAlign='center' size='4xl' p='200px'>PIC-er</Heading>
+            <Heading color='accent' textAlign='center' size='4xl' p='150px' fontSize='18vh'>PIC-er</Heading>
             <VStack direction='column' p='16px' spacing='16px'>
-                <Button as={Link} to='game'>Play</Button>
-                <Button as={Link} to='leaderboard'>Leaderboard</Button>
+                <Button as={Link} to='game' variant='home'>Play</Button>
+                <Button as={Link} to='leaderboard' variant='home'>Leaderboard</Button>
             </VStack>
         </>
     )

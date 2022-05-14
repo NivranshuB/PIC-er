@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, HStack, Spacer } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";

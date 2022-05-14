@@ -63,7 +63,6 @@ const LeaderboardList = (props) => {
                 })) : <NoPersonalScoresCard text={"Play some games to get your scores on the board!"}/>}
             </Box>
 
-
         </Flex>
     )
 }
