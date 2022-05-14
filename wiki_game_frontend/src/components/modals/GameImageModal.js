@@ -1,6 +1,6 @@
 import { Button, Image, Modal, ModalBody, ModalContent, ModalOverlay, Stack, useDisclosure } from "@chakra-ui/react";
 
-const ImageModal = ({ image, handleContinue }) => {
+const GameImageModal = ({ image, handleContinue }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -30,4 +30,4 @@ const ImageModal = ({ image, handleContinue }) => {
     )
 }
 
-export default ImageModal;
+export default GameImageModal;

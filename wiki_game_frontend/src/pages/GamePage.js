@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import GameArrow from "../components/GameArrow";
-import ImageModal from "../components/ImageModal";
+import GameImageModal from "../components/modals/GameImageModal";
 import { continueGame, endGame, startGame } from "../services/api";
 import { useAuth0 } from "@auth0/auth0-react";
 import MD5 from 'crypto-js/md5';
 import timeInMinutes from "../utils/timeInMinutes";
+import RegularImageModal from "../components/modals/RegularImageModal";
 
 let closerImage = {};
 
@@ -186,7 +187,9 @@ const GamePage = () => {
                                         <Heading textAlign='center'>
                                             Current Image
                                         </Heading>
-                                        <Image src={data.startImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} />
+                                        {/* <ImageModal image={data.startImage} /> */}
+                                        {/* <Image src={data.startImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} /> */}
+                                        <RegularImageModal image={data.startImage.imageURL} />
                                     </Box>
                                 </Center>
                                 <Spacer />
@@ -197,7 +200,7 @@ const GamePage = () => {
                             <HStack spacing='16px' width='100%' justify='center' alignItems='start'>
                                 {data.images.map((image) => {
                                     return (
-                                        <ImageModal image={image} handleContinue={handleContinue} />
+                                        <GameImageModal image={image} handleContinue={handleContinue} />
                                     )
                                 })}
                             </HStack>

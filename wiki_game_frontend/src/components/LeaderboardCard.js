@@ -1,4 +1,5 @@
 import { Box, Center, Flex, Heading, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, useDisclosure, VStack } from "@chakra-ui/react";
+import RegularImageModal from "./modals/RegularImageModal";
 
 const LeaderboardCard = (props) => {
 
@@ -30,7 +31,7 @@ const LeaderboardCard = (props) => {
                 {time}
             </Center>
 
-            <Modal isOpen={isOpen} onClose={onClose} size='2xl'>
+            <Modal isOpen={isOpen} onClose={onClose} size='3xl'>
                 <ModalOverlay />
                 <ModalContent bg='lighterBackground'>
                     <ModalCloseButton />
@@ -70,13 +71,15 @@ const LeaderboardCard = (props) => {
                                 <VStack width='100%' p='8px'>
                                     <Heading size='md'>Starting image</Heading>
                                     <Box bg='background' padding='8px' borderRadius='8px'>
-                                        <Image src={startImage}></Image>   
+                                        {/* <Image src={startImage}></Image>    */}
+                                        <RegularImageModal image={startImage} />
                                     </Box>
                                 </VStack>
                                 <VStack width='100%' p='8px'>
                                     <Heading size='md'>Goal image</Heading>
                                     <Box bg='background' padding='8px' borderRadius='8px'>
-                                        <Image src={targetImage}></Image>
+                                        {/* <Image src={targetImage}></Image> */}
+                                        <RegularImageModal image={targetImage} />
                                     </Box>
                                 </VStack>
                             </Flex>

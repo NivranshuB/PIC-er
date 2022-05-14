@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getLeaderboard, getPersonalLeaderboard } from "../services/api";
 import { useAuth0 } from "@auth0/auth0-react";
 import timeInMinutes from "../utils/timeInMinutes";
+import RegularImageModal from "../components/modals/RegularImageModal";
 
 const GameEndPage = () => {
 
@@ -38,7 +39,7 @@ const GameEndPage = () => {
 
     return (
         <Flex m='24px' height='90%'>
-            <VStack direction='column' width='100%' height='100%' >
+            <VStack direction='column' width='100%' height='100%' p='36px' >
                 <LeaderboardList items={globalLead} title='Global Leaderboard' />
                 <Spacer/>
                 {isAuthenticated
@@ -65,15 +66,15 @@ const GameEndPage = () => {
                             <Image src={targetImageURL} maxHeight='100%' />
                         </VStack>
                     </HStack>
-                    <Flex>
+                    <Flex pt='32px'>
                         <VStack width='100%'>
                             <Heading size='md'>Clicks</Heading>
-                            <Heading size='lg'>{clicks}</Heading>
+                            <Heading size='xl'>{clicks}</Heading>
                         </VStack>
                         <VStack width='100%'>
 
                             <Heading size='md'>Time</Heading>
-                            <Heading size='lg'>{timeInMinutes(time)}</Heading>
+                            <Heading size='xl'>{timeInMinutes(time)}</Heading>
                         </VStack>
                     </Flex>
                     <Center>
