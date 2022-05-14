@@ -11,19 +11,19 @@ const LeaderboardList = (props) => {
 
     const [clicksSorted, setClicksSorted] = useState(true);
 
-    const handleSort = () => {
+    const sortByClicks = () => {
+        items.sort((a,b) => (a.highscore > b.highscore ? 1 : -1 ));
+        setClicksSorted(true);
+    }
 
-        if (clicksSorted) {
-            items.sort((a, b) => (a.clicks > b.clicks) ? 1 : -1);
-        } else {
-            items.sort((a, b) => (a.time > b.time) ? 1 : -1);
-        }
-        setClicksSorted(!clicksSorted)
+    const sortByTime = () => {
+        items.sort((a, b) => (a.time > b.time) ? 1 : -1);
+        setClicksSorted(false);
     }
 
     // Sorts code once on page load
     useEffect(() => {
-        handleSort();
+        sortByClicks();
     }, []);
 
     return (
@@ -42,13 +42,13 @@ const LeaderboardList = (props) => {
                     <Heading size='lg'>Name</Heading>
                 </Box>
                 <Center flex='1'>
-                    <Button variant={clicksSorted ? 'borderlessWhite' : 'borderless'} onClick={() => handleSort()}>
+                    <Button variant={clicksSorted ? 'borderless' : 'borderlessWhite'} onClick={() => sortByClicks()}>
                         <Heading size='lg'>Clicks</Heading>
                     </Button>
 
                 </Center>
                 <Center flex='1'>
-                    <Button variant={clicksSorted ? 'borderless' : 'borderlessWhite'} onClick={() => handleSort()}>
+                    <Button variant={clicksSorted ? 'borderlessWhite' : 'borderless'} onClick={() => sortByTime()}>
                         <Heading size='lg'>Time</Heading>
                     </Button>
                 </Center>
