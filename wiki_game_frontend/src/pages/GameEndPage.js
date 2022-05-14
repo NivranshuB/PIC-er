@@ -21,14 +21,10 @@ const GameEndPage = () => {
 
     useEffect(() => {
         async function loadLeaderboardData() {
-            console.log('Loading global leaderboard')
             getLeaderboard().then((o) => {
                 setGlobalLead(o);
-                console.log(globalLead);
             });
             if (isAuthenticated) {
-                console.log('Loading personal leaderboard for ' + user.nickname)
-                // await setPersonalLead(user.username).then((o) => setPersonalLead(o))
                 getPersonalLeaderboard(user.nickname).then((o) => setPersonalLead(o))
             }
         }
@@ -36,9 +32,6 @@ const GameEndPage = () => {
     }, []);
 
     const notLoggedInText = 'Login or create an account to view your personal high scores';
-
-    // to be replaced by auth0
-    // const isAuthenticated = true;
 
     return (
         <Flex m='24px' height='90%'>
