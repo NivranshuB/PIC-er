@@ -39,7 +39,7 @@ const GamePage = () => {
     const shuffleImages = (images) => {
         const closerImage = images[0];
         let randomImages = [];
-        if (closerImage === {}) {
+        if (Object.keys(closerImage).length > 0) {
             randomImages.push(closerImage);
             for (let image of images.slice(1, 6)) {
                 if (image.imageID !== closerImage.imageID) {
