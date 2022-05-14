@@ -13,6 +13,8 @@ let closerImage = {};
 
 const GamePage = () => {
 
+    const [loading, setLoading] = useState(true);
+
     const navigate = useNavigate();
 
     const { user, isAuthenticated } = useAuth0();
@@ -39,17 +41,22 @@ const GamePage = () => {
     }, []);
 
     const handleStart = async () => {
-        const data = await startGame();
-        const { startImage, targetImage, levelImages } = data;
-        let shuffledArray = shuffleImages(levelImages);
-        setData({
-            startImage: startImage,
-            targetImage: targetImage,
-            images: shuffledArray,
+        let shuffledArray = [];
+        startGame().then((data) => {
+            const { startImage, targetImage, levelImages } = data;
+            shuffledArray = shuffleImages(levelImages);
+            setData({
+                startImage: startImage,
+                targetImage: targetImage,
+                images: shuffledArray,
+            })
+            setOriginalImage(startImage);
+            setLoading(false);
+            setClicks(0);
+            setTime(0);
         });
-        setOriginalImage(startImage);
-        setClicks(0);
-        setTime(0);
+
+
     }
 
     const handleContinue = async (image) => {
@@ -144,64 +151,67 @@ const GamePage = () => {
     return (
         <Flex direction='column' height='100%'>
             <BackButton />
-            <Flex width='100%' position='absolute' zIndex='-1'>
+            {loading
+                ? <Center><Heading>Loading...</Heading></Center>
+                : <>
+                    <Flex width='100%' position='absolute' zIndex='-1'>
 
 
-                <Heading size='md' alignSelf='center' p='32px' textAlign='center' width='200px'>
-                    Select the image below that best links you to the target image
-                </Heading>
-                <Spacer />
-                <Flex direction='column' p='32px' justify='right'>
-                    <Heading textAlign='center'>
-                        Target Image
-                    </Heading>
-                    <Image src={data.targetImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} />
-                    <Box alignSelf='center'>
-                        Time: {timeInMinutes(time)}
-                    </Box>
-                    <Spacer />
-                    <Box alignSelf='center'>
-                        Clicks: {clicks}
-                    </Box>
-                </Flex>
-            </Flex>
-
-            <Flex direction='column' height='100%'>
-
-                <Flex alignSelf='center' direction='column' height='80%'>
-                    <Flex>
+                        <Heading size='md' alignSelf='center' p='32px' textAlign='center' width='200px'>
+                            Select the image below that best links you to the target image
+                        </Heading>
                         <Spacer />
-                        <Center>
-                            <Box>
-                                <Heading textAlign='center'>
-                                    Current Image
-                                </Heading>
-                                <Image src={data.startImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} />
+                        <Flex direction='column' p='32px' justify='right'>
+                            <Heading textAlign='center'>
+                                Target Image
+                            </Heading>
+                            <Image src={data.targetImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} />
+                            <Box alignSelf='center'>
+                                Time: {timeInMinutes(time)}
                             </Box>
-                        </Center>
-                        <Spacer />
+                            <Spacer />
+                            <Box alignSelf='center'>
+                                Clicks: {clicks}
+                            </Box>
+                        </Flex>
                     </Flex>
 
-                    <GameArrow />
+                    <Flex direction='column' height='100%'>
 
-                    <HStack spacing='16px' width='100%' justify='center' alignItems='start'>
-                        {data.images.map((image) => {
-                            return (
-                                <ImageModal image={image} handleContinue={handleContinue} />
-                            )
-                        })}
-                    </HStack>
-                </Flex>
+                        <Flex alignSelf='center' direction='column' height='80%'>
+                            <Flex>
+                                <Spacer />
+                                <Center>
+                                    <Box>
+                                        <Heading textAlign='center'>
+                                            Current Image
+                                        </Heading>
+                                        <Image src={data.startImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} />
+                                    </Box>
+                                </Center>
+                                <Spacer />
+                            </Flex>
 
-                <Flex p='24px' position='fixed' bottom='0' width='100%'>
-                    <Box alignSelf='center'>
-                        <Button onClick={() => handleRestart()}>Restart</Button>
-                    </Box>
-                    <Spacer />
+                            <GameArrow />
 
-                </Flex>
-            </Flex>
+                            <HStack spacing='16px' width='100%' justify='center' alignItems='start'>
+                                {data.images.map((image) => {
+                                    return (
+                                        <ImageModal image={image} handleContinue={handleContinue} />
+                                    )
+                                })}
+                            </HStack>
+                        </Flex>
 
+                        <Flex p='24px' position='fixed' bottom='0' width='100%'>
+                            <Box alignSelf='center'>
+                                <Button onClick={() => handleRestart()}>Restart</Button>
+                            </Box>
+                            <Spacer />
+
+                        </Flex>
+                    </Flex>
+                </>}
         </Flex>
     )
 }
