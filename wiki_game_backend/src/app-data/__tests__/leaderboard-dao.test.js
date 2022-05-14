@@ -73,15 +73,6 @@ afterAll(async () => {
 
 it('add score to leaderboard', async () => {
 
-    const body = {
-        username: 'jim',
-        email: 'jim.com',
-        highscore: 10,
-        startImageURL: 'start-img1',
-        targetImageURL: 'target-img1',
-        time: '11:03'
-    }
-
     const newEntry = {
         body: {
             username: 'jim',
@@ -106,7 +97,7 @@ it('add score to leaderboard', async () => {
 
 it('gets local leaderboard', async () => {
     const local = await getLocalLeaderboard('bob');
-    expect(local).toBeTruthy;
+    expect(local).toBeTruthy();
     expect(local.length).toBe(1);
     expect(local[0].email).toBe('bob.com');
     expect(local[0].highscore).toBe(2);
@@ -114,13 +105,14 @@ it('gets local leaderboard', async () => {
 
 it('get local leaderboard for a user that does not exist', async () => {
     const local = await getLocalLeaderboard('jeff');
-    expect(local).toBeFalsy;
+    expect(local).toBeTruthy();
+    expect(local.length).toBe(0);
 });
 
 it('get global leaderboard', async () => {
     const global = await getGlobalLeaderboard();
 
-    expect(global).toBeTruthy;
+    expect(global).toBeTruthy();
     expect(global.length).toBe(3);
     expect(global[0].username).toBe('bob');
     expect(global[1].username).toBe('tim');
