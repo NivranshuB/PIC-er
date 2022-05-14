@@ -101,8 +101,6 @@ const GamePage = () => {
 
     const checkGameComplete = (image) => {
         if (image.imageURL === data.targetImage.imageURL) {
-            console.log(clicks);
-            console.log(originalImage.imageURL);
             if ( isAuthenticated ) {
                 endGame({ username: user.nickname, email: MD5(user.email).toString(), highscore: clicks, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL, time: time });
             }
