@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import { useState, useEffect } from 'react'
 import BackButton from "../components/BackButton";
-import LeaderboardList from "../components/LeaderboardList";
+import LeaderboardList from "../components/leaderboard/LeaderboardList";
 import NotLoggedInCard from "../components/NotLoggedInCard";
 import { getLeaderboard, getPersonalLeaderboard } from "../services/api";
 import { useAuth0 } from "@auth0/auth0-react";

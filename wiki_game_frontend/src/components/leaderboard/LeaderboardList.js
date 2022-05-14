@@ -1,7 +1,7 @@
 import { Box, Button, Center, Flex, Heading } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { overflowBoxStyle } from "../theme";
-import timeInMinutes from "../utils/timeInMinutes";
+import { overflowBoxStyle } from "../../theme";
+import timeInMinutes from "../../utils/timeInMinutes";
 import LeaderboardCard from "./LeaderboardCard"
 import NoPersonalScoresCard from "./NoPersonalScoresCard";
 

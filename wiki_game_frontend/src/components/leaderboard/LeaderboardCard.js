@@ -1,5 +1,5 @@
 import { Box, Center, Flex, Heading, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, useDisclosure, VStack } from "@chakra-ui/react";
-import RegularImageModal from "./modals/RegularImageModal";
+import RegularImageModal from "../modals/RegularImageModal";
 
 const LeaderboardCard = (props) => {
 
