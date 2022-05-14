@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Center, Flex, Heading, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, useDisclosure, VStack } from "@chakra-ui/react";
 
 const LeaderboardCard = (props) => {
 
@@ -67,16 +67,16 @@ const LeaderboardCard = (props) => {
 
                         </Flex>
                             <Flex m='24px'>
-                                <VStack width='100%'>
+                                <VStack width='100%' p='8px'>
                                     <Heading size='md'>Starting image</Heading>
-                                    <Box bg='background' padding='20px'>
-                                        <img src={startImage}></img>   
+                                    <Box bg='background' padding='8px' borderRadius='8px'>
+                                        <Image src={startImage}></Image>   
                                     </Box>
                                 </VStack>
-                                <VStack width='100%'>
+                                <VStack width='100%' p='8px'>
                                     <Heading size='md'>Goal image</Heading>
-                                    <Box bg='background' padding='20px'>
-                                        <img src={targetImage}></img>
+                                    <Box bg='background' padding='8px' borderRadius='8px'>
+                                        <Image src={targetImage}></Image>
                                     </Box>
                                 </VStack>
                             </Flex>

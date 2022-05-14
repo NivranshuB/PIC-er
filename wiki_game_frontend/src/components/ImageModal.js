@@ -1,4 +1,4 @@
-import { Button, Center, Image, Modal, ModalBody, ModalContent, ModalOverlay, Stack, useDisclosure } from "@chakra-ui/react";
+import { Button, Image, Modal, ModalBody, ModalContent, ModalOverlay, Stack, useDisclosure } from "@chakra-ui/react";
 
 const ImageModal = ({ image, handleContinue }) => {
 

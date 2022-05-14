@@ -1,4 +1,4 @@
-import { Center, Flex, Spacer } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { useState, useEffect } from 'react'
 import BackButton from "../components/BackButton";
 import LeaderboardList from "../components/LeaderboardList";
@@ -17,14 +17,10 @@ const LeaderboardPage = () => {
 
     useEffect(() => {
         async function loadLeaderboardData() {
-            console.log('Loading global leaderboard')
             getLeaderboard().then((o) => {
                 setGlobalLead(o);
-                console.log(globalLead);
             });
             if (isAuthenticated) {
-                console.log('Loading personal leaderboard for ' + user.nickname)
-                // await setPersonalLead(user.username).then((o) => setPersonalLead(o))
                 getPersonalLeaderboard(user.nickname).then((o) => setPersonalLead(o))
             }
         }

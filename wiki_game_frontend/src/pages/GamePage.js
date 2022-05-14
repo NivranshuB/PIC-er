@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Heading, HStack, Image, Modal, ModalBody, ModalContent, ModalOverlay, Spacer, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
@@ -24,6 +24,19 @@ const GamePage = () => {
     })
 
     const [originalImage, setOriginalImage] = useState();
+    const [time, setTime] = useState(0);
+    const [clicks, setClicks] = useState(0);
+
+    useEffect(() => {
+        let interval = setInterval(() => {
+            setTime(time + 1);
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [time]);
+
+    useEffect(() => {
+        handleStart();
+    }, []);
 
     const handleStart = async () => {
         const data = await startGame();
@@ -37,6 +50,22 @@ const GamePage = () => {
         setOriginalImage(startImage);
         setClicks(0);
         setTime(0);
+    }
+
+    const handleContinue = async (image) => {
+        checkGameComplete(image);
+        const dataToSend = getTagsToSend(image);
+        await continueGame(dataToSend)
+            .then((response) => {
+                let shuffledArray = shuffleImages(response);
+                setData({
+                    ...data,
+                    startImage: image,
+                    images: shuffledArray,
+                })
+            });
+
+        setClicks(clicks + 1);
     }
 
     const shuffleImages = (images) => {
@@ -67,39 +96,9 @@ const GamePage = () => {
         return randomImages;
     }
 
-    useEffect(() => {
-        handleStart();
-    }, []);
-
-    const [time, setTime] = useState(0);
-    const [clicks, setClicks] = useState(0);
-
-    useEffect(() => {
-        let interval = setInterval(() => {
-            setTime(time + 1);
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [time]);
-
-    const handleContinue = async (image) => {
-        checkGameComplete(image);
-        const dataToSend = getTagsToSend(image);
-        await continueGame(dataToSend)
-            .then((response) => {
-                let shuffledArray = shuffleImages(response);
-                setData({
-                    ...data,
-                    startImage: image,
-                    images: shuffledArray,
-                })
-            });
-
-        setClicks(clicks + 1);
-    }
-
     const checkGameComplete = (image) => {
         if (image.imageURL === data.targetImage.imageURL) {
-            if ( isAuthenticated ) {
+            if (isAuthenticated) {
                 endGame({ username: user.nickname, email: MD5(user.email).toString(), highscore: clicks, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL, time: time });
             }
             navigate('/end', { state: { clicks: clicks, time: time, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL } });
@@ -130,7 +129,7 @@ const GamePage = () => {
         if (closerImage.imageID === image.imageID) {
             let newTags = targetTags.filter(tag => !imageTags.includes(tag));
             const randomNewTag = newTags[Math.floor(Math.random() * newTags.length)];
-    
+
             let tagsToSend = imageTags.concat(randomNewTag);
             return { selectedTags: tagsToSend };
         }

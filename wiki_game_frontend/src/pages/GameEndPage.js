@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer, Stack, VStack, Wrap } from "@chakra-ui/react";
+import { Button, Center, Flex, Heading, HStack, Image, Spacer, Stack, VStack } from "@chakra-ui/react";
 import LeaderboardList from "../components/LeaderboardList";
 import NotLoggedInCard from "../components/NotLoggedInCard";
 import { Link, useLocation, useNavigate } from "react-router-dom";

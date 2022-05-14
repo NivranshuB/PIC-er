@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const NavbarPage = () => {
-    const { user, loginWithRedirect, logout, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
+    const { user, loginWithRedirect, logout, isAuthenticated, isLoading } = useAuth0();
 
     return (
         <Box height='100vh'>
