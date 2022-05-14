@@ -1,4 +1,4 @@
-import { Button, Image, Modal, ModalBody, ModalContent, ModalOverlay, Stack, useDisclosure } from "@chakra-ui/react";
+import { Button, Image, Modal, ModalBody, ModalContent, ModalOverlay, Spacer, Stack, useDisclosure } from "@chakra-ui/react";
 
 const GameImageModal = ({ image, handleContinue }) => {
 
@@ -11,7 +11,9 @@ const GameImageModal = ({ image, handleContinue }) => {
 
     return (
         <>
-            <Image src={image.imageURL} maxWidth='16%' maxHeight='80%' fit='contain' onClick={onOpen} _hover={{ cursor: 'pointer' }} />
+            <Spacer />
+            <Image src={image.imageURL} minWidth='15%' maxWidth='15%' maxHeight='250px' fit='contain' onClick={onOpen} _hover={{ cursor: 'pointer' }} />
+            <Spacer />
 
             <Modal isOpen={isOpen} onClose={onClose} size='xl'>
                 <ModalOverlay backdropFilter='auto' backdropBrightness='20%' />
@@ -19,7 +21,7 @@ const GameImageModal = ({ image, handleContinue }) => {
                     <ModalBody >
                         <Stack>
                             <Image src={image.imageURL} height='100%' />
-                            <Button alignSelf='center' onClick={() => handleClick(image) }>Select</Button>
+                            <Button alignSelf='center' onClick={() => handleClick(image)}>Select</Button>
                         </Stack>
 
                     </ModalBody>

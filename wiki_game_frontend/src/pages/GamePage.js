@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
@@ -150,68 +150,71 @@ const GamePage = () => {
     }
 
     return (
-        <Flex direction='column' height='100%'>
-            <BackButton />
+        <Flex direction='column' width='100%' height='80%'>
+            <HStack width='100%'>
+                <BackButton />
+                <Spacer />
+                <Center>
+                    <Heading size='md' alignSelf='center' p='16px' textAlign='right'>
+                        Select the image below that best links you to the target image
+                    </Heading>
+                </Center>
+            </HStack>
+
             {loading
                 ? <Center><Heading>Loading...</Heading></Center>
                 : <>
-                    <Flex width='100%' position='absolute' zIndex='-1'>
+                    <Flex direction='row' width='100%'>
 
+                        <Flex alignSelf='center' direction='column' width='100%' pl='32px' pr='32px'>
+                            <Flex width='100%'>
+                                <HStack width='100%' alignItems='end'>
 
-                        <Heading size='md' alignSelf='center' p='32px' textAlign='center' width='200px'>
-                            Select the image below that best links you to the target image
-                        </Heading>
-                        <Spacer />
-                        <Flex direction='column' p='32px' justify='right'>
-                            <Heading textAlign='center'>
-                                Target Image
-                            </Heading>
-                            <Image src={data.targetImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} />
-                            <Box alignSelf='center'>
-                                Time: {timeInMinutes(time)}
-                            </Box>
-                            <Spacer />
-                            <Box alignSelf='center'>
-                                Clicks: {clicks}
-                            </Box>
-                        </Flex>
-                    </Flex>
+                                    <Flex alignSelf='center' width='300px' direction='column'>
+                                        <Flex direction='column' p='16px'>
+                                            <Box alignSelf='center'>
+                                                <Heading>Time: {timeInMinutes(time)}</Heading>
+                                            </Box>
+                                            <Box alignSelf='center'>
+                                                <Heading>Clicks: {clicks}</Heading>
+                                            </Box>
+                                        </Flex>
 
-                    <Flex direction='column' height='100%'>
+                                        <Center p='16px'>
+                                            <Button onClick={() => handleRestart()}>Restart</Button>
+                                        </Center>
+                                    </Flex>
 
-                        <Flex alignSelf='center' direction='column' height='80%'>
-                            <Flex>
-                                <Spacer />
-                                <Center>
-                                    <Box>
+                                    <Spacer />
+
+                                    <Box alignItems='end'>
                                         <Heading textAlign='center'>
                                             Current Image
                                         </Heading>
-                                        {/* <ImageModal image={data.startImage} /> */}
-                                        {/* <Image src={data.startImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} /> */}
                                         <RegularImageModal image={data.startImage.imageURL} />
                                     </Box>
-                                </Center>
-                                <Spacer />
+
+                                    <Spacer />
+
+                                    <Box>
+                                        <Heading textAlign='center'>
+                                            Target Image
+                                        </Heading>
+                                        <RegularImageModal image={data.targetImage.imageURL} />
+
+                                    </Box>
+                                </HStack>
                             </Flex>
 
                             <GameArrow />
 
-                            <HStack spacing='16px' width='100%' justify='center' alignItems='start'>
+                            <HStack spacing='16px' width='100%' height='80%' justify='center' alignItems='start' pl='32px' pr='32px'>
                                 {data.images.map((image) => {
                                     return (
                                         <GameImageModal image={image} handleContinue={handleContinue} />
                                     )
                                 })}
                             </HStack>
-                        </Flex>
-
-                        <Flex p='24px' position='fixed' bottom='0' width='100%'>
-                            <Box alignSelf='center'>
-                                <Button onClick={() => handleRestart()}>Restart</Button>
-                            </Box>
-                            <Spacer />
-
                         </Flex>
                     </Flex>
                 </>}
