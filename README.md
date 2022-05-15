@@ -70,15 +70,21 @@ Libraries used:
 
 #### Backend
 
-Game logic was primarily tested using Manual testing due to the game logic being difficult to test across multiple image clicks.
+Game logic was primarily tested using Manual testing due to the game logic being difficult to test across multiple image clicks. Image objects also could only be retrieved by the frontend but not modified dynamically, therefore testing express endpoints was not crucial for the game's functionality. Furthermore, the functions interacting with image objects used an element of randomisation meaning manual testing was able to more efficiently test out the game logic on the backend side compared to unit/module testing.
 
-Jest was used to test the backend. MongoMemoeryServer was used as an in-memory version of the MongoDB. Leaderboard was tested to ensure the correct gets uploaded to the Database for a new entry. Also ensures the correct data is retrieved for the global and personal leaderboards.
+A test-frontend stub was also created early during development to test out the communication of game and image objects from the frontend to the the backend using express.
 
-Postman was used to ensure the API calls were working correctly.
+Jest was used to test the backend. MongoMemoryServer was used as an in-memory version of the MongoDB. Leaderboard was tested to ensure the correct score details get uploaded to the Database for a new entry. Also ensures the correct data is retrieved for the global and personal leaderboards.
+
+Postman was used to ensure the API calls were working correctly. Postman was also used to test that game objects were being communicated accurately between the server and the MongoDB instance.
 
 #### Frontend
 
-Axios Mock adapter was used to ensure the frontend sends the correct data to the backend. Tests were used to ensure the correct calls to start, continue and end game were made. Calls to retrieve leaderboard data were also tested.
+Axios Mock adapter was used to ensure the frontend sends the correct data to the backend. Tests were used to ensure the correct calls to start, continue and end game were made. Test cases were also created to test the retrieval of personal and global leaderboard data as well as the creation of new leaderboard entries.
+
+Unit testing was carried out manually as the elements of the UI were too dependent on other modules to be tested separately. 
+
+Figma was utilised to design UI prototypes and test out different ideas for the components of the web application. This was done early in the development process to settle on a user interface design before commencing the coding of the frontend on React.
 
 ## Project Features
 
