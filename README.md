@@ -1,6 +1,16 @@
 # PIC-er
 
-SOFTENG 750 Group Charcoal Cats
+*SOFTENG 750 Group Charcoal Cats*
+
+## Table of Contents
+- [Introduction](#introduction)
+- [Getting Started](#getting-started)
+- [Project Overview](#project-overview)
+- [Project Features](#project-features)
+- [Workflow](#workflow)
+- [Team Organisation](#team-organisation)
+
+## Introduction
 
 Inspired by the Wikipedia game [Wiki-race](https://en.wikipedia.org/wiki/Wikipedia:Wikirace), PIC-er is a React-based web game using the MERN stack.
 
