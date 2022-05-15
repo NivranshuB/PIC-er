@@ -6,8 +6,12 @@ import { useEffect, useState } from "react";
 import { getLeaderboard, getPersonalLeaderboard } from "../services/api";
 import { useAuth0 } from "@auth0/auth0-react";
 import timeInMinutes from "../utils/timeInMinutes";
-import RegularImageModal from "../components/modals/RegularImageModal";
 
+/**
+ * End game page
+ * Will display the game results and a summary of the leaderboards
+ * @returns GameEndPage
+ */
 const GameEndPage = () => {
 
     const { user, isAuthenticated } = useAuth0();
@@ -17,12 +21,10 @@ const GameEndPage = () => {
     const {state} = useLocation();
     const {clicks, time, startImageURL, targetImageURL} = state;
 
-
-
     const [globalLead, setGlobalLead] = useState([])
     const [personalLead, setPersonalLead] = useState([])
 
-
+    // retrieves the leaderboard results from the backend once on page load
     useEffect(() => {
         async function loadLeaderboardData() {
             getLeaderboard().then((o) => {
