@@ -36,7 +36,7 @@ async function getNextImageSet(tagsMatching) {
 }
 
 async function getACloserImage(tagsMatching) {
-    return imageCollection.find({imageTags: {$all: tagsMatching}, tagCount: tagsMatching.length}).toArray()
+    return imageCollection.find({imageTags: {$all: tagsMatching}}).toArray()
     .then((closerImageArray) => closerImageArray[getRandomIntBetweenValues(0, closerImageArray.length)])
 }
 
