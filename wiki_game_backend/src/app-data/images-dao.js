@@ -3,7 +3,7 @@
  */
 import { imageCollection } from '../server';
 
-const NUM_OF_IMAGES = 5;
+const NUM_OF_IMAGES = 6;
 
 //Function to send the start image, the target image and the 5 level images upon game initialisation
 async function createGame() {
@@ -21,7 +21,7 @@ async function createGame() {
     await imageCollection.find({imageTags: {$all: startImageTagArray}, tagCount: {$gte: 3}}).toArray()
             .then((arr) => {targetImage = arr[getRandomIntBetweenValues(0, arr.length)]})
 
-    await getACloserImage(closerImageTags(startImageTagArray, targetImage.imageTags)).then((o) => closerImage = (o == null) ? {} : o);       
+    await getACloserImage(closerImageTags(startImageTagArray, targetImage.imageTags)).then((o) => closerImage = (o == null || o.imageID == targetImage.imageID) ? {} : o);       
     await getRandomImages().then((o) => randomImages = o);      
     levelImages.push(closerImage);
     levelImages = levelImages.concat(randomImages);
@@ -36,7 +36,7 @@ async function getNextImageSet(tagsMatching) {
 }
 
 async function getACloserImage(tagsMatching) {
-    return imageCollection.find({imageTags: {$all: tagsMatching}}).toArray()
+    return imageCollection.find({imageTags: {$all: tagsMatching}, tagCount: tagsMatching.length}).toArray()
     .then((closerImageArray) => closerImageArray[getRandomIntBetweenValues(0, closerImageArray.length)])
 }
 

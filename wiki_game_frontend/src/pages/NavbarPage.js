@@ -1,43 +1,35 @@
-import { Box, Button, ButtonGroup, Center, Flex, HStack, Spacer, Stack, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Flex, Heading, HStack, Spacer, Text } from "@chakra-ui/react";
 import { Link, Outlet } from "react-router-dom";
-import LoginModal from "../components/LoginModal";
-import SignupModal from "../components/SignupModal";
 import { useAuth0 } from "@auth0/auth0-react";
-import MD5 from 'crypto-js/md5';
-
 
 const NavbarPage = () => {
-    const { user, loginWithRedirect, logout, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const { isOpen: isOpenSignup, onOpen: onOpenSignup, onClose: onCloseSignup } = useDisclosure();
+    const { user, loginWithRedirect, logout, isAuthenticated, isLoading } = useAuth0();
 
     return (
         <Box height='100vh'>
-            <Flex color='accent' backgroundColor='lighterBackground'>
-                <Center pl='4'>
+            <Flex color='accent' backgroundColor='lighterBackground' pl='16px' pr='16px'>
                     <Link to='/'>
-                        PIC-er
+                        <Heading textAlign='center'>PIC-er</Heading>
                     </Link>
 
-                </Center>
-
                 <Spacer />
+
                 <ButtonGroup>
 
-                    <SignupModal isOpen={isOpenSignup} onClose={onCloseSignup} />
+                    {/* Displays Sign up and Login buttons if not logged in else shows username and Logout button */}
                     {(!isLoading && isAuthenticated)
                         ? <HStack>
-                            <h2>Hi, {user.nickname}</h2>
+                            <Text color='white'>Hi, {user.nickname}</Text>
                             <Button variant='borderless' onClick={() => logout({ returnTo: window.location.origin })}>Logout</Button>
                         </HStack>
                         : (<>
                             <Button variant='borderlessWhite' onClick={() => loginWithRedirect({ screen_hint: 'signup' })}>Sign Up</Button>
                             <Button variant='borderless' onClick={() => loginWithRedirect()}>Login</Button>
                         </>)}
-                    <LoginModal isOpen={isOpen} onClose={onClose} />
                 </ButtonGroup>
 
             </Flex>
+            
             {/* Renders children pages */}
             <Outlet />
         </Box>

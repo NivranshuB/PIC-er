@@ -1,21 +1,18 @@
 import { Button } from "@chakra-ui/react"
+import { totalNumberOfHelpPages } from "../pages/HelpPage";
 
-function HelpNextButton (setHelpFirstPage, setHelpLastPage, helpCurrentPageNumber, setHelpCurrentPageNumber, setHelpImageSource) {
+const HelpNextButton = ({setHelpFirstPage, setHelpLastPage, helpCurrentPageNumber, setHelpCurrentPageNumber, setHelpImageSource}) => {
 
     const moveToNextHelpPage = () => {
-        //NEED TO CONSIDER HOW MANY HELP PAGES THERE ARE IN TOTAL
-
-        if (helpCurrentPageNumber == 9) {
+        if (helpCurrentPageNumber === (totalNumberOfHelpPages - 1)) {
             setHelpFirstPage(false);
             setHelpLastPage(true)
-            setHelpCurrentPageNumber(helpCurrentPageNumber + 1);
-            setHelpImageSource(null);       //NEED TO SET TO GET THE IMAGE
         } else {
             setHelpFirstPage(false);
-            setHelpLastPage(false);
-            setHelpCurrentPageNumber(helpCurrentPageNumber + 1)
-            setHelpImageSource(null);       //NEED TO SET TO GET THE IMAGE
+            setHelpLastPage(false);  
         }
+        setHelpCurrentPageNumber(helpCurrentPageNumber + 1);
+        setHelpImageSource('helpImages/' + (helpCurrentPageNumber + 1) + '.png');
     }
 
     return (

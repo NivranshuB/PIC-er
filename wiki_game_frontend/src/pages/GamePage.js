@@ -1,14 +1,26 @@
-import { Box, Button, Center, Flex, Heading, HStack, Image, Modal, ModalBody, ModalContent, ModalOverlay, Spacer, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, HStack, Spacer, Tag, Tooltip } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import GameArrow from "../components/GameArrow";
-import ImageModal from "../components/ImageModal";
+import GameImageModal from "../components/modals/GameImageModal";
 import { continueGame, endGame, startGame } from "../services/api";
 import { useAuth0 } from "@auth0/auth0-react";
 import MD5 from 'crypto-js/md5';
+import timeInMinutes from "../utils/timeInMinutes";
+import RegularImageModal from "../components/modals/RegularImageModal";
 
+let closerImage = {};
+
+/**
+ * Displays the game page
+ * Core game logic
+ * @returns Game page
+ */
 const GamePage = () => {
+
+    // check if data has been retrieved from the db and game is ready
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
 
@@ -20,68 +32,44 @@ const GamePage = () => {
         images: [],
     })
 
+    const [hintText, setHintText] = useState();
+
     const [originalImage, setOriginalImage] = useState();
-
-    const handleStart = async () => {
-        const data = await startGame();
-        const { startImage, targetImage, levelImages } = data;
-        let shuffledArray = shuffleImages(levelImages);
-        setData({
-            startImage: startImage,
-            targetImage: targetImage,
-            images: shuffledArray,
-        });
-        setOriginalImage(startImage);
-        setClicks(0);
-        setTime(0);
-    }
-
-    const shuffleImages = (images) => {
-        const closerImage = images[0];
-        let randomImages = [];
-        if (Object.keys(closerImage.length > 0)) {
-            randomImages.push(closerImage);
-            for (let image of images.slice(1, 6)) {
-                if (image.imageID !== closerImage.imageID) {
-                    randomImages.push(image);
-                    if (randomImages.length === 5) {
-                        break;
-                    }
-                }
-            }
-        } else {
-            randomImages = images.slice(1, 6);
-        }
-
-        let index = randomImages.length;
-        while (index !== 0) {
-            let randomIndex = Math.floor(Math.random() * index);
-            index--;
-
-            [randomImages[index], randomImages[randomIndex]] = [randomImages[randomIndex], randomImages[index]];
-        }
-        return randomImages;
-    }
-
-    useEffect(() => {
-        handleStart();
-    }, []);
-
     const [time, setTime] = useState(0);
     const [clicks, setClicks] = useState(0);
 
-    let minutes = parseInt(time / 60);
-    let seconds = time % 60;
-
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    seconds = seconds < 10 ? '0' + seconds : seconds;
-
+    // timer
     useEffect(() => {
         let interval = setInterval(() => {
             setTime(time + 1);
         }, 1000);
         return () => clearInterval(interval);
     }, [time]);
+
+    // run start game once on page load
+    useEffect(() => {
+        handleStart();
+    }, []);
+
+    const handleStart = async () => {
+        let shuffledArray = [];
+        startGame().then((data) => {
+            const { startImage, targetImage, levelImages } = data;
+            shuffledArray = shuffleImages(levelImages, targetImage);
+            setData({
+                startImage: startImage,
+                targetImage: targetImage,
+                images: shuffledArray,
+            })
+            setOriginalImage(startImage);
+            setLoading(false);
+            setClicks(0);
+            setTime(0);
+            updateHintText(targetImage.imageTags)
+        });
+
+
+    }
 
     const handleContinue = async (image) => {
         checkGameComplete(image);
@@ -99,15 +87,82 @@ const GamePage = () => {
         setClicks(clicks + 1);
     }
 
+    /**
+     * shuffle images to be displayed
+     * includes error checking
+     * @param {*} images images to be shuffled
+     * @param {*} start Target image to be checked on first run
+     * @returns shuffled images
+     */
+    const shuffleImages = (images, start = null) => {
+        closerImage = images[0];
+        let imageSet = []
+        let randomImages = [];
+
+        if (start != null) {
+            for (let i of images) {
+                if (i.imageID !== start.imageID) {
+                    imageSet.push(i);
+                }
+            }
+        } else {
+            imageSet = images;
+        }
+
+        // checks closer image exists
+        if (Object.keys(closerImage).length > 0) {
+            randomImages.push(closerImage);
+            // checks none of the random images are duplicates of the closer image
+            // only provide 5 images in total
+            for (let image of imageSet.slice(1, 6)) {
+                if (image.imageID !== closerImage.imageID) {
+                    randomImages.push(image);
+                    if (randomImages.length === 5) {
+                        break;
+                    }
+                }
+            }
+        } else {
+            randomImages = imageSet.slice(1, 6);
+        }
+
+        let index = randomImages.length;
+        // shuffle the images
+        while (index !== 0) {
+            let randomIndex = Math.floor(Math.random() * index);
+            index--;
+
+            [randomImages[index], randomImages[randomIndex]] = [randomImages[randomIndex], randomImages[index]];
+        }
+
+        return randomImages;
+    }
+
+    /**
+     * Will send the current game results to the backend if user is logged in
+     * @param {*} image Image clicked to win the game
+     */
     const checkGameComplete = (image) => {
         if (image.imageURL === data.targetImage.imageURL) {
-            if ( isAuthenticated ) {
-                endGame({ username: user.nickname, email: MD5(user.email).toString(), highscore: clicks, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL, time: time });
+            if (isAuthenticated) {
+                endGame({
+                    username: user.nickname,
+                    email: MD5(user.email).toString(),
+                    highscore: clicks,
+                    startImageURL: originalImage.imageURL,
+                    targetImageURL: data.targetImage.imageURL,
+                    time: time
+                });
             }
             navigate('/end', { state: { clicks: clicks, time: time, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL } });
         }
     }
 
+    /**
+     * Calculates which tags to be requested from the backend
+     * @param {*} image Image the user clicked on
+     * @returns The object to be sent to the backend containing the tags
+     */
     const getTagsToSend = (image) => {
         const imageTags = image.imageTags;
         const targetTags = data.targetImage.imageTags;
@@ -120,82 +175,118 @@ const GamePage = () => {
                 }
             }
         }
+
+        // if all tags match the target image's tags, send the target tags
         if (tagMatchCount === targetTags.length) {
             return { selectedTags: targetTags };
         }
 
+        // if no tags match, send the tags of the image clicked on
         if (tagMatchCount === 0) {
             return { selectedTags: imageTags };
         }
 
-        return { selectedTags: image.imageTags };
+        // if the closer image was clicked, add one random tag from the target image to progress the game smoothly
+        if (closerImage.imageID === image.imageID) {
+            let newTags = targetTags.filter(tag => !imageTags.includes(tag));
+            const randomNewTag = newTags[Math.floor(Math.random() * newTags.length)];
+
+            let tagsToSend = imageTags.concat(randomNewTag);
+            return { selectedTags: tagsToSend };
+        }
+
+        return { selectedTags: imageTags };
     }
 
     const handleRestart = () => {
         handleStart();
     }
 
+    const updateHintText = (hintTags) => {
+        let hintText = '';
+
+        for (const hint of hintTags) {
+            hintText = hintText + " " + hint;
+        } 
+
+        setHintText(hintText);
+    }
+
     return (
-        <Flex direction='column' height='100%'>
-            <BackButton />
-            <Flex width='100%' position='absolute' zIndex='-1'>
-
-
-                <Heading size='md' alignSelf='center' p='32px' textAlign='center' width='200px'>
-                    Select the image below that best links you to the target image
-                </Heading>
+        <Flex direction='column' width='100%' height='80%'>
+            <HStack width='100%'>
+                <BackButton />
                 <Spacer />
-                <Flex direction='column' p='32px' justify='right'>
-                    <Heading textAlign='center'>
-                        Target Image
+                <Center>
+                    <Heading size='md' alignSelf='center' p='16px' textAlign='right'>
+                        Select the image below that best links you to the target image
                     </Heading>
-                    <Image src={data.targetImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} />
-                    <Box alignSelf='center'>
-                        Time: {minutes}:{seconds}
-                    </Box>
-                    <Spacer />
-                    <Box alignSelf='center'>
-                        Clicks: {clicks}
-                    </Box>
-                </Flex>
-            </Flex>
+                </Center>
+            </HStack>
 
-            <Flex direction='column' height='100%'>
+            {loading
+                ? <Center><Heading>Loading...</Heading></Center>
+                : <>
+                    <Flex direction='row' width='100%'>
 
-                <Flex alignSelf='center' direction='column' height='80%'>
-                    <Flex>
-                        <Spacer />
-                        <Center>
-                            <Box>
-                                <Heading textAlign='center'>
-                                    Current Image
-                                </Heading>
-                                <Image src={data.startImage.imageURL} maxWidth='300px' maxHeight='300px' fit='contain' p='8px' _hover={{ transform: 'scale(2)' }} />
-                            </Box>
-                        </Center>
-                        <Spacer />
+                        <Flex alignSelf='center' direction='column' width='100%' pl='32px' pr='32px'>
+                            <Flex width='100%'>
+                                <HStack width='100%' alignItems='end'>
+
+                                    <Flex alignSelf='center' width='300px' direction='column'>
+                                        <Flex direction='column' p='16px'>
+                                            <Box alignSelf='center'>
+                                                <Heading>Time: {timeInMinutes(time)}</Heading>
+                                            </Box>
+                                            <Box alignSelf='center'>
+                                                <Heading>Clicks: {clicks}</Heading>
+                                            </Box>
+                                        </Flex>
+                                        <Center p='16px'>
+                                            <Button onClick={() => handleRestart()}>Restart</Button>
+                                        </Center>
+                                        <Center>
+                                            <Tooltip label={hintText} bg="lighterBackground" borderRadius="8px" hasArrow>
+                                                <Tag bg="lighterBackground" color="white">
+                                                    Hover for hint
+                                                </Tag>
+                                            </Tooltip>  
+                                        </Center>                                                                               
+                                    </Flex>
+
+                                    <Spacer />
+
+                                    <Box alignItems='end'>
+                                        <Heading textAlign='center'>
+                                            Current Image
+                                        </Heading>
+                                        <RegularImageModal image={data.startImage.imageURL} />
+                                    </Box>
+
+                                    <Spacer />
+
+                                    <Box>
+                                        <Heading textAlign='center'>
+                                            Target Image
+                                        </Heading>
+                                        <RegularImageModal image={data.targetImage.imageURL} />
+
+                                    </Box>
+                                </HStack>
+                            </Flex>
+
+                            <GameArrow />
+
+                            <HStack spacing='16px' width='100%' height='80%' justify='center' alignItems='start' pl='32px' pr='32px'>
+                                {data.images.map((image) => {
+                                    return (
+                                        <GameImageModal image={image} handleContinue={handleContinue} />
+                                    )
+                                })}
+                            </HStack>
+                        </Flex>
                     </Flex>
-
-                    <GameArrow />
-
-                    <HStack spacing='16px' width='100%' justify='center' alignItems='start'>
-                        {data.images.map((image) => {
-                            return (
-                                <ImageModal image={image} handleContinue={handleContinue} />
-                            )
-                        })}
-                    </HStack>
-                </Flex>
-
-                <Flex p='24px' position='fixed' bottom='0' width='100%'>
-                    <Box alignSelf='center'>
-                        <Button onClick={() => handleRestart()}>Restart</Button>
-                    </Box>
-                    <Spacer />
-
-                </Flex>
-            </Flex>
-
+                </>}
         </Flex>
     )
 }
