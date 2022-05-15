@@ -5,7 +5,7 @@ import HelpDoneButton from "../components/HelpDoneButton";
 import HelpNextButton from "../components/HelpNextButton";
 import HelpPreviousButton from "../components/HelpPreviousButton";
 
-export const totalNumberOfHelpPages = 12;
+export const totalNumberOfHelpPages = 13;
 
 const HelpPage = () => {
 
