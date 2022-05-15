@@ -16,6 +16,7 @@ const NavbarPage = () => {
 
                 <ButtonGroup>
 
+                    {/* Displays Sign up and Login buttons if not logged in else shows username and Logout button */}
                     {(!isLoading && isAuthenticated)
                         ? <HStack>
                             <Text color='white'>Hi, {user.nickname}</Text>

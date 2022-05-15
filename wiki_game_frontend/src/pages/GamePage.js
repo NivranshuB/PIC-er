@@ -12,8 +12,14 @@ import RegularImageModal from "../components/modals/RegularImageModal";
 
 let closerImage = {};
 
+/**
+ * Displays the game page
+ * Core game logic
+ * @returns Game page
+ */
 const GamePage = () => {
 
+    // check if data has been retrieved from the db and game is ready
     const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
@@ -32,6 +38,7 @@ const GamePage = () => {
     const [time, setTime] = useState(0);
     const [clicks, setClicks] = useState(0);
 
+    // timer
     useEffect(() => {
         let interval = setInterval(() => {
             setTime(time + 1);
@@ -39,6 +46,7 @@ const GamePage = () => {
         return () => clearInterval(interval);
     }, [time]);
 
+    // run start game once on page load
     useEffect(() => {
         handleStart();
     }, []);
@@ -47,7 +55,7 @@ const GamePage = () => {
         let shuffledArray = [];
         startGame().then((data) => {
             const { startImage, targetImage, levelImages } = data;
-            shuffledArray = shuffleImages(levelImages);
+            shuffledArray = shuffleImages(levelImages, targetImage);
             setData({
                 startImage: startImage,
                 targetImage: targetImage,
@@ -79,13 +87,34 @@ const GamePage = () => {
         setClicks(clicks + 1);
     }
 
-    const shuffleImages = (images) => {
+    /**
+     * shuffle images to be displayed
+     * includes error checking
+     * @param {*} images images to be shuffled
+     * @param {*} start Target image to be checked on first run
+     * @returns shuffled images
+     */
+    const shuffleImages = (images, start = null) => {
         closerImage = images[0];
-
+        let imageSet = []
         let randomImages = [];
+
+        if (start != null) {
+            for (let i of images) {
+                if (i.imageID !== start.imageID) {
+                    imageSet.push(i);
+                }
+            }
+        } else {
+            imageSet = images;
+        }
+
+        // checks closer image exists
         if (Object.keys(closerImage).length > 0) {
             randomImages.push(closerImage);
-            for (let image of images.slice(1, 6)) {
+            // checks none of the random images are duplicates of the closer image
+            // only provide 5 images in total
+            for (let image of imageSet.slice(1, 6)) {
                 if (image.imageID !== closerImage.imageID) {
                     randomImages.push(image);
                     if (randomImages.length === 5) {
@@ -94,28 +123,46 @@ const GamePage = () => {
                 }
             }
         } else {
-            randomImages = images.slice(1, 6);
+            randomImages = imageSet.slice(1, 6);
         }
 
         let index = randomImages.length;
+        // shuffle the images
         while (index !== 0) {
             let randomIndex = Math.floor(Math.random() * index);
             index--;
 
             [randomImages[index], randomImages[randomIndex]] = [randomImages[randomIndex], randomImages[index]];
         }
+
         return randomImages;
     }
 
+    /**
+     * Will send the current game results to the backend if user is logged in
+     * @param {*} image Image clicked to win the game
+     */
     const checkGameComplete = (image) => {
         if (image.imageURL === data.targetImage.imageURL) {
             if (isAuthenticated) {
-                endGame({ username: user.nickname, email: MD5(user.email).toString(), highscore: clicks, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL, time: time });
+                endGame({
+                    username: user.nickname,
+                    email: MD5(user.email).toString(),
+                    highscore: clicks,
+                    startImageURL: originalImage.imageURL,
+                    targetImageURL: data.targetImage.imageURL,
+                    time: time
+                });
             }
             navigate('/end', { state: { clicks: clicks, time: time, startImageURL: originalImage.imageURL, targetImageURL: data.targetImage.imageURL } });
         }
     }
 
+    /**
+     * Calculates which tags to be requested from the backend
+     * @param {*} image Image the user clicked on
+     * @returns The object to be sent to the backend containing the tags
+     */
     const getTagsToSend = (image) => {
         const imageTags = image.imageTags;
         const targetTags = data.targetImage.imageTags;
@@ -129,14 +176,17 @@ const GamePage = () => {
             }
         }
 
+        // if all tags match the target image's tags, send the target tags
         if (tagMatchCount === targetTags.length) {
             return { selectedTags: targetTags };
         }
 
+        // if no tags match, send the tags of the image clicked on
         if (tagMatchCount === 0) {
             return { selectedTags: imageTags };
         }
 
+        // if the closer image was clicked, add one random tag from the target image to progress the game smoothly
         if (closerImage.imageID === image.imageID) {
             let newTags = targetTags.filter(tag => !imageTags.includes(tag));
             const randomNewTag = newTags[Math.floor(Math.random() * newTags.length)];

@@ -1,5 +1,11 @@
 import { Center, Image, Modal, ModalBody, ModalContent, ModalOverlay, Stack, useDisclosure } from "@chakra-ui/react";
 
+/**
+ * Image modal for image without the need for a button
+ * Allows the user to view a larger version of the image
+ * @param {*} image image to be displayed
+ * @returns Image as well as a modal
+ */
 const RegularImageModal = ({ image }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();

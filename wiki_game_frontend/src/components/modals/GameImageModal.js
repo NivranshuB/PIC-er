@@ -1,5 +1,12 @@
 import { Button, Image, Modal, ModalBody, ModalContent, ModalOverlay, Spacer, Stack, useDisclosure } from "@chakra-ui/react";
 
+/**
+ * Game image modal to display the image during the game as well as enable the image to be clicked to open a modal
+ * to view a larger version of the image as well as submitting this image to progress to the next game stage.
+ * @param {image} image Image clicked to display more info
+ * @param {handleContinue} handleContinue Controls what the select button will do when clicked
+ * @returns Image and Modal
+ */
 const GameImageModal = ({ image, handleContinue }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();

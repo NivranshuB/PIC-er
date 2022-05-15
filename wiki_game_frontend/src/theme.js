@@ -24,6 +24,7 @@ const Button = {
                 bg: 'accent',
             }
         },
+        // alternative button to for less emphasis
         grey: {
             bg: 'lighterBackground',
             width: '120px',
@@ -32,6 +33,7 @@ const Button = {
                 color: 'accent',
             },
         },
+        // to be used in the navbar
         borderless: {
             color: 'accent',
             _hover: {
@@ -43,6 +45,7 @@ const Button = {
                 color: 'accent',
             }
         },
+        // to be used in the navbar
         borderlessWhite: {
             color: 'white',
             _hover: {
