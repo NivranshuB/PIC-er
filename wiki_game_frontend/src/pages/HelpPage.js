@@ -38,13 +38,14 @@ const HelpPage = () => {
                                 helpCurrentPageNumber={helpCurrentPageNumber}
                                 setHelpCurrentPageNumber={setHelpCurrentPageNumber}
                                 setHelpImageSource={setHelpImageSource} />
-                            }
+                        }
                     </Box>
                     <Box w='600px'>
                         <Progress size='md' colorScheme='red' bg='lighterBackground' borderRadius='8px' value={(helpCurrentPageNumber / totalNumberOfHelpPages) * 100} />
                         <Center><Text>{helpCurrentPageNumber}/{totalNumberOfHelpPages}</Text></Center>
                     </Box>
                     <Box w='150px'>
+                        {/* Done button will be displayed if on last page */}
                         {helpLastPage ?
                             <HelpDoneButton /> :
                             <HelpNextButton

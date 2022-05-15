@@ -113,6 +113,11 @@ export const overflowBoxStyle = {
     },
 }
 
+/**
+ * Custom global theme to be used throughout the project
+ * Refer to Chakra UI documentation for more information
+ * https://chakra-ui.com/guides/getting-started/cra-guide
+ */
 const theme = extendTheme({
     styles: {
         global: {
