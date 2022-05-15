@@ -155,11 +155,13 @@ Figma was utilised to design UI prototypes and test out different ideas for the 
 
 Redirects to the Auth0 Login page
 
-![image](https://user-images.githubusercontent.com/68992239/168456658-2e7c4a99-f515-442d-8fc2-e7c3b5b2ace6.png)
+![image](https://user-images.githubusercontent.com/68992239/168464257-888ad34a-dc39-4349-ab60-5c3407ba6bed.png)
 
 ### Signup Button
 
 Redirects to the Auth0 Signup page
+
+![image](https://user-images.githubusercontent.com/68992239/168464288-2791748b-306f-4d65-9f8d-4c9860a7ff36.png)
 
 ### Logout Button
 
