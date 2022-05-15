@@ -24,9 +24,9 @@ After initially proposing quite a more challenging style game design we amended 
 
 Our game caters towards the following two types of players:
 
-1. [Skill based] Players that want something intellectually challenging. These players will want to take their time and really prioritise how many image clicks they need to make to get to the target image. For these players the time metric does not mean too much and their main stimulation from the game is how they are able to link the start image to the next best image one at a time. They will treat this game as a careful observation game.
+1. *Skill based* - Players that want something intellectually challenging. These players will want to take their time and really prioritise how many image clicks they need to make to get to the target image. For these players the time metric does not mean too much and their main stimulation from the game is how they are able to link the start image to the next best image one at a time. They will treat this game as a careful observation game.
 
-2. [Speed based] Players that want to speed through the game and test their reflexive abilities. These players would want to speed through the images to try and get from the start image to the target image as fast as possible. These players are stimulated by the speed with which they can navigate the application page. These players are motivated to improve their digital agility and dexterity and do not care much about following the 'links' from the start image to the target image, relying heavily on luck.
+2. *Speed based* - Players that want to speed through the game and test their reflexive abilities. These players would want to speed through the images to try and get from the start image to the target image as fast as possible. These players are stimulated by the speed with which they can navigate the application page. These players are motivated to improve their digital agility and dexterity and do not care much about following the 'links' from the start image to the target image, relying heavily on luck.
 
 Our game provides two different ways to measure performance meaning that we can can cater to those that prefer a more challenging game (similar to our inspiration - the wiki game) and also to those who prefer a quick speedy challenge. In the future we would like to extend these two concepts into having two entirely different game modes for these two player demographics.
 
@@ -35,6 +35,10 @@ Our game provides two different ways to measure performance meaning that we can 
 The project is separated into a frontend and a backend. 
 
 Ensure the `.env` file is placed into the root of the directory (on the same level as this README file and the two folders, wiki_game_backend and wiki_game_frontend). The `.env` file contains information to connect to the MongoDB database.
+
+Clone the repository:
+
+`git clone https://github.com/UOA-CS732-SE750-Students-2022/project-group-charcoal-cats.git`
 
 The best way to run the program is to open two separate terminals.
 
