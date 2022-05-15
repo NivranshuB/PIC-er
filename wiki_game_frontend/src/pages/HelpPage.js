@@ -22,7 +22,7 @@ const HelpPage = () => {
 
             {/*Image source from public folder */}
             <Center p='16px'>
-                <Image fit='contain' boxSize='70%' src={helpImageSource} />
+                <Image fit='contain' boxSize='55%' src={helpImageSource} />
             </Center>
 
 
