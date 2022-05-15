@@ -46,7 +46,7 @@ MongoDB was used along with Express.
 
 ### Frontend
 
-React was used to create the frontend in addition to Node.js
+React was used to create the frontend in addition to Node.js. Node version: 16.14.0
 
 Libraries used:
 * Chakra UI component libary
