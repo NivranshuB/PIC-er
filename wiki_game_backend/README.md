@@ -8,9 +8,22 @@
 
 # Testing
 
+## Important
 Ensure the line:
-`import { scoreCollection } from '../app-data/__tests__/leaderboard-dao.test';` is uncommented and the line:
-`import { scoreCollection } from '../server'` is commented out inside the `wiki_game_backend/src/app-data/leaderboard-dao.js` file in order to test.
+
+`import { scoreCollection } from '../app-data/__tests__/leaderboard-dao.test';` 
+
+is uncommented and the line:
+
+`import { scoreCollection } from '../server'` 
+
+is commented out inside the 
+
+`wiki_game_backend/src/app-data/leaderboard-dao.js` 
+
+file in order to test.
+
+## Run these commands to test:
 
 `cd wiki_game_backend`
 

@@ -32,7 +32,8 @@ The best way to run the program is to open two separate terminals.
 
 `yarn start`
 
-Find more info on the Frontend and Backend below:
+Find more info on the Frontend and Backend, including testing, below:
+
 * [Frontend README](./wiki_game_frontend/README.md)
 * [Backend README](./wiki_game_backend/README.md)
 

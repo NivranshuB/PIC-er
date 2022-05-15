@@ -1,4 +1,8 @@
-import { scoreCollection } from '../server'
+// import { scoreCollection } from '../server'
+
+import { scoreCollection } from '../app-data/__tests__/leaderboard-dao.test';
+// --> import when testing leaderboard-dao.js
+
 const LEADERBOARD_RESULTS_LIMIT = 10
 /**
  * Contains all the access methods to retrieve local and global score objects from MongoDB
