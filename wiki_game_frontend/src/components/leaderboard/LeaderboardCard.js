@@ -1,5 +1,12 @@
 import { Box, Center, Flex, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, useDisclosure, VStack } from "@chakra-ui/react";
+import RegularImageModal from "../modals/RegularImageModal";
 
+/**
+ * LeaderboardCard displays the row in a leaderboard with rank, name, clicks and time
+ * Also has a clickable modal to show the start and target image of that game
+ * @param {*} props rank, name, clicks, time, startImage, targetImage
+ * @returns leaderboard card to be used as the leaderboard row
+ */
 const LeaderboardCard = (props) => {
 
     const { rank, name, clicks, time, startImage, targetImage} = props;
@@ -30,7 +37,7 @@ const LeaderboardCard = (props) => {
                 {time}
             </Center>
 
-            <Modal isOpen={isOpen} onClose={onClose} size='2xl'>
+            <Modal isOpen={isOpen} onClose={onClose} size='3xl'>
                 <ModalOverlay />
                 <ModalContent bg='lighterBackground'>
                     <ModalCloseButton />
@@ -67,16 +74,18 @@ const LeaderboardCard = (props) => {
 
                         </Flex>
                             <Flex m='24px'>
-                                <VStack width='100%'>
+                                <VStack width='100%' p='8px'>
                                     <Heading size='md'>Starting image</Heading>
-                                    <Box bg='background' padding='20px'>
-                                        <img src={startImage}></img>   
+                                    <Box bg='background' padding='8px' borderRadius='8px'>
+                                        {/* <Image src={startImage}></Image>    */}
+                                        <RegularImageModal image={startImage} />
                                     </Box>
                                 </VStack>
-                                <VStack width='100%'>
+                                <VStack width='100%' p='8px'>
                                     <Heading size='md'>Goal image</Heading>
-                                    <Box bg='background' padding='20px'>
-                                        <img src={targetImage}></img>
+                                    <Box bg='background' padding='8px' borderRadius='8px'>
+                                        {/* <Image src={targetImage}></Image> */}
+                                        <RegularImageModal image={targetImage} />
                                     </Box>
                                 </VStack>
                             </Flex>

@@ -1,11 +1,17 @@
-import { Box, Button, Center, Flex, Heading, HStack, Image, Spacer, Stack, VStack, Wrap } from "@chakra-ui/react";
-import LeaderboardList from "../components/LeaderboardList";
+import { Button, Center, Flex, Heading, HStack, Image, Spacer, Stack, VStack } from "@chakra-ui/react";
+import LeaderboardList from "../components/leaderboard/LeaderboardList";
 import NotLoggedInCard from "../components/NotLoggedInCard";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getLeaderboard, getPersonalLeaderboard } from "../services/api";
 import { useAuth0 } from "@auth0/auth0-react";
+import timeInMinutes from "../utils/timeInMinutes";
 
+/**
+ * End game page
+ * Will display the game results and a summary of the leaderboards
+ * @returns GameEndPage
+ */
 const GameEndPage = () => {
 
     const { user, isAuthenticated } = useAuth0();
@@ -18,17 +24,13 @@ const GameEndPage = () => {
     const [globalLead, setGlobalLead] = useState([])
     const [personalLead, setPersonalLead] = useState([])
 
-
+    // retrieves the leaderboard results from the backend once on page load
     useEffect(() => {
         async function loadLeaderboardData() {
-            console.log('Loading global leaderboard')
             getLeaderboard().then((o) => {
                 setGlobalLead(o);
-                console.log(globalLead);
             });
             if (isAuthenticated) {
-                console.log('Loading personal leaderboard for ' + user.nickname)
-                // await setPersonalLead(user.username).then((o) => setPersonalLead(o))
                 getPersonalLeaderboard(user.nickname).then((o) => setPersonalLead(o))
             }
         }
@@ -37,12 +39,9 @@ const GameEndPage = () => {
 
     const notLoggedInText = 'Login or create an account to view your personal high scores';
 
-    // to be replaced by auth0
-    // const isAuthenticated = true;
-
     return (
         <Flex m='24px' height='90%'>
-            <VStack direction='column' width='100%' height='100%' >
+            <VStack direction='column' width='100%' height='100%' p='36px' >
                 <LeaderboardList items={globalLead} title='Global Leaderboard' />
                 <Spacer/>
                 {isAuthenticated
@@ -65,19 +64,19 @@ const GameEndPage = () => {
                         </VStack>
                         <Spacer />
                         <VStack width='100%' height='100%'>
-                            <Heading size='md'>Goal image</Heading>
+                            <Heading size='md'>Target image</Heading>
                             <Image src={targetImageURL} maxHeight='100%' />
                         </VStack>
                     </HStack>
-                    <Flex>
+                    <Flex pt='32px'>
                         <VStack width='100%'>
                             <Heading size='md'>Clicks</Heading>
-                            <Heading size='lg'>{clicks}</Heading>
+                            <Heading size='xl'>{clicks}</Heading>
                         </VStack>
                         <VStack width='100%'>
 
                             <Heading size='md'>Time</Heading>
-                            <Heading size='lg'>{time}</Heading>
+                            <Heading size='xl'>{timeInMinutes(time)}</Heading>
                         </VStack>
                     </Flex>
                     <Center>

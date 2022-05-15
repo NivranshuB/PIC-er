@@ -1,35 +1,35 @@
-import { Box, Button, Center, Flex, Heading, Spacer } from "@chakra-ui/react";
-import { useState } from "react";
-import { overflowBoxStyle } from "../theme";
+import { Box, Button, Center, Flex, Heading } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { overflowBoxStyle } from "../../theme";
+import timeInMinutes from "../../utils/timeInMinutes";
 import LeaderboardCard from "./LeaderboardCard"
 import NoPersonalScoresCard from "./NoPersonalScoresCard";
 
+/**
+ * Displays the leaderboard list of all items as rows as well as the leaderboard title
+ * @param {*} props items, title
+ * @returns Leaderboard list with rows and a title
+ */
 const LeaderboardList = (props) => {
 
     const { items, title } = props;
 
     const [clicksSorted, setClicksSorted] = useState(true);
 
-    const timeInMinutes = (a) => {
-        let mins = (Math.floor(a / 60)).toString();
-        let seconds = ((a % 60).toString().padStart(2, '0'))
-        return `${mins}:${seconds}`
+    const sortByClicks = () => {
+        items.sort((a,b) => (a.highscore > b.highscore ? 1 : -1 ));
+        setClicksSorted(true);
     }
 
-    const handleSort = () => {
-
-        if (clicksSorted) {
-            items.sort((a, b) => (a.clicks > b.clicks) ? 1 : -1);
-        } else {
-            items.sort((a, b) => (a.time > b.time) ? 1 : -1);
-        }
-        setClicksSorted(!clicksSorted)
+    const sortByTime = () => {
+        items.sort((a, b) => (a.time > b.time) ? 1 : -1);
+        setClicksSorted(false);
     }
 
-    // Sorts code once on page load
-    // useEffect(() => {
-    //     handleSort();
-    // }, []);
+    // Sorts code once on page load sorted by clicks by default
+    useEffect(() => {
+        sortByClicks();
+    }, []);
 
     return (
         <Flex width='100%' ml='16px' mr='16px' direction='column' height='48%'>
@@ -47,13 +47,13 @@ const LeaderboardList = (props) => {
                     <Heading size='lg'>Name</Heading>
                 </Box>
                 <Center flex='1'>
-                    <Button variant={clicksSorted ? 'borderlessWhite' : 'borderless'} onClick={() => handleSort()}>
+                    <Button variant={clicksSorted ? 'borderless' : 'borderlessWhite'} onClick={() => sortByClicks()}>
                         <Heading size='lg'>Clicks</Heading>
                     </Button>
 
                 </Center>
                 <Center flex='1'>
-                    <Button variant={clicksSorted ? 'borderless' : 'borderlessWhite'} onClick={() => handleSort()}>
+                    <Button variant={clicksSorted ? 'borderlessWhite' : 'borderless'} onClick={() => sortByTime()}>
                         <Heading size='lg'>Time</Heading>
                     </Button>
                 </Center>
@@ -67,7 +67,6 @@ const LeaderboardList = (props) => {
                     )
                 })) : <NoPersonalScoresCard text={"Play some games to get your scores on the board!"}/>}
             </Box>
-
 
         </Flex>
     )
