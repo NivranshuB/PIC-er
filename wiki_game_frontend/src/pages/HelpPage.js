@@ -5,14 +5,14 @@ import HelpDoneButton from "../components/HelpDoneButton";
 import HelpNextButton from "../components/HelpNextButton";
 import HelpPreviousButton from "../components/HelpPreviousButton";
 
-export const totalNumberOfHelpPages = 10;
+export const totalNumberOfHelpPages = 13;
 
 const HelpPage = () => {
 
     const [helpFirstPage, setHelpFirstPage] = useState(true);
     const [helpLastPage, setHelpLastPage] = useState(false);
     const [helpCurrentPageNumber, setHelpCurrentPageNumber] = useState(1);  //Help pages are indexed from 1
-    const [helpImageSource, setHelpImageSource] = useState('/helpImages/1.png');
+    const [helpImageSource, setHelpImageSource] = useState('/helpImages/helpPage1.png');
 
     return (
         <div>
@@ -22,7 +22,7 @@ const HelpPage = () => {
 
             {/*Image source from public folder */}
             <Center p='16px'>
-                <Image fit='contain' boxSize='70%' src={helpImageSource} />
+                <Image fit='contain' boxSize='55%' src={helpImageSource} />
             </Center>
 
 
