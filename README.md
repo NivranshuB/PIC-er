@@ -82,11 +82,15 @@ Axios Mock adapter was used to ensure the frontend sends the correct data to the
 
 ### Game Page
 
-![image](https://user-images.githubusercontent.com/68992239/168456572-ff8dc8e5-eb5c-4937-af3b-f361ca4c8243.png)
+![image](https://user-images.githubusercontent.com/68992239/168460250-cb2149ea-3c53-4d8b-b013-37a29aadfc78.png)
 
 * When a game begins, display the starting image, taget image, and 5 other images. The game is designed so that one of the images is the 'closer image' that the user should click. The other 4 images are randomised images that may lead the user to the target image, or may lead them down the wrong track.
 * The game displays the time and the number of clicks during the game.
 * A Restart button is also provided if the user feels stuck and wants to start the game again.
+* If the user would like some assistance, they can also hover over the hint tag to reveal the target image tags:
+
+![image](https://user-images.githubusercontent.com/68992239/168460290-852a2ba7-25d0-4e34-962c-21e678609842.png)
+
 * The user is able to click on any of the images to open a larger version of the image:
 
 ![image](https://user-images.githubusercontent.com/68992239/168456580-c1f07356-5203-497b-a029-7458acd2ad35.png)
