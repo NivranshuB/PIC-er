@@ -64,7 +64,7 @@ const GameEndPage = () => {
                         </VStack>
                         <Spacer />
                         <VStack width='100%' height='100%'>
-                            <Heading size='md'>Goal image</Heading>
+                            <Heading size='md'>Target image</Heading>
                             <Image src={targetImageURL} maxHeight='100%' />
                         </VStack>
                     </HStack>
