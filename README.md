@@ -73,6 +73,7 @@ Axios Mock adapter was used to ensure the frontend sends the correct data to the
 
 ### Home Page
 
+![image](https://user-images.githubusercontent.com/68992239/168456569-707eb54d-f0b7-4a73-b69d-924ee87737c1.png)
 
 * Play: Play the game
 * Leaderboard: View the leaderboard (personal and global)
@@ -80,28 +81,45 @@ Axios Mock adapter was used to ensure the frontend sends the correct data to the
 
 ### Game Page
 
-
+![image](https://user-images.githubusercontent.com/68992239/168456572-ff8dc8e5-eb5c-4937-af3b-f361ca4c8243.png)
 
 * When a game begins, display the starting image, taget image, and 5 other images. The game is designed so that one of the images is the 'closer image' that the user should click. The other 4 images are randomised images that may lead the user to the target image, or may lead them down the wrong track.
 * The game displays the time and the number of clicks during the game.
 * A Restart button is also provided if the user feels stuck and wants to start the game again.
 * The user is able to click on any of the images to open a larger version of the image:
+
+![image](https://user-images.githubusercontent.com/68992239/168456580-c1f07356-5203-497b-a029-7458acd2ad35.png)
   
 * If a user clicks on one of the 5 selectable images, they are also presented with an option to select this image to progress the game further:
 
+![image](https://user-images.githubusercontent.com/68992239/168456586-b5e30429-1e52-42c1-b881-808e28313947.png)
+
 ### Game End Page
 
+![image](https://user-images.githubusercontent.com/68992239/168456595-8799c46c-8179-4f77-baa5-a1f721773344.png)
 
 * When the user finds the target image, they are presented with the Game End page. This shows a summary of the game such as the starting, target image, the clicks taken and the time taken.
 * The user is able to return home or play again to navigate straight to the Game Page again.
 * One the left side of the screen, the user is presented with the global leaderboard. 
 * A message is displayed to the user saying they are unable to view their personal high scores because they are not logged in.
-* When the user is logged in, they are able to view their personal high scores
+* When the user is logged in, they are able to view their personal high scores:
+
+![image](https://user-images.githubusercontent.com/68992239/168456600-f38ef991-03ed-4a44-87b2-a66e7934238d.png)
 
 ### Leaderboard Page
 
-* The leaderboard page displays the same information as the leaderboard on the Game End Page but in a more readable form. Whenever the leaderboard appears, they user is also able to select one of the leaderboard items to view a more in-depth overview of the game. This includes the starting and target images for that game.
+![image](https://user-images.githubusercontent.com/68992239/168456610-34ab4a1d-d3ab-4a99-a92b-483e59279e9b.png)
+
+* The leaderboard page displays the same information as the leaderboard on the Game End Page but in a more readable form. 
+* Whenever the leaderboard appears, the user is also able to select one of the leaderboard items to view a more in-depth overview of the game. This includes the starting and target images for that game:
+
+![image](https://user-images.githubusercontent.com/68992239/168456625-8f998a46-ef32-4a9e-b691-7b848dfed05d.png)
+
 * Inside this modal, the user is able to click on the image to view a larger version of the image, the same as during the game.
+
+* The same message appears if the user is not logged in:
+
+![image](https://user-images.githubusercontent.com/68992239/168456631-d21580bc-54ed-43c4-b850-407c706efc8b.png)
 
 ### Help Page
 
@@ -116,6 +134,8 @@ Axios Mock adapter was used to ensure the frontend sends the correct data to the
 
 Redirects to the Auth0 Login page
 
+![image](https://user-images.githubusercontent.com/68992239/168456658-2e7c4a99-f515-442d-8fc2-e7c3b5b2ace6.png)
+
 ### Signup Button
 
 Redirects to the Auth0 Signup page
@@ -123,4 +143,9 @@ Redirects to the Auth0 Signup page
 ### Logout Button
 
 If the user is logged in, the Signup, and Login buttons are hidden and replaced with the Logout Button. The username of the current logged in user is also displayed
+
+![image](https://user-images.githubusercontent.com/68992239/168456644-6a7dbfd2-c439-4991-a515-03fb1933cc50.png)
+
+![image](https://user-images.githubusercontent.com/68992239/168456647-623e5346-ebde-485b-859f-0251c4a7af82.png)
+
 
