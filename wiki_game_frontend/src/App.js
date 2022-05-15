@@ -6,6 +6,7 @@ import LeaderboardPage from './pages/LeaderboardPage';
 import GameEndPage from './pages/GameEndPage';
 import HelpPage from './pages/HelpPage';
 import GamePage from './pages/GamePage';
+import { ErrorPage } from "./pages/ErrorPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path='help' element={<HelpPage />} />
             <Route path='game' element={<GamePage />} />
             <Route path='end' element={<GameEndPage />} />
+            <Route path='*' element={<ErrorPage />} />
           </Route>
         </Routes>
       </div>
