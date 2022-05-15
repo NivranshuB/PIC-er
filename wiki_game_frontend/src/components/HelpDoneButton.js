@@ -1,6 +1,10 @@
 import { Button } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Displays on last step of help page
+ * @returns Button
+ */
 const HelpDoneButton = () => {
 
     const navigate = useNavigate();

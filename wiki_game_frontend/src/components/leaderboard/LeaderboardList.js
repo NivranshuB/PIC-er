@@ -5,6 +5,11 @@ import timeInMinutes from "../../utils/timeInMinutes";
 import LeaderboardCard from "./LeaderboardCard"
 import NoPersonalScoresCard from "./NoPersonalScoresCard";
 
+/**
+ * Displays the leaderboard list of all items as rows as well as the leaderboard title
+ * @param {*} props items, title
+ * @returns Leaderboard list with rows and a title
+ */
 const LeaderboardList = (props) => {
 
     const { items, title } = props;
@@ -21,7 +26,7 @@ const LeaderboardList = (props) => {
         setClicksSorted(false);
     }
 
-    // Sorts code once on page load
+    // Sorts code once on page load sorted by clicks by default
     useEffect(() => {
         sortByClicks();
     }, []);

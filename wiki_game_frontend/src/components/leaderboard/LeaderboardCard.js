@@ -1,6 +1,12 @@
-import { Box, Center, Flex, Heading, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, useDisclosure, VStack } from "@chakra-ui/react";
+import { Box, Center, Flex, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, useDisclosure, VStack } from "@chakra-ui/react";
 import RegularImageModal from "../modals/RegularImageModal";
 
+/**
+ * LeaderboardCard displays the row in a leaderboard with rank, name, clicks and time
+ * Also has a clickable modal to show the start and target image of that game
+ * @param {*} props rank, name, clicks, time, startImage, targetImage
+ * @returns leaderboard card to be used as the leaderboard row
+ */
 const LeaderboardCard = (props) => {
 
     const { rank, name, clicks, time, startImage, targetImage} = props;

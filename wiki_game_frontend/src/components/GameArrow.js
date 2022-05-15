@@ -1,5 +1,9 @@
 import { Box, HStack, Spacer } from "@chakra-ui/react";
 
+/**
+ * Arrow to be used during the game
+ * @returns Image Box to display the game arrows leading to the potential image choices
+ */
 const GameArrow = () => {
 
     const arrowWidth = '8px';
