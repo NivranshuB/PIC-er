@@ -24,6 +24,6 @@ If you want to test the application simply run the following commands:
 
 `yarn test`
 
-## connecting with the backend
+## Connecting with the backend
 
 If you want to frontend to communicate with the backend, follow the relevant instructions shown in the root [README file](../README.md), and the [Backend README file](../wiki_game_backend/README.md)

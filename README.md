@@ -36,6 +36,10 @@ The project is separated into a frontend and a backend.
 
 Ensure the `.env` file is placed into the root of the directory (on the same level as this README file and the two folders, wiki_game_backend and wiki_game_frontend). The `.env` file contains information to connect to the MongoDB database.
 
+Clone the repository:
+
+`git clone https://github.com/UOA-CS732-SE750-Students-2022/project-group-charcoal-cats.git`
+
 The best way to run the program is to open two separate terminals.
 
 ### For the backend:
