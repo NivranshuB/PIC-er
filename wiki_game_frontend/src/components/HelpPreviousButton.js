@@ -12,7 +12,7 @@ function HelpPreviousButton ({setHelpFirstPage, setHelpLastPage, helpCurrentPage
             setHelpLastPage(false);            
         }
         setHelpCurrentPageNumber(helpCurrentPageNumber - 1);
-        setHelpImageSource('helpImages/' + (helpCurrentPageNumber - 1) + '.png');
+        setHelpImageSource('helpImages/helpPage' + (helpCurrentPageNumber - 1) + '.png');
     }
 
     return (
