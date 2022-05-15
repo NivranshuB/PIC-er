@@ -21,7 +21,7 @@ async function createGame() {
     await imageCollection.find({imageTags: {$all: startImageTagArray}, tagCount: {$gte: 3}}).toArray()
             .then((arr) => {targetImage = arr[getRandomIntBetweenValues(0, arr.length)]})
 
-    await getACloserImage(closerImageTags(startImageTagArray, targetImage.imageTags)).then((o) => closerImage = (o == null) ? {} : o);       
+    await getACloserImage(closerImageTags(startImageTagArray, targetImage.imageTags)).then((o) => closerImage = (o == null || o.id == startImage.id) ? {} : o);       
     await getRandomImages().then((o) => randomImages = o);      
     levelImages.push(closerImage);
     levelImages = levelImages.concat(randomImages);
