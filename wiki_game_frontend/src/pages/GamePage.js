@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Heading, HStack, Spacer } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, HStack, Spacer, Tag, Tooltip } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
@@ -25,6 +25,8 @@ const GamePage = () => {
         targetImage: '',
         images: [],
     })
+
+    const [hintText, setHintText] = useState();
 
     const [originalImage, setOriginalImage] = useState();
     const [time, setTime] = useState(0);
@@ -55,6 +57,7 @@ const GamePage = () => {
             setLoading(false);
             setClicks(0);
             setTime(0);
+            updateHintText(targetImage.imageTags)
         });
 
 
@@ -149,6 +152,16 @@ const GamePage = () => {
         handleStart();
     }
 
+    const updateHintText = (hintTags) => {
+        let hintText = '';
+
+        for (const hint of hintTags) {
+            hintText = hintText + " " + hint;
+        } 
+
+        setHintText(hintText);
+    }
+
     return (
         <Flex direction='column' width='100%' height='80%'>
             <HStack width='100%'>
@@ -179,10 +192,16 @@ const GamePage = () => {
                                                 <Heading>Clicks: {clicks}</Heading>
                                             </Box>
                                         </Flex>
-
                                         <Center p='16px'>
                                             <Button onClick={() => handleRestart()}>Restart</Button>
                                         </Center>
+                                        <Center>
+                                            <Tooltip label={hintText} bg="lighterBackground" borderRadius="8px" hasArrow>
+                                                <Tag bg="lighterBackground" color="white">
+                                                    Hover for hint
+                                                </Tag>
+                                            </Tooltip>  
+                                        </Center>                                                                               
                                     </Flex>
 
                                     <Spacer />
