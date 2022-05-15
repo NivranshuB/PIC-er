@@ -45,7 +45,7 @@ const GamePage = () => {
         let shuffledArray = [];
         startGame().then((data) => {
             const { startImage, targetImage, levelImages } = data;
-            shuffledArray = shuffleImages(levelImages);
+            shuffledArray = shuffleImages(levelImages, startImage);
             setData({
                 startImage: startImage,
                 targetImage: targetImage,
@@ -76,13 +76,24 @@ const GamePage = () => {
         setClicks(clicks + 1);
     }
 
-    const shuffleImages = (images) => {
+    const shuffleImages = (images, start=null) => {
         closerImage = images[0];
-
+        let imageSet = []
         let randomImages = [];
+        
+        if (start != null) {
+            for (let i of images) {
+                if (i.imageID !== start.imageID) {
+                    imageSet.push(i);
+                }
+            }
+        } else {
+            imageSet = images;
+        }
+
         if (Object.keys(closerImage).length > 0) {
             randomImages.push(closerImage);
-            for (let image of images.slice(1, 6)) {
+            for (let image of imageSet.slice(1, 6)) {
                 if (image.imageID !== closerImage.imageID) {
                     randomImages.push(image);
                     if (randomImages.length === 5) {
@@ -91,9 +102,8 @@ const GamePage = () => {
                 }
             }
         } else {
-            randomImages = images.slice(1, 6);
+            randomImages = imageSet.slice(1, 6);
         }
-
         let index = randomImages.length;
         while (index !== 0) {
             let randomIndex = Math.floor(Math.random() * index);
@@ -101,6 +111,7 @@ const GamePage = () => {
 
             [randomImages[index], randomImages[randomIndex]] = [randomImages[randomIndex], randomImages[index]];
         }
+        
         return randomImages;
     }
 
