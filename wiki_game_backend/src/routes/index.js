@@ -1,3 +1,6 @@
+/**
+ * Index.js for the routes folder
+ */
 import express from 'express';
 
 const router = express.Router();

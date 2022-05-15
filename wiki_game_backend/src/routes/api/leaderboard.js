@@ -3,9 +3,7 @@
  */
  import express from 'express';
  import { getLocalLeaderboard, getGlobalLeaderboard, clearLocalLeaderboard } from '../../app-data/leaderboard-dao';
- 
- const HTTP_CREATED = 201;
- const HTTP_NOT_FOUND = 404;
+
  const HTTP_NO_CONTENT = 204;
  
  const router = express.Router();
