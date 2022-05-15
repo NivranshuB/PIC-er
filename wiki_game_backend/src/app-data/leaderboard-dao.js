@@ -1,7 +1,12 @@
 /**
  * Contains all the access methods to retrieve local and global score objects from MongoDB
  */
+
 import { scoreCollection } from '../server'
+
+//import { scoreCollection } from '../app-data/__tests__/leaderboard-dao.test';
+// --> import when testing leaderboard-dao.js
+
 const LEADERBOARD_RESULTS_LIMIT = 10
 
 //Check if the local score is in the top 10 highest scores for the user
