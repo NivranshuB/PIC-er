@@ -3,8 +3,6 @@ import path from 'path';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import dotenv from 'dotenv';
 
-//Note: Had to remove '"type": "module",' from package.json of backend to make server.js work after merging
-
 // Setup Express
 const app = express();
 const port = process.env.PORT || 3001;
@@ -16,16 +14,13 @@ app.use(express.json());
 import routes from './routes';
 app.use('/', routes);
 
-//Setup routes from old routes
-// import routes from '../routes/route'
-// app.use('/', routes)
-
 //Setup mongo connection
 dotenv.config({ path: '..\\.env'});
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.s2hea.mongodb.net/PictureRace?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 export let dbConnection, imageCollection, scoreCollection;
 
+//Connect server to MongoDB instance
 client.connect((err, c) => {
     if (err) {
         console.error(err)
