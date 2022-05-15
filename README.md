@@ -148,4 +148,20 @@ If the user is logged in, the Signup, and Login buttons are hidden and replaced 
 
 ![image](https://user-images.githubusercontent.com/68992239/168456647-623e5346-ebde-485b-859f-0251c4a7af82.png)
 
+## Workflow
 
+* Agile
+
+* Shared GitHub repo model. Feature branching workflow was used.
+
+* When a feature is completed on a branch, create a pull request that should be reviewed by at least one other member of the team before being merged into main.
+
+## Team organisation
+
+Frontend: Corban, Calvin
+
+Backend: Nivran, Joe
+
+Meetings were held relatively regularly, at least once a week when possible and when the team was able to work on the project.
+
+The frontend and backend would also have frequent meetings, often multiple shorter meetings per week to catch up. Constant communication was done through Discord or Messenger. Cross sub-team communication was also performed when required.
