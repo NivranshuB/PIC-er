@@ -1,5 +1,6 @@
 import { Heading, Image, HStack, Box, Progress, Center, Text } from "@chakra-ui/react"
 import { useState } from "react";
+import BackButton from "../components/BackButton";
 import HelpDoneButton from "../components/HelpDoneButton";
 import HelpNextButton from "../components/HelpNextButton";
 import HelpPreviousButton from "../components/HelpPreviousButton";
@@ -16,6 +17,8 @@ const HelpPage = () => {
 
     return(
         <div>
+            <BackButton />
+
             <Center><Heading fontSize='4xl'>Help</Heading></Center>
 
             {/*Image source from public folder */}
@@ -35,7 +38,7 @@ const HelpPage = () => {
                         : null}
                     </Box>
                     <Box w='600px'>
-                        <Progress size='md' value={(helpCurrentPageNumber/totalNumberOfHelpPages)*100}/>
+                        <Progress size='md' colorScheme='red' bg='lighterBackground' borderRadius='8px' value={(helpCurrentPageNumber/totalNumberOfHelpPages)*100} />
                         <Center><Text>{helpCurrentPageNumber}/{totalNumberOfHelpPages}</Text></Center>
                     </Box>
                     <Box w='150px'>
