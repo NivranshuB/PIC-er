@@ -18,6 +18,18 @@ Instead of navigating Wikipedia hyperlinks, the user must navigate through image
 
 The goal is to get to the target image in the least number of clicks and in the shortest amount of time.
 
+### Purpose of the game
+
+After initially proposing quite a more challenging style game design we amended our game logic to cater to a wider audience. We decided to use both a 'time for completion' metric and an 'image clicks for completion' to cater to the two different type of players of our game.
+
+Our game provides caters towards the following two types of players:
+
+1. [Skill based] Players that want something intellectually challenging. These players will want to take their time and really prioritise how many image clicks they need to make to get to the target image. For these players the time metric does not mean too much and their main stimulation from the game is how they are able to link the start image to the next best image one at a time. They will treat this game as a careful observation game.
+
+2. [Speed based] Players that want to speed through the game and test their reflexive abilities. These players would want to speed through the level images to try and get from the start image to the target image as fast as possible. These players are simulated by the speed with which they can navigate the application page particulary. These players are motivated to improve their digital agility and dexterity and do not care much about following the 'links' from the start image to the target image, relying heavily on rng.
+
+Our game providing two different ways to measure performance means that we can can cater to those that prefer a more challenging game (similar to our inspiration - the wiki game) and also two those who prefer a quick speedy challenge. In the future we would like to extend these two concepts into having two entirely different game modes for these two player demographics.
+
 ## Getting started
 
 The project is separated into a frontend and a backend. 
