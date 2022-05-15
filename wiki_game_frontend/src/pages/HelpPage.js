@@ -5,51 +5,54 @@ import HelpDoneButton from "../components/HelpDoneButton";
 import HelpNextButton from "../components/HelpNextButton";
 import HelpPreviousButton from "../components/HelpPreviousButton";
 
+export const totalNumberOfHelpPages = 10;
+
 const HelpPage = () => {
 
     const [helpFirstPage, setHelpFirstPage] = useState(true);
     const [helpLastPage, setHelpLastPage] = useState(false);
     const [helpCurrentPageNumber, setHelpCurrentPageNumber] = useState(1);  //Help pages are indexed from 1
-    const [helpImageSource, setHelpImageSource] = useState(null);           //NEED TO USE THE CORRECT IMAGE SOURCE
+    const [helpImageSource, setHelpImageSource] = useState('/helpImages/1.png');
 
-    const totalNumberOfHelpPages = 10;  //NEED TO CHANGE TO CORRECT NUMBER OF PAGES
-
-
-    return(
+    return (
         <div>
             <BackButton />
 
             <Center><Heading fontSize='4xl'>Help</Heading></Center>
 
             {/*Image source from public folder */}
-            {/*<Image boxSize='500px' src={helpImageSource}>Help image goes here</Image>*/}
+            <Center p='16px'>
+                <Image fit='contain' boxSize='70%' src={helpImageSource} />
+            </Center>
+
 
             {/* Buttons to navigate through help pages with progress bar */}
             <Center>
                 <HStack spacing='150px'>
                     <Box w='150px'>
-                        {helpFirstPage ? 
-                        <HelpPreviousButton 
-                            setHelpFirstPage={setHelpFirstPage} 
-                            setHelpLastPage={setHelpLastPage} 
-                            helpCurrentPageNumber={helpCurrentPageNumber}
-                            setHelpCurrentPageNumber={setHelpCurrentPageNumber}
-                            setHelpImageSource={setHelpImageSource}/> 
-                        : null}
+                        {helpFirstPage ?
+                            null :
+                            <HelpPreviousButton
+                                setHelpFirstPage={setHelpFirstPage}
+                                setHelpLastPage={setHelpLastPage}
+                                helpCurrentPageNumber={helpCurrentPageNumber}
+                                setHelpCurrentPageNumber={setHelpCurrentPageNumber}
+                                setHelpImageSource={setHelpImageSource} />
+                            }
                     </Box>
                     <Box w='600px'>
-                        <Progress size='md' colorScheme='red' bg='lighterBackground' borderRadius='8px' value={(helpCurrentPageNumber/totalNumberOfHelpPages)*100} />
+                        <Progress size='md' colorScheme='red' bg='lighterBackground' borderRadius='8px' value={(helpCurrentPageNumber / totalNumberOfHelpPages) * 100} />
                         <Center><Text>{helpCurrentPageNumber}/{totalNumberOfHelpPages}</Text></Center>
                     </Box>
                     <Box w='150px'>
-                        {helpLastPage ? 
-                        <HelpDoneButton/> :
-                        <HelpNextButton
-                            setHelpFirstPage={setHelpFirstPage}
-                            setHelpLastPage={setHelpLastPage} 
-                            helpCurrentPageNumber={helpCurrentPageNumber}
-                            setHelpCurrentPageNumber={setHelpCurrentPageNumber}
-                            setHelpImageSource={setHelpImageSource}/> 
+                        {helpLastPage ?
+                            <HelpDoneButton /> :
+                            <HelpNextButton
+                                setHelpFirstPage={setHelpFirstPage}
+                                setHelpLastPage={setHelpLastPage}
+                                helpCurrentPageNumber={helpCurrentPageNumber}
+                                setHelpCurrentPageNumber={setHelpCurrentPageNumber}
+                                setHelpImageSource={setHelpImageSource} />
                         }
                     </Box>
                 </HStack>
